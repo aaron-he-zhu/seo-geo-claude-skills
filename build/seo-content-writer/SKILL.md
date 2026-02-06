@@ -42,7 +42,7 @@ Create a blog post for [topic] with these keywords: [keyword list]
 ### With Specific Requirements
 
 ```
-Write a 2,000-word guide about [topic] targeting [keyword], 
+Write a 2,000-word guide about [topic] targeting [keyword],
 include FAQ section for featured snippets
 ```
 
@@ -51,6 +51,22 @@ include FAQ section for featured snippets
 ```
 Here's my content brief: [brief]. Write SEO-optimized content following this outline.
 ```
+
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~search console connected:**
+Automatically pull keyword metrics (search volume, difficulty, CPC), competitor content analysis (top-ranking pages, content length, common topics), SERP features (featured snippets, PAA questions), and keyword opportunities (related keywords, question-based queries).
+
+**With manual data only:**
+Ask the user to provide:
+1. Target primary keyword and 3-5 secondary keywords
+2. Target audience and search intent (informational/commercial/transactional)
+3. Target word count and desired tone
+4. Any competitor URLs or content examples to reference
+
+Proceed with the full workflow using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
 
 ## Instructions
 
@@ -74,7 +90,39 @@ When a user requests SEO content:
    **Competitor URLs**: [top ranking content to beat]
    ```
 
-2. **Research and Plan**
+2. **Load CORE-EEAT Quality Constraints**
+
+   Before writing, load content quality standards from the [CORE-EEAT Benchmark](../../references/core-eeat-benchmark.md):
+
+   ```markdown
+   ### CORE-EEAT Pre-Write Checklist
+
+   **Content Type**: [identified from requirements above]
+   **Loaded Constraints** (high-weight items for this content type):
+
+   Apply these standards while writing:
+
+   | ID | Standard | How to Apply |
+   |----|----------|-------------|
+   | C01 | Intent Alignment | Title promise must match content delivery |
+   | C02 | Direct Answer | Core answer in first 150 words |
+   | C06 | Audience Targeting | State "this article is for..." |
+   | C10 | Semantic Closure | Conclusion answers opening question + next steps |
+   | O01 | Heading Hierarchy | H1→H2→H3, no level skipping |
+   | O02 | Summary Box | Include TL;DR or Key Takeaways |
+   | O06 | Section Chunking | Each section single topic; paragraphs 3–5 sentences |
+   | O09 | Information Density | No filler; consistent terminology |
+   | R01 | Data Precision | ≥5 precise numbers with units |
+   | R02 | Citation Density | ≥1 external citation per 500 words |
+   | R04 | Evidence-Claim Mapping | Every claim backed by evidence |
+   | R07 | Entity Precision | Full names for people/orgs/products |
+
+   _These 12 items apply across all content types. For content-type-specific dimension weights, see the Content-Type Weight Table in [core-eeat-benchmark.md](../../references/core-eeat-benchmark.md)._
+   _Full 80-item benchmark: [references/core-eeat-benchmark.md](../../references/core-eeat-benchmark.md)_
+   _For complete content quality audit: use [content-quality-auditor](../../cross-cutting/content-quality-auditor/)_
+   ```
+
+3. **Research and Plan**
 
    Before writing:
    
@@ -319,7 +367,7 @@ When a user requests SEO content:
 
     ```markdown
     ### Content SEO Score
-    
+
     | Factor | Status | Notes |
     |--------|--------|-------|
     | Title optimized | ✅/⚠️/❌ | [notes] |
@@ -332,13 +380,56 @@ When a user requests SEO content:
     | FAQ section | ✅/⚠️/❌ | [notes] |
     | Readability | ✅/⚠️/❌ | [notes] |
     | Word count | ✅/⚠️/❌ | [X] words |
-    
+
     **Overall SEO Score**: [X]/10
-    
+
     **Improvements to Consider**:
     1. [Suggestion]
     2. [Suggestion]
     ```
+
+11. **CORE-EEAT Self-Check**
+
+    After writing, verify content against loaded CORE-EEAT constraints:
+
+    ```markdown
+    ### CORE-EEAT Post-Write Check
+
+    | ID | Standard | Status | Notes |
+    |----|----------|--------|-------|
+    | C01 | Intent Alignment: title = content | ✅/⚠️/❌ | [notes] |
+    | C02 | Direct Answer in first 150 words | ✅/⚠️/❌ | [notes] |
+    | C06 | Audience explicitly stated | ✅/⚠️/❌ | [notes] |
+    | C10 | Conclusion answers opening question | ✅/⚠️/❌ | [notes] |
+    | O01 | Heading hierarchy correct | ✅/⚠️/❌ | [notes] |
+    | O02 | Summary/Key Takeaways present | ✅/⚠️/❌ | [notes] |
+    | O06 | Paragraphs 3–5 sentences | ✅/⚠️/❌ | [notes] |
+    | O09 | No filler; consistent terms | ✅/⚠️/❌ | [notes] |
+    | R01 | ≥5 precise data points with units | ✅/⚠️/❌ | [notes] |
+    | R02 | ≥1 citation per 500 words | ✅/⚠️/❌ | [notes] |
+    | R04 | Claims backed by evidence | ✅/⚠️/❌ | [notes] |
+    | R07 | Full entity names used | ✅/⚠️/❌ | [notes] |
+
+    **Items Needing Attention**: [list any ⚠️/❌ items]
+
+    _For full 80-item audit, use [content-quality-auditor](../../cross-cutting/content-quality-auditor/)_
+    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Primary keyword confirmed and matches search intent
+- [ ] Target word count specified (minimum 800 words for substantive content)
+- [ ] Content type and audience clearly defined
+- [ ] Competitor URLs reviewed or target SERP features identified
+
+### Output Validation
+- [ ] Keyword density within 1-2% for primary keyword
+- [ ] All sections from outline covered completely
+- [ ] Internal links included (2-5 relevant links)
+- [ ] FAQ section present with at least 3 questions
+- [ ] Readability score appropriate for target audience
+- [ ] Source of each data point clearly stated (~~SEO tool data, user-provided, or estimated)
 
 ## Example
 
@@ -499,10 +590,16 @@ Write an ultimate guide about [topic] (3,000+ words) targeting [keyword]
 5. **Include visual elements** - Break up text with images, tables, lists
 6. **Update regularly** - Fresh content signals to search engines
 
+## Reference Materials
+
+- [Title Formulas](./references/title-formulas.md) - Proven headline formulas, power words, CTR patterns
+- [Content Structure Templates](./references/content-structure-templates.md) - Templates for blog posts, comparisons, listicles, how-tos, pillar pages
+
 ## Related Skills
 
 - [keyword-research](../../research/keyword-research/) - Find keywords to target
 - [geo-content-optimizer](../geo-content-optimizer/) - Optimize for AI citations
 - [meta-tags-optimizer](../meta-tags-optimizer/) - Create compelling meta tags
 - [on-page-seo-auditor](../../optimize/on-page-seo-auditor/) - Audit SEO elements
+- [content-quality-auditor](../../cross-cutting/content-quality-auditor/) - Full 80-item CORE-EEAT audit
 

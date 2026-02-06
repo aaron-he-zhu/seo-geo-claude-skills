@@ -55,11 +55,59 @@ Update this content to outrank [competitor URL]: [your URL]
 Create a content refresh strategy for [domain/topic]
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~analytics + ~~search console + ~~SEO tool connected:**
+Claude can automatically pull historical traffic trends from ~~analytics, fetch impression and ranking data from ~~search console, retrieve keyword position history from ~~SEO tool, and identify content with declining performance. This enables data-driven refresh prioritization.
+
+**With manual data only:**
+Ask the user to provide:
+1. Traffic data or screenshots showing performance trends
+2. Ranking screenshots or history for key pages
+3. Content publish dates and last update dates
+4. List of pages the user suspects need refreshing
+
+Proceed with the analysis using provided data. Note in the output which findings are from automated data vs. manual review.
+
 ## Instructions
 
 When a user requests content refresh help:
 
-1. **Identify Content Refresh Candidates**
+1. **CORE-EEAT Quick Score — Identify Weak Dimensions**
+
+   Before refreshing, run a quick CORE-EEAT assessment to focus effort on the weakest areas. Reference: [CORE-EEAT Benchmark](../../references/core-eeat-benchmark.md)
+
+   ```markdown
+   ### CORE-EEAT Quick Assessment
+
+   **Content**: [title or URL]
+   **Content Type**: [type]
+
+   Rapidly score each dimension (estimate 0-100):
+
+   | Dimension | Quick Score | Key Weakness | Refresh Priority |
+   |-----------|-----------|--------------|-----------------|
+   | C — Contextual Clarity | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+   | O — Organization | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+   | R — Referenceability | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+   | E — Exclusivity | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+   | Exp — Experience | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+   | Ept — Expertise | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+   | A — Authority | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+   | T — Trust | [X]/100 | [main issue] | 🔴/🟡/🟢 |
+
+   **Weakest Dimensions** (focus refresh here):
+   1. [Dimension] — [what needs fixing]
+   2. [Dimension] — [what needs fixing]
+
+   **Refresh Strategy**: Focus on 🔴 dimensions first, then 🟡.
+
+   _For full 80-item audit, use [content-quality-auditor](../../cross-cutting/content-quality-auditor/)_
+   ```
+
+2. **Identify Content Refresh Candidates**
 
    ```markdown
    ## Content Refresh Analysis
@@ -350,7 +398,7 @@ When a user requests content refresh help:
    - [ ] Update `dateModified` in schema
    - [ ] Update sitemap lastmod
    - [ ] Clear cache after publishing
-   - [ ] Resubmit to Search Console
+   - [ ] Resubmit to ~~search console
    
    ### Promotion Strategy
    
@@ -409,9 +457,23 @@ When a user requests content refresh help:
    | Featured Snippets | 0 | 1+ | 2+ |
    
    ## Next Review
-   
+
    Schedule next refresh review: [Date - 6 months from now]
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Target content URL or title clearly identified
+- [ ] Historical performance data available (traffic trends, rankings)
+- [ ] Content publish/update dates known
+- [ ] If comparing to competitors, competitor URLs provided
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] Outdated elements identified with specific examples and replacement data
+- [ ] All suggested additions include word counts and section locations
+- [ ] Source of each data point clearly stated (~~analytics data, ~~search console, ~~SEO tool, user-provided, or estimated)
 
 ## Example
 
@@ -471,4 +533,5 @@ When a user requests content refresh help:
 - [seo-content-writer](../../build/seo-content-writer/) - Write new sections
 - [geo-content-optimizer](../../build/geo-content-optimizer/) - Enhance for AI
 - [on-page-seo-auditor](../on-page-seo-auditor/) - Audit refreshed content
+- [content-quality-auditor](../../cross-cutting/content-quality-auditor/) - Full 80-item CORE-EEAT audit
 

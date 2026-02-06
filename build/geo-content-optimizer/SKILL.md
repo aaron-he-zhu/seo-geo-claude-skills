@@ -51,11 +51,61 @@ Write content about [topic] optimized for both SEO and GEO
 Audit this content for GEO readiness and suggest improvements
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~AI monitor + ~~SEO tool connected:**
+Automatically pull AI citation patterns (which content is being cited by ChatGPT, Claude, Perplexity), current AI visibility scores, competitor citation frequency, and AI Overview appearance tracking.
+
+**With manual data only:**
+Ask the user to provide:
+1. Target queries where they want AI citations
+2. Current content URL or full content text
+3. Any known instances where competitors are being cited by AI
+
+Proceed with the full workflow using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests GEO optimization:
 
-1. **Understand GEO Fundamentals**
+1. **Load CORE-EEAT GEO-First Optimization Targets**
+
+   Before optimizing, load GEO-critical items from the [CORE-EEAT Benchmark](../../references/core-eeat-benchmark.md):
+
+   ```markdown
+   ### CORE-EEAT GEO-First Targets
+
+   These items have the highest impact on AI engine citation. Use as optimization checklist:
+
+   **Top 6 Priority Items**:
+   | Rank | ID | Standard | Why It Matters |
+   |------|----|----------|---------------|
+   | 1 | C02 | Direct Answer in first 150 words | All engines extract from first paragraph |
+   | 2 | C09 | Structured FAQ with Schema | Directly matches AI follow-up queries |
+   | 3 | O03 | Data in tables, not prose | Most extractable structured format |
+   | 4 | O05 | JSON-LD Schema Markup | Helps AI understand content type |
+   | 5 | E01 | Original first-party data | AI prefers exclusive, verifiable sources |
+   | 6 | O02 | Key Takeaways / Summary Box | First choice for AI summary citations |
+
+   **All GEO-First Items** (optimize for all when possible):
+   C02, C04, C05, C07, C08, C09 | O02, O03, O04, O05, O06, O09
+   R01, R02, R03, R04, R05, R07, R09 | E01, E02, E03, E04, E06, E08, E09, E10
+   Exp10 | Ept05, Ept08 | A08
+
+   **AI Engine Preferences**:
+   | Engine | Priority Items |
+   |--------|----------------|
+   | Google AI Overview | C02, O03, O05, C09 |
+   | ChatGPT Browse | C02, R01, R02, E01 |
+   | Perplexity AI | E01, R03, R05, Ept05 |
+   | Claude | R04, Ept08, Exp10, R03 |
+
+   _Full benchmark: [references/core-eeat-benchmark.md](../../references/core-eeat-benchmark.md)_
+   ```
+
+2. **Understand GEO Fundamentals**
 
    ```markdown
    ### How AI Systems Select Content to Cite
@@ -343,27 +393,27 @@ When a user requests GEO optimization:
 
    ```markdown
    ## GEO Optimization Report
-   
+
    ### Changes Made
-   
+
    **Definitions Added/Improved**:
    1. [Definition 1] - [location in content]
    2. [Definition 2] - [location in content]
-   
+
    **Quotable Statements Created**:
    1. "[Statement 1]"
    2. "[Statement 2]"
-   
+
    **Authority Signals Added**:
    1. [Expert quote/citation]
    2. [Source attribution]
-   
+
    **Structural Improvements**:
    1. [Change 1]
    2. [Change 2]
-   
+
    ### Before/After GEO Score
-   
+
    | Factor | Before | After | Change |
    |--------|--------|-------|--------|
    | Clear definitions | [X] | [X] | +[X] |
@@ -373,9 +423,9 @@ When a user requests GEO optimization:
    | Q&A format | [X] | [X] | +[X] |
    | Authority signals | [X] | [X] | +[X] |
    | **Total** | [X]/30 | [X]/30 | +[X] |
-   
+
    ### AI Query Coverage
-   
+
    This content is now optimized to answer:
    - "What is [topic]?" ✅
    - "How does [topic] work?" ✅
@@ -383,6 +433,50 @@ When a user requests GEO optimization:
    - "[Topic] vs [alternative]" ✅
    - "Best [topic] for [use case]" ✅
    ```
+
+10. **CORE-EEAT GEO Self-Check**
+
+    After optimization, verify GEO-First items:
+
+    ```markdown
+    ### CORE-EEAT GEO Post-Optimization Check
+
+    | ID | Standard | Status | Notes |
+    |----|----------|--------|-------|
+    | C02 | Direct Answer in first 150 words | ✅/⚠️/❌ | [notes] |
+    | C04 | Key terms defined on first use | ✅/⚠️/❌ | [notes] |
+    | C09 | Structured FAQ with Schema | ✅/⚠️/❌ | [notes] |
+    | O02 | Summary Box / Key Takeaways | ✅/⚠️/❌ | [notes] |
+    | O03 | Comparisons in tables | ✅/⚠️/❌ | [notes] |
+    | O05 | JSON-LD Schema Markup | ✅/⚠️/❌ | [notes] |
+    | O06 | Section chunking (3–5 sentences) | ✅/⚠️/❌ | [notes] |
+    | R01 | ≥5 precise data points with units | ✅/⚠️/❌ | [notes] |
+    | R02 | ≥1 citation per 500 words | ✅/⚠️/❌ | [notes] |
+    | R04 | Claims backed by evidence | ✅/⚠️/❌ | [notes] |
+    | R07 | Full entity names | ✅/⚠️/❌ | [notes] |
+    | E01 | Original first-party data | ✅/⚠️/❌ | [notes] |
+    | Exp10 | Limitations acknowledged | ✅/⚠️/❌ | [notes] |
+    | Ept08 | Reasoning transparency | ✅/⚠️/❌ | [notes] |
+
+    **Items Needing Attention**: [list any ⚠️/❌ items]
+
+    _For full 80-item audit, use [content-quality-auditor](../../cross-cutting/content-quality-auditor/)_
+    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Content source identified (URL, full text, or content draft)
+- [ ] Target AI queries or topics clearly defined
+- [ ] Current GEO baseline assessed (if optimizing existing content)
+
+### Output Validation
+- [ ] At least 3 clear, quotable definitions added
+- [ ] Factual density improved with at least 5 verifiable statistics
+- [ ] All claims have source citations from authoritative sources
+- [ ] Q&A format sections cover top 5 user queries
+- [ ] GEO score improvement of at least 50% from baseline
+- [ ] Source of each data point clearly stated (~~AI monitor data, user-provided, or estimated)
 
 ## Example
 
@@ -471,10 +565,16 @@ Use this checklist for any content:
 5. **Match query format** - Questions deserve direct answers
 6. **Build authority** - Expert credentials increase citation likelihood
 
+## Reference Materials
+
+- [AI Citation Patterns](./references/ai-citation-patterns.md) - How Google AI Overviews, ChatGPT, Perplexity, and Claude select and cite sources
+- [Quotable Content Examples](./references/quotable-content-examples.md) - Before/after examples of content optimized for AI citation
+
 ## Related Skills
 
 - [seo-content-writer](../seo-content-writer/) - Create SEO content to optimize
 - [schema-markup-generator](../schema-markup-generator/) - Add structured data
 - [content-refresher](../../optimize/content-refresher/) - Update content for freshness
 - [serp-analysis](../../research/serp-analysis/) - Analyze AI Overview patterns
+- [content-quality-auditor](../../cross-cutting/content-quality-auditor/) - Full 80-item CORE-EEAT audit
 

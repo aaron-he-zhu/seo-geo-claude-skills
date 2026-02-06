@@ -51,6 +51,24 @@ Create a GEO visibility report for [domain]
 Generate a content performance report
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~analytics + ~~search console + ~~SEO tool + ~~AI monitor connected:**
+Automatically aggregate traffic metrics from ~~analytics, search performance data from ~~search console, ranking and backlink data from ~~SEO tool, and GEO visibility metrics from ~~AI monitor. Creates comprehensive multi-source reports with historical trends.
+
+**With manual data only:**
+Ask the user to provide:
+1. Analytics screenshots or traffic data export (sessions, users, conversions)
+2. Search Console data (impressions, clicks, average position)
+3. Keyword ranking data for the reporting period
+4. Backlink metrics (referring domains, new/lost links)
+5. Key performance indicators and goals for comparison
+6. AI citation data if tracking GEO metrics
+
+Proceed with the full analysis using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests a performance report:
@@ -384,19 +402,39 @@ When a user requests a performance report:
    ## Appendix
    
    ### Data Sources
-   - Google Analytics 4
-   - Google Search Console
-   - [SEO Tool]
-   - [Rank Tracker]
-   
+   - ~~analytics (traffic and conversion data)
+   - ~~search console (search performance)
+   - ~~SEO tool (rankings and backlinks)
+   - ~~AI monitor (GEO metrics)
+
    ### Methodology
    [Explain how metrics were calculated]
-   
+
    ### Glossary
    - **GEO**: Generative Engine Optimization
    - **DA**: Domain Authority
    - [Additional terms]
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Reporting period clearly defined with comparison period
+- [ ] All required data sources available or alternatives noted
+- [ ] Target audience identified (executive/technical/client)
+- [ ] Performance goals and KPIs established for benchmarking
+
+### Output Validation
+- [ ] Every metric cites its data source and collection date
+- [ ] Trends include period-over-period comparisons
+- [ ] Recommendations are specific, prioritized, and actionable
+- [ ] Source of each data point clearly stated (~~analytics data, ~~search console data, ~~SEO tool data, user-provided, or estimated)
+
+## Example
+
+**User**: "Create a monthly SEO report for December 2024"
+
+**Output**: [Full report following the structure above with period-specific data and insights]
 
 ## Report Templates by Audience
 
@@ -416,12 +454,6 @@ Focus on: Crawl data, technical issues, detailed rankings, backlink analysis
 
 Focus on: Progress against goals, wins, clear recommendations
 
-## Example
-
-**User**: "Create a monthly SEO report for December 2024"
-
-**Output**: [Full report following the structure above with period-specific data and insights]
-
 ## Tips for Success
 
 1. **Lead with insights** - Start with what matters, not raw data
@@ -437,4 +469,5 @@ Focus on: Progress against goals, wins, clear recommendations
 - [backlink-analyzer](../backlink-analyzer/) - Link profile data
 - [alert-manager](../alert-manager/) - Set up report triggers
 - [serp-analysis](../../research/serp-analysis/) - SERP composition data
+- [memory-management](../../cross-cutting/memory-management/) - Archive reports in project memory
 

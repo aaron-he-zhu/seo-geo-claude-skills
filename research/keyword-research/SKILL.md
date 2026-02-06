@@ -54,6 +54,23 @@ Identify question-based keywords for [topic] that AI systems might answer
 What keywords is [competitor URL] ranking for that I should target?
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~search console connected:**
+Automatically pull historical search volume data, keyword difficulty scores, SERP analysis, current rankings from ~~search console, and competitor keyword overlap. The skill will fetch seed keyword metrics, related keyword suggestions, and search trend data.
+
+**With manual data only:**
+Ask the user to provide:
+1. Seed keywords or topic description
+2. Target audience and geographic location
+3. Business goals (traffic, leads, sales)
+4. Current domain authority (if known) or site age
+5. Any known keyword performance data or search volume estimates
+
+Proceed with the full analysis using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests keyword research:
@@ -256,11 +273,26 @@ When a user requests keyword research:
    | [Month] | [Title] | [Keyword] | [Type] |
    
    ## Next Steps
-   
+
    1. [Action item 1]
    2. [Action item 2]
    3. [Action item 3]
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Seed keywords or topic description clearly provided
+- [ ] Target audience and business goals specified
+- [ ] Geographic and language targeting confirmed
+- [ ] Domain authority or site maturity level established
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] Search volume and difficulty scores included for each keyword
+- [ ] Keywords grouped by intent and mapped to content types
+- [ ] Topic clusters show clear pillar-to-cluster relationships
+- [ ] Source of each data point clearly stated (~~SEO tool data, user-provided, or estimated)
 
 ## Example
 
@@ -398,4 +430,5 @@ Research local keywords for [business type] in [city/region]
 - [content-gap-analysis](../content-gap-analysis/) - Find missing keyword opportunities
 - [seo-content-writer](../../build/seo-content-writer/) - Create content for target keywords
 - [geo-content-optimizer](../../build/geo-content-optimizer/) - Optimize for AI citations
+- [memory-management](../../cross-cutting/memory-management/) - Store keyword data in project memory
 

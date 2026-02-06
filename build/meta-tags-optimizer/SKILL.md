@@ -51,6 +51,22 @@ Improve these meta tags for better CTR: [current tags]
 Create Open Graph and Twitter card tags for [page/URL]
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~search console + ~~SEO tool connected:**
+Automatically pull current meta tags, CTR data by query, competitor title/description patterns, SERP preview data, and impression/click metrics to identify optimization opportunities.
+
+**With manual data only:**
+Ask the user to provide:
+1. Current title and meta description (if optimizing existing)
+2. Target primary keyword and 2-3 secondary keywords
+3. Page URL and main content/value proposition
+4. Competitor URLs or examples of well-performing titles in the SERP
+
+Proceed with the full workflow using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests meta tag optimization:
@@ -314,17 +330,33 @@ When a user requests meta tag optimization:
    ```
    ```
 
-8. **Provide CTR Optimization Tips**
+8. **CORE-EEAT Alignment Check**
+
+   Verify meta tags align with content quality standards. Reference: [CORE-EEAT Benchmark](../../references/core-eeat-benchmark.md)
+
+   ```markdown
+   ### CORE-EEAT Meta Tag Alignment
+
+   | Check | Status | Notes |
+   |-------|--------|-------|
+   | **C01 Intent Alignment**: Title promise matches actual content delivery | ✅/⚠️/❌ | [Does the title accurately represent what the page delivers?] |
+   | **C02 Direct Answer**: Meta description reflects the core answer available in first 150 words | ✅/⚠️/❌ | [Does the description preview the direct answer?] |
+
+   **If C01 fails**: Title is misleading — rewrite to match actual content.
+   **If C02 fails**: Content may need restructuring to front-load the answer, or description should better reflect available content.
+   ```
+
+9. **Provide CTR Optimization Tips**
 
    ```markdown
    ## CTR Optimization Analysis
-   
+
    ### Power Words Used
    - [Word 1] - Creates [emotion/action]
    - [Word 2] - Creates [emotion/action]
-   
+
    ### CTR Boosting Elements
-   
+
    | Element | Present | Impact |
    |---------|---------|--------|
    | Numbers | Yes/No | +20-30% CTR |
@@ -332,20 +364,36 @@ When a user requests meta tag optimization:
    | Power Words | Yes/No | +10-15% CTR |
    | Question | Yes/No | +10-15% CTR |
    | Brackets | Yes/No | +10% CTR |
-   
+
    ### A/B Test Suggestions
-   
+
    Test these variations:
-   
+
    **Version A** (Current):
    - Title: [Title]
    - Description: [Description]
-   
+
    **Version B** (Test):
    - Title: [Alternative title]
    - Description: [Alternative description]
    - Hypothesis: [Why this might perform better]
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Primary keyword confirmed and matches page content
+- [ ] Page type identified (blog/product/landing/service/homepage)
+- [ ] Target audience and search intent clearly defined
+- [ ] Unique value proposition articulated
+
+### Output Validation
+- [ ] Title length 50-60 characters (displays fully in SERP)
+- [ ] Meta description length 150-160 characters
+- [ ] Primary keyword appears in both title and description
+- [ ] Open Graph image specified (1200x630px recommended)
+- [ ] All HTML syntax valid (no unclosed quotes or tags)
+- [ ] Source of each data point clearly stated (~~search console CTR data, ~~SEO tool competitor data, user-provided, or estimated)
 
 ## Example
 

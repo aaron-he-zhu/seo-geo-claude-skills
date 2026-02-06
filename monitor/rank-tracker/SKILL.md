@@ -53,6 +53,23 @@ Compare my rankings to [competitor] for [keywords]
 Create a ranking report for [domain/campaign]
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~search console + ~~analytics + ~~AI monitor connected:**
+Automatically pull ranking positions from ~~SEO tool, search impressions/clicks from ~~search console, traffic data from ~~analytics, and AI Overview citation tracking from ~~AI monitor. Daily automated rank checks with historical trend data.
+
+**With manual data only:**
+Ask the user to provide:
+1. Keyword ranking positions (current and historical if available)
+2. Target keyword list with search volumes
+3. Competitor domains and their ranking positions for key terms
+4. SERP feature status (featured snippets, PAA appearances)
+5. AI Overview citation data (if tracking GEO metrics)
+
+Proceed with the full analysis using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests rank tracking or analysis:
@@ -403,10 +420,24 @@ When a user requests rank tracking or analysis:
    2. [Strategic action]
    
    ## Next Report
-   
+
    Scheduled: [date]
    Focus areas: [areas to monitor]
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Keywords list is complete with search volumes
+- [ ] Target domain and tracking location are specified
+- [ ] Competitor domains identified for comparison
+- [ ] Historical baseline data available or initial tracking period set
+
+### Output Validation
+- [ ] Every metric cites its data source and collection date
+- [ ] Ranking changes include context (vs. previous period)
+- [ ] Significant movements have explanations or investigation notes
+- [ ] Source of each data point clearly stated (~~SEO tool data, ~~search console data, user-provided, or estimated)
 
 ## Example
 
@@ -439,7 +470,7 @@ Keywords in top 10 increased from 12 to 17 (+5)
 **Recommended**: Update your marketing automation guide with 2024 statistics and examples.
 ```
 
-## Tracking Best Practices
+## Tips for Success
 
 1. **Track consistently** - Same time, same device, same location
 2. **Include enough keywords** - 50-200 for meaningful data
@@ -454,4 +485,5 @@ Keywords in top 10 increased from 12 to 17 (+5)
 - [serp-analysis](../../research/serp-analysis/) - Understand SERP composition
 - [alert-manager](../alert-manager/) - Set up ranking alerts
 - [performance-reporter](../performance-reporter/) - Comprehensive reporting
+- [memory-management](../../cross-cutting/memory-management/) - Store ranking history in project memory
 

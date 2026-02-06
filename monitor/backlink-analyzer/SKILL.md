@@ -53,6 +53,23 @@ Check for toxic backlinks on [domain]
 Compare backlink profiles: [your domain] vs [competitor domains]
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~link database + ~~SEO tool connected:**
+Automatically pull comprehensive backlink profiles including referring domains, anchor text distribution, link quality metrics (DA/DR), link velocity, and toxic link detection from ~~link database. Competitor backlink data from ~~SEO tool for gap analysis.
+
+**With manual data only:**
+Ask the user to provide:
+1. Backlink export CSV (with source domains, anchor text, link type)
+2. Referring domains list with authority metrics
+3. Competitor domains for comparison
+4. Recent link gains/losses if tracking changes
+5. Any known toxic or spammy links
+
+Proceed with the full analysis using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests backlink analysis:
@@ -399,6 +416,20 @@ When a user requests backlink analysis:
    | Link velocity | [X]/mo | [Y]/mo |
    | Toxic link % | [X]% | <5% |
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Target domain backlink data is complete and current
+- [ ] Competitor domains specified for comparison analysis
+- [ ] Backlink data includes necessary fields (source domain, anchor text, link type)
+- [ ] Authority metrics available (DA/DR or equivalent)
+
+### Output Validation
+- [ ] Every metric cites its data source and collection date
+- [ ] Toxic link assessments include risk justification
+- [ ] Link opportunity recommendations are specific and actionable
+- [ ] Source of each data point clearly stated (~~link database data, ~~SEO tool data, user-provided, or estimated)
 
 ## Example
 

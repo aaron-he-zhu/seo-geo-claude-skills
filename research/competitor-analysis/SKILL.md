@@ -55,6 +55,23 @@ Analyze why [competitor] ranks #1 for [keyword]
 How is [competitor] getting cited in AI responses? What can I learn?
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~analytics + ~~AI monitor connected:**
+Automatically pull competitor keyword rankings, backlink profiles, top performing content, domain authority metrics from ~~SEO tool. Compare against your site's metrics from ~~analytics and ~~search console. Check AI citation patterns for both your site and competitors using ~~AI monitor.
+
+**With manual data only:**
+Ask the user to provide:
+1. Competitor URLs to analyze (2-5 recommended)
+2. Your own site URL and current metrics (traffic, rankings if known)
+3. Industry or niche context
+4. Specific aspects to focus on (keywords, content, backlinks, etc.)
+5. Any known competitor strengths or weaknesses
+
+Proceed with the full analysis using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests competitor analysis:
@@ -353,6 +370,21 @@ When a user requests competitor analysis:
    2. [Action item]
    ```
 
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Competitor URLs verified as relevant to your niche
+- [ ] Analysis scope defined (comprehensive or specific focus area)
+- [ ] Your own site metrics available for comparison
+- [ ] Minimum 2-3 competitors identified for meaningful patterns
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] Competitor strengths backed by measurable evidence (metrics, rankings)
+- [ ] Opportunities based on identifiable gaps, not assumptions
+- [ ] Action plan items are specific and actionable (not vague strategies)
+- [ ] Source of each data point clearly stated (~~SEO tool data, ~~analytics data, ~~AI monitor data, user-provided, or estimated)
+
 ## Example
 
 **User**: "Analyze why HubSpot ranks so well for marketing-related keywords"
@@ -466,4 +498,5 @@ How has [competitor]'s SEO strategy evolved over the past year?
 - [content-gap-analysis](../content-gap-analysis/) - Find content opportunities
 - [backlink-analyzer](../../monitor/backlink-analyzer/) - Deep-dive into backlinks
 - [serp-analysis](../serp-analysis/) - Understand search result composition
+- [memory-management](../../cross-cutting/memory-management/) - Store competitor data in project memory
 

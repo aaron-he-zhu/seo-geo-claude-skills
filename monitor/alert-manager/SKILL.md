@@ -55,6 +55,23 @@ Set up competitor monitoring for [competitor domains]
 Review and optimize my current SEO alerts
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~search console + ~~web crawler API connected:**
+Automatically monitor real-time metric feeds for ranking changes via ~~SEO tool API, indexing and coverage alerts from ~~search console, and technical health alerts from ~~web crawler. Set up automated threshold-based alerts with notification delivery.
+
+**With manual data only:**
+Ask the user to provide:
+1. Current baseline metrics for alert thresholds (rankings, traffic, backlinks)
+2. Critical keywords or pages to monitor
+3. Alert priority levels and notification preferences
+4. Historical data to understand normal fluctuation ranges
+5. Manual reporting on metric changes when they check their tools
+
+Proceed with the alert configuration using provided parameters. User will need to manually check metrics and report changes for alert triggers.
+
 ## Instructions
 
 When a user requests alert setup:
@@ -427,6 +444,20 @@ When a user requests alert setup:
     - [ ] Update response plans
     - [ ] Clean up false positives
     ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Alert thresholds are based on realistic baseline data
+- [ ] Critical keywords and pages clearly identified
+- [ ] Response plans defined for each alert priority level
+- [ ] Notification channels configured with appropriate recipients
+
+### Output Validation
+- [ ] Every metric cites its data source and collection date
+- [ ] Alert thresholds account for normal metric fluctuations
+- [ ] Response plans are specific and time-bound
+- [ ] Source of each alert trigger clearly stated (~~SEO tool API alert, ~~search console notification, ~~web crawler alert, or manual user check)
 
 ## Example
 

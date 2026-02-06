@@ -59,6 +59,22 @@ Find orphan pages on [domain]
 Optimize anchor text across the site
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~web crawler + ~~analytics connected:**
+Claude can automatically perform a full site crawl via ~~web crawler to map the complete link graph, fetch page performance metrics from ~~analytics to identify high-value pages, and analyze link flow throughout the site. This enables data-driven internal linking strategies.
+
+**With manual data only:**
+Ask the user to provide:
+1. Sitemap URL or list of important pages
+2. Key page URLs that need more internal links
+3. Content categories or topic clusters
+4. Any existing link structure documentation
+
+Proceed with the analysis using provided data. Note in the output which findings are from automated crawl vs. manual review.
+
 ## Instructions
 
 When a user requests internal linking optimization:
@@ -379,13 +395,26 @@ When a user requests internal linking optimization:
    | Natural | "this article", "learn more" | 20-30% |
    
    ## Tracking Success
-   
+
    Monitor these metrics weekly:
    - [ ] Rankings for target keywords
    - [ ] Traffic to previously orphan pages
-   - [ ] Crawl stats in Search Console
+   - [ ] Crawl stats in ~~search console
    - [ ] Internal link distribution changes
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Site structure or sitemap provided (URL or file)
+- [ ] Target pages or topic clusters clearly defined
+- [ ] If optimizing specific page, page URL or content provided
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] All link suggestions include source page, target page, and recommended anchor text
+- [ ] Orphan page lists include URLs and recommended actions
+- [ ] Source of each data point clearly stated (~~web crawler data, ~~analytics, user-provided, or manual analysis)
 
 ## Example
 

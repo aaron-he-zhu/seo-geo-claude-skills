@@ -55,18 +55,54 @@ Generate LocalBusiness schema for [business name and details]
 Review and improve this schema markup: [existing schema]
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~web crawler connected:**
+Automatically crawl and extract page content (visible text, headings, lists, tables), existing schema markup, page metadata, and structured content elements that map to schema properties.
+
+**With manual data only:**
+Ask the user to provide:
+1. Page URL or full HTML content
+2. Page type (article, product, FAQ, how-to, local business, etc.)
+3. Specific data needed for schema (prices, dates, author info, Q&A pairs, etc.)
+4. Current schema markup (if optimizing existing)
+
+Proceed with the full workflow using provided data. Note in the output which data is from automated extraction vs. user-provided data.
+
 ## Instructions
 
 When a user requests schema markup:
 
 1. **Identify Content Type and Rich Result Opportunity**
 
+   Reference the [CORE-EEAT Benchmark](../../references/core-eeat-benchmark.md) item **O05 (Schema Markup)** for content-type to schema mapping:
+
+   ```markdown
+   ### CORE-EEAT Schema Mapping (O05)
+
+   | Content Type | Required Schema | Conditional Schema |
+   |-------------|----------------|--------------------|
+   | Blog (guides) | Article, Breadcrumb | FAQ, HowTo |
+   | Blog (tools) | Article, Breadcrumb | FAQ, Review |
+   | Blog (insights) | Article, Breadcrumb | FAQ |
+   | Alternative | Comparison*, Breadcrumb, FAQ | AggregateRating |
+   | Best-of | ItemList, Breadcrumb, FAQ | AggregateRating per tool |
+   | Use-case | WebPage, Breadcrumb, FAQ | — |
+   | FAQ | FAQPage, Breadcrumb | — |
+   | Landing | SoftwareApplication, Breadcrumb, FAQ | WebPage |
+   | Testimonial | Review, Breadcrumb | FAQ, Person |
+
+   *Use the mapping above to ensure schema type matches content type (CORE-EEAT O05: Pass criteria).*
+   ```
+
    ```markdown
    ### Schema Analysis
-   
+
    **Content Type**: [blog/product/FAQ/how-to/local business/etc.]
    **Page URL**: [URL]
-   
+
    **Eligible Rich Results**:
    
    | Rich Result Type | Eligibility | Impact |
@@ -447,9 +483,9 @@ When a user requests schema markup:
 
     ```markdown
     ## Implementation Guide
-    
+
     ### Adding Schema to Your Page
-    
+
     **Option 1: In HTML <head>**
     ```html
     <head>
@@ -458,7 +494,7 @@ When a user requests schema markup:
       </script>
     </head>
     ```
-    
+
     **Option 2: Before closing </body>**
     ```html
       <script type="application/ld+json">
@@ -466,31 +502,47 @@ When a user requests schema markup:
       </script>
     </body>
     ```
-    
+
     ### Validation Steps
-    
-    1. **Google Rich Results Test**
-       - URL: https://search.google.com/test/rich-results
+
+    1. **~~schema validator**
        - Test your live URL or paste code
        - Check for errors and warnings
-    
+
     2. **Schema.org Validator**
        - URL: https://validator.schema.org/
        - Validates against Schema.org spec
-    
-    3. **Google Search Console**
-       - Monitor rich results in Search Console
+
+    3. **~~search console**
+       - Monitor rich results in ~~search console
        - Check Enhancements reports for issues
-    
+
     ### Validation Checklist
-    
+
     - [ ] JSON syntax is valid (no trailing commas)
     - [ ] All required properties present
     - [ ] URLs are absolute, not relative
     - [ ] Dates are in ISO 8601 format
     - [ ] Content matches visible page content
-    - [ ] No Google policy violations
+    - [ ] No policy violations
     ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Page URL or content provided
+- [ ] Schema type appropriate for content (Article for blog, Product for e-commerce, etc.)
+- [ ] All required data available (author, dates, prices, etc. depending on schema type)
+- [ ] Content eligibility for rich results confirmed
+
+### Output Validation
+- [ ] JSON syntax validates (no trailing commas, proper quotes)
+- [ ] All required properties present for chosen schema type
+- [ ] URLs are absolute, not relative
+- [ ] Dates in ISO 8601 format (YYYY-MM-DDTHH:MM:SS+00:00)
+- [ ] Schema content matches visible page content exactly
+- [ ] Passes ~~schema validator with no errors
+- [ ] Source of each data point clearly stated (~~web crawler extraction, user-provided, or manual entry)
 
 ## Example
 
@@ -575,7 +627,7 @@ When a user requests schema markup:
 
 ### Validation
 
-Test at: https://search.google.com/test/rich-results
+Test with ~~schema validator
 
 ### SERP Preview
 
@@ -615,6 +667,11 @@ Learn SEO from scratch with our comprehensive guide...
 3. **Keep updated** - Update dates and prices when they change
 4. **Test thoroughly** - Validate before deploying
 5. **Monitor Search Console** - Watch for errors and warnings
+
+## Reference Materials
+
+- [Schema Templates](./references/schema-templates.md) - Copy-ready JSON-LD templates for all schema types
+- [Validation Guide](./references/validation-guide.md) - Common errors, required properties, testing workflow
 
 ## Related Skills
 

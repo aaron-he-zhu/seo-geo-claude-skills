@@ -52,6 +52,21 @@ Compare on-page SEO of [your URL] vs [competitor URL] for [keyword]
 Pre-publish SEO audit for this content targeting [keyword]: [content]
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~web crawler connected:**
+Claude can automatically pull page HTML via ~~web crawler, fetch keyword search volume and difficulty from ~~SEO tool, retrieve click-through rate data from ~~search console, and download competitor pages for comparison. This enables fully automated audits with live data.
+
+**With manual data only:**
+Ask the user to provide:
+1. Page URL or complete HTML content
+2. Target primary and secondary keywords
+3. Competitor page URLs for comparison (optional)
+
+Proceed with the full audit using provided data. Note in the output which findings are from automated crawl vs. manual review.
+
 ## Instructions
 
 When a user requests an on-page SEO audit:
@@ -327,7 +342,41 @@ When a user requests an on-page SEO audit:
    **Technical Score**: [X]/10
    ```
 
-10. **Generate Audit Summary**
+10. **CORE-EEAT Content Quality Quick Scan**
+
+    Run a quick scan of on-page-relevant CORE-EEAT items. Reference: [CORE-EEAT Benchmark](../../references/core-eeat-benchmark.md)
+
+    ```markdown
+    ## CORE-EEAT Quick Scan
+
+    Content-relevant items from the 80-item benchmark:
+
+    | ID | Check Item | Status | Notes |
+    |----|-----------|--------|-------|
+    | C01 | Intent Alignment | ✅/⚠️/❌ | Title promise = content delivery |
+    | C02 | Direct Answer | ✅/⚠️/❌ | Core answer in first 150 words |
+    | C09 | FAQ Coverage | ✅/⚠️/❌ | Structured FAQ present |
+    | C10 | Semantic Closure | ✅/⚠️/❌ | Conclusion answers opening |
+    | O01 | Heading Hierarchy | ✅/⚠️/❌ | H1→H2→H3, no skipping |
+    | O02 | Summary Box | ✅/⚠️/❌ | TL;DR or Key Takeaways |
+    | O03 | Data Tables | ✅/⚠️/❌ | Comparisons in tables |
+    | O05 | Schema Markup | ✅/⚠️/❌ | Appropriate JSON-LD |
+    | O06 | Section Chunking | ✅/⚠️/❌ | Single topic per section |
+    | R01 | Data Precision | ✅/⚠️/❌ | ≥5 precise numbers |
+    | R02 | Citation Density | ✅/⚠️/❌ | ≥1 per 500 words |
+    | R06 | Timestamp | ✅/⚠️/❌ | Updated <1 year |
+    | R08 | Internal Link Graph | ✅/⚠️/❌ | Descriptive anchors |
+    | R10 | Content Consistency | ✅/⚠️/❌ | No contradictions |
+    | Exp01 | First-Person Narrative | ✅/⚠️/❌ | "I tested" or "We found" |
+    | Ept01 | Author Identity | ✅/⚠️/❌ | Byline + bio present |
+    | T04 | Disclosure Statements | ✅/⚠️/❌ | Affiliate links disclosed |
+
+    **CORE-EEAT Quick Score**: [X]/17 items passing
+
+    > For a complete 80-item audit with weighted scoring, use [content-quality-auditor](../../cross-cutting/content-quality-auditor/).
+    ```
+
+11. **Generate Audit Summary**
 
     ```markdown
     # On-Page SEO Audit Report
@@ -417,12 +466,25 @@ When a user requests an on-page SEO audit:
     - [ ] [Additional action items]
     
     ## Expected Results
-    
+
     After implementing these changes:
     - Estimated ranking improvement: [X] positions
     - Estimated CTR improvement: [X]%
     - Estimated traffic increase: [X]%
     ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Target keyword(s) clearly specified by user
+- [ ] Page content accessible (either via URL or provided HTML)
+- [ ] If competitor comparison requested, competitor URL provided
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] Scores based on measurable criteria, not subjective opinion
+- [ ] All suggested changes include specific locations (title tag, H2 #3, paragraph 5, etc.)
+- [ ] Source of each data point clearly stated (~~SEO tool data, user-provided, ~~web crawler, or manual review)
 
 ## Example
 
@@ -488,4 +550,5 @@ When a user requests an on-page SEO audit:
 - [technical-seo-checker](../technical-seo-checker/) - Technical SEO audit
 - [meta-tags-optimizer](../../build/meta-tags-optimizer/) - Optimize meta tags
 - [content-refresher](../content-refresher/) - Update existing content
+- [content-quality-auditor](../../cross-cutting/content-quality-auditor/) - Full 80-item CORE-EEAT audit
 

@@ -55,6 +55,23 @@ Which of these keywords trigger AI Overviews? [keyword list]
 Why does [URL] rank #1 for [keyword]?
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~search console + ~~AI monitor connected:**
+Automatically fetch SERP snapshots for target keywords, extract ranking page metrics (domain authority, backlinks, content length), pull SERP feature data, and check AI Overview presence using ~~AI monitor. Historical SERP change data and mobile vs. desktop variations can be retrieved automatically.
+
+**With manual data only:**
+Ask the user to provide:
+1. Target keyword(s) to analyze
+2. SERP screenshots or detailed descriptions of search results
+3. URLs of top 10 ranking pages
+4. Search location and device type (mobile/desktop)
+5. Any observations about SERP features (featured snippets, PAA, AI Overviews)
+
+Proceed with the full analysis using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests SERP analysis:
@@ -359,11 +376,26 @@ When a user requests SERP analysis:
    ```
    
    ### Next Steps
-   
+
    1. [Immediate action]
    2. [Content creation action]
    3. [Optimization action]
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Target keyword(s) clearly specified
+- [ ] Search location and device type confirmed
+- [ ] SERP data is current (date confirmed)
+- [ ] Top 10 ranking URLs identified or provided
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] SERP composition mapped with all features documented
+- [ ] Ranking factors identified from actual top 10 analysis (not assumptions)
+- [ ] Content requirements based on observed patterns in current SERP
+- [ ] Source of each data point clearly stated (~~SEO tool data, ~~AI monitor data, user-provided, or manual observation)
 
 ## Example
 

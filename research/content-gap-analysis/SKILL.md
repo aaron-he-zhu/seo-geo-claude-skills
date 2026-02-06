@@ -55,6 +55,23 @@ What [content type] do competitors have that I don't?
 What content gaps exist for [audience segment] in my niche?
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~SEO tool + ~~search console + ~~analytics + ~~AI monitor connected:**
+Automatically pull your site's content inventory from ~~search console and ~~analytics (indexed pages, traffic per page, keywords ranking), competitor content data from ~~SEO tool (ranking keywords, top pages, backlink counts), and AI citation patterns from ~~AI monitor. Keyword overlap analysis and gap identification can be automated.
+
+**With manual data only:**
+Ask the user to provide:
+1. Your site URL and content inventory (list of published content with topics)
+2. Competitor URLs (3-5 sites)
+3. Your current traffic and keyword performance (if available)
+4. Known content strengths and weaknesses
+5. Industry context and business goals
+
+Proceed with the full analysis using provided data. Note in the output which metrics are from automated collection vs. user-provided data.
+
 ## Instructions
 
 When a user requests content gap analysis:
@@ -405,6 +422,21 @@ When a user requests content gap analysis:
    | Traffic from new content | [X] | [X] | [X] |
    | AI citations | [X] | [X] | [X] |
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Your content inventory is complete or representative sample provided
+- [ ] Competitor URLs identified (minimum 2-3 competitors)
+- [ ] Analysis scope defined (specific topics or comprehensive)
+- [ ] Business goals and priorities clarified
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] Gap analysis compares like-to-like content (topic clusters to topic clusters)
+- [ ] Priority scoring based on measurable criteria (volume, difficulty, business fit)
+- [ ] Content calendar maps gaps to realistic timeframes
+- [ ] Source of each data point clearly stated (~~SEO tool data, ~~analytics data, ~~AI monitor data, user-provided, or estimated)
 
 ## Example
 

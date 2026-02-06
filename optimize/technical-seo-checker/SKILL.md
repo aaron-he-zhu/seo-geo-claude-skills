@@ -52,6 +52,22 @@ Audit crawlability and indexability for [domain]
 Technical SEO checklist for migrating [old domain] to [new domain]
 ```
 
+## Data Sources
+
+> See [CONNECTORS.md](../../CONNECTORS.md) for tool category placeholders.
+
+**With ~~web crawler + ~~page speed tool + ~~CDN connected:**
+Claude can automatically crawl the entire site structure via ~~web crawler, pull Core Web Vitals and performance metrics from ~~page speed tool, analyze caching headers from ~~CDN, and fetch mobile-friendliness data. This enables comprehensive automated technical audits.
+
+**With manual data only:**
+Ask the user to provide:
+1. Site URL(s) to audit
+2. PageSpeed Insights screenshots or reports
+3. robots.txt file content
+4. sitemap.xml URL or file
+
+Proceed with the full audit using provided data. Note in the output which findings are from automated crawl vs. manual review.
+
 ## Instructions
 
 When a user requests a technical SEO audit:
@@ -106,7 +122,7 @@ When a user requests a technical SEO audit:
    | Sitemap exists | ✅/❌ | [notes] |
    | Valid XML format | ✅/⚠️/❌ | [errors] |
    | In robots.txt | ✅/❌ | [notes] |
-   | Submitted to GSC | ✅/⚠️/❌ | [notes] |
+   | Submitted to ~~search console | ✅/⚠️/❌ | [notes] |
    | URLs count | [X] | [appropriate?] |
    | Only indexable URLs | ✅/⚠️/❌ | [notes] |
    | Includes priority | ✅/⚠️ | [notes] |
@@ -461,13 +477,26 @@ When a user requests a technical SEO audit:
    - [ ] [Task 2]
    
    ## Monitoring Recommendations
-   
+
    Set up alerts for:
    - Core Web Vitals drops
    - Crawl error spikes
    - Index coverage changes
    - Security issues
    ```
+
+## Validation Checkpoints
+
+### Input Validation
+- [ ] Site URL or domain clearly specified
+- [ ] Access to technical data (robots.txt, sitemap, or crawl results)
+- [ ] Performance metrics available (via ~~page speed tool or screenshots)
+
+### Output Validation
+- [ ] Every recommendation cites specific data points (not generic advice)
+- [ ] All issues include affected URLs or page counts
+- [ ] Performance metrics include actual numbers with units (seconds, KB, etc.)
+- [ ] Source of each data point clearly stated (~~web crawler data, ~~page speed tool, user-provided, or estimated)
 
 ## Example
 
@@ -480,8 +509,8 @@ When a user requests a technical SEO audit:
 ```markdown
 ### Crawlability
 - [ ] robots.txt is valid and not blocking important content
-- [ ] XML sitemap exists and is submitted to GSC
-- [ ] No crawl errors in Search Console
+- [ ] XML sitemap exists and is submitted to ~~search console
+- [ ] No crawl errors in ~~search console
 - [ ] No redirect chains or loops
 
 ### Indexability  
@@ -516,10 +545,15 @@ When a user requests a technical SEO audit:
 ## Tips for Success
 
 1. **Prioritize by impact** - Fix critical issues first
-2. **Monitor continuously** - Use Search Console alerts
+2. **Monitor continuously** - Use ~~search console alerts
 3. **Test changes** - Verify fixes work before deploying widely
 4. **Document everything** - Track changes for troubleshooting
 5. **Regular audits** - Schedule quarterly technical reviews
+
+## Reference Materials
+
+- [robots.txt Reference](./references/robots-txt-reference.md) - Syntax guide, templates, common configurations
+- [HTTP Status Codes](./references/http-status-codes.md) - SEO impact of each status code, redirect best practices
 
 ## Related Skills
 
