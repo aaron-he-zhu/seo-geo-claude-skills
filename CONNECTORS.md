@@ -26,7 +26,7 @@
 
 ## Included MCP Servers
 
-Pre-configured in `.mcp.json` (HTTP-based, no local setup required):
+Endpoint templates shipped in `.mcp.json` (HTTP-based; auth/OAuth is still required before vendor data leaves the host):
 
 | Server | What it provides |
 |--------|-----------------|
@@ -45,7 +45,7 @@ Pre-configured in `.mcp.json` (HTTP-based, no local setup required):
 | Contentful | Content lifecycle management, assets, environments |
 | Slack | Team notifications, alert delivery |
 
-To add more servers, edit `.mcp.json` at the project root:
+To add more servers for local use, edit your host/user MCP config; only change the published project `.mcp.json` when contributing a default endpoint:
 
 ```json
 {

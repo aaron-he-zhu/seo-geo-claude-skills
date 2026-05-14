@@ -1,0 +1,3 @@
+```yaml
+{id: routing-command-tech-crawl-001, type: eval-case, status: simulated, target_skill: technical-seo-checker, scenario: "User asks for crawlability and Core Web Vitals checks.", input_summary: "Check our site for indexing, sitemap, robots, CWV, and mobile issues.", expected_behavior: ["Route /aaron:tech to technical SEO diagnostics.", "Do not guess Core Web Vitals when tool evidence is absent.", "Separate crawlability, performance, structured data, and security findings."], failure_modes: ["Guesses field metrics.", "Routes to content audit.", "Skips robots or sitemap evidence."], evolution_use: "Use when changing technical routing."}
+```

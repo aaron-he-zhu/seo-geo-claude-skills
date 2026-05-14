@@ -1,169 +1,107 @@
-# Technical SEO Checker — Worked Example & Checklist
+# Technical SEO Checker Worked Example and Checklist
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/SKILL.md).
+Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/SKILL.md). Use as a compact output model, not as fixed data.
 
----
-
-## Worked Example
-
-**User**: "Check the technical SEO of cloudhosting.com"
-
-**Output**:
+## Worked Example Shape
 
 ```markdown
 # Technical SEO Audit Report
 
-**Domain**: cloudhosting.com
-**Audit Date**: 2024-09-15
-**Pages Analyzed**: 312
+**Domain**: [domain]
+**Audit date**: [date]
+**Pages analyzed**: [count]
 
-## Crawlability Analysis
+## Crawlability
 
-### Robots.txt Review
+### robots.txt
+| Check | Status | Evidence | Fix |
+|-------|--------|----------|-----|
+| File exists | [pass/warn/fail] | [status code] | [fix] |
+| Valid syntax | [pass/warn/fail] | [rule] | [fix] |
+| Sitemap directive | [pass/warn/fail] | [sitemap URL or missing] | Add `Sitemap: [absolute URL]` |
+| Important pages blocked | [pass/warn/fail] | [blocked URL/rule] | [allow or revise rule] |
+| Assets accessible | [pass/warn/fail] | [CSS/JS sample] | [fix] |
 
-**URL**: cloudhosting.com/robots.txt
-**Status**: Found
+### XML sitemap
+| Check | Status | Evidence | Fix |
+|-------|--------|----------|-----|
+| Sitemap exists | [pass/warn/fail] | [URL count] | [fix] |
+| Only indexable URLs | [pass/warn/fail] | [noindex/canonical/redirect count] | Remove non-indexable URLs |
+| lastmod accuracy | [pass/warn/fail] | [sample dates] | Update only when page content changes |
+| Declared in robots.txt | [pass/warn/fail] | [yes/no] | Add sitemap directive |
 
-| Check | Status | Notes |
-|-------|--------|-------|
-| File exists | ✅ | 200 response |
-| Valid syntax | ⚠️ | Wildcard pattern `Disallow: /*?` too aggressive — blocks faceted pages |
-| Sitemap declared | ❌ | No Sitemap directive in robots.txt |
-| Important pages blocked | ⚠️ | /pricing/ blocked by `Disallow: /pricing` rule |
-| Assets blocked | ✅ | CSS/JS accessible |
+**Crawlability score**: [X]/10
 
-**Issues Found**:
-- Sitemap URL not declared in robots.txt
-- `/pricing/` inadvertently blocked — high-value commercial page
-
-### XML Sitemap Review
-
-**Sitemap URL**: cloudhosting.com/sitemap.xml
-**Status**: Found (not referenced in robots.txt)
-
-| Check | Status | Notes |
-|-------|--------|-------|
-| Sitemap exists | ✅ | Valid XML, 287 URLs |
-| Only indexable URLs | ❌ | 23 noindex URLs included |
-| Includes lastmod | ⚠️ | All dates set to 2023-01-01 — not accurate |
-
-**Crawlability Score**: 5/10
-
-## Performance Analysis
-
-### Core Web Vitals
+## Performance
 
 | Metric | Mobile | Desktop | Target | Status |
 |--------|--------|---------|--------|--------|
-| LCP (Largest Contentful Paint) | 4.8s | 2.1s | <2.5s | ❌ Mobile / ✅ Desktop |
-| FID (First Input Delay) | 45ms | 12ms | <100ms | ✅ / ✅ |
-| CLS (Cumulative Layout Shift) | 0.24 | 0.08 | <0.1 | ❌ Mobile / ✅ Desktop |
-| INP (Interaction to Next Paint) | 380ms | 140ms | <200ms | ❌ Mobile / ✅ Desktop |
+| LCP | [value] | [value] | <=2.5s | [status] |
+| INP | [value] | [value] | <=200ms | [status] |
+| CLS | [value] | [value] | <=0.1 | [status] |
+| TTFB | [value] | [value] | <=800ms preferred | [status] |
 
-### Additional Performance Metrics
+**Top fixes**:
+- [largest LCP/TTFB/render-blocking issue + estimated impact]
+- [largest CLS issue + fix]
 
-| Metric | Value | Status |
-|--------|-------|--------|
-| Time to First Byte (TTFB) | 1,240ms | ❌ |
-| Page Size | 3.8MB | ❌ |
-| Requests | 94 | ⚠️ |
+## Security
 
-**LCP Issues**:
-- Uncompressed hero image (2.4MB PNG): Convert to WebP, est. save 1.9MB
-- No CDN detected: TTFB 1,240ms from origin server
+| Check | Status | Evidence | Fix |
+|-------|--------|----------|-----|
+| SSL certificate valid | [pass/warn/fail] | [expiry/source] | [fix] |
+| HTTPS enforced | [pass/warn/fail] | [HTTP response behavior] | 301 HTTP to HTTPS |
+| Mixed content | [pass/warn/fail] | [affected assets/pages] | Replace with HTTPS URLs |
+| HSTS enabled | [pass/warn/fail] | [header value/missing] | Add appropriate HSTS header after HTTPS is stable |
 
-**CLS Issues**:
-- Ad banner at top of page injects without reserved height (0.18 shift contribution)
+## Structured Data
 
-**Performance Score**: 3/10
+| Schema type | Pages | Valid | Errors / missing opportunities |
+|-------------|-------|-------|--------------------------------|
+| Organization | [count] | [yes/no] | [issues] |
+| Article / BlogPosting | [count] | [yes/no] | [missing blog pages] |
+| Product / Offer | [count] | [yes/no] | [missing commercial pages] |
+| FAQPage | [count] | [yes/no] | [visible FAQ pages without schema] |
 
-## Security Analysis
+## Overall Technical Health: [X]/100
 
-### HTTPS Status
-
-| Check | Status | Notes |
-|-------|--------|-------|
-| SSL certificate valid | ✅ | Expires: 2025-03-22 |
-| HTTPS enforced | ⚠️ | http://cloudhosting.com returns 200 instead of 301 redirect |
-| Mixed content | ❌ | 7 images loaded over HTTP on /features/ page |
-| HSTS enabled | ❌ | Header not present |
-
-**Security Score**: 5/10
-
-## Structured Data Analysis
-
-### Schema Markup Found
-
-| Schema Type | Pages | Valid | Errors |
-|-------------|-------|-------|--------|
-| Organization | 1 (homepage) | ✅ | None |
-| Article | 0 | — | Missing on 48 blog posts |
-| Product | 0 | — | Missing on 5 plan pages |
-| FAQ | 0 | — | Missing on 12 pages with FAQ content |
-
-**Structured Data Score**: 3/10
-
-## Overall Technical Health: 42/100
-
-```
-Score Breakdown:
-█████░░░░░ Crawlability: 5/10
-██████░░░░ Indexability: 6/10
-███░░░░░░░ Performance: 3/10
-██████░░░░ Mobile: 6/10
-█████░░░░░ Security: 5/10
-██████░░░░ URL Structure: 6/10
-███░░░░░░░ Structured Data: 3/10
-```
+| Area | Score |
+|------|-------|
+| Crawlability | [X]/10 |
+| Indexability | [X]/10 |
+| Performance | [X]/10 |
+| Mobile | [X]/10 |
+| Security | [X]/10 |
+| URL structure | [X]/10 |
+| Structured data | [X]/10 |
 
 ## Priority Issues
 
-### 🔴 Critical (Fix Immediately)
-1. **Mobile LCP 4.8s (target <2.5s)** — Compress hero image to WebP (est. save 1.9MB) and implement a CDN to reduce TTFB from 1,240ms to <400ms.
+### Critical
+1. **[Issue]** — [evidence, affected URLs, fix, expected impact]
 
-### 🟡 Important (Fix Soon)
-2. **HTTP not redirecting to HTTPS** — Add 301 redirect from http:// to https:// and enable HSTS header. 7 mixed-content images on /features/ need URL updates.
+### Important
+2. **[Issue]** — [evidence, affected URLs, fix]
 
-### 🟢 Minor (Optimize)
-3. **No Article/FAQ schema on blog posts** — Add Article schema to 48 blog posts and FAQ schema to 12 FAQ pages for rich result eligibility.
+### Minor
+3. **[Issue]** — [optimization path]
 ```
-
----
 
 ## Technical SEO Checklist
 
-```markdown
-### Crawlability
-- [ ] robots.txt is valid and not blocking important content
-- [ ] XML sitemap exists and is submitted to ~~search console
-- [ ] No crawl errors in ~~search console
-- [ ] No redirect chains or loops
+| Area | Checks |
+|------|--------|
+| Crawlability | `robots.txt` valid; XML sitemap exists/submitted; no crawl errors; no redirect chains or loops; no important assets blocked |
+| Indexability | Important pages indexable; canonical tags correct; no duplicate content issues; pagination handled correctly |
+| Performance | Core Web Vitals pass; page speed under 3s where practical; images optimized; JS/CSS minimized and non-blocking where possible |
+| Mobile | Mobile-friendly layout; viewport configured; touch targets usable |
+| Security | HTTPS enforced; SSL valid; no mixed content; HSTS/security headers reviewed |
+| Structure | URLs clean/descriptive; architecture logical; internal linking supports priority pages |
+| Structured data | Relevant schema implemented; required fields present; visible content matches markup |
 
-### Indexability
-- [ ] Important pages are indexable
-- [ ] Canonical tags are correct
-- [ ] No duplicate content issues
-- [ ] Pagination is handled correctly
+## Reporting Rules
 
-### Performance
-- [ ] Core Web Vitals pass
-- [ ] Page speed under 3 seconds
-- [ ] Images are optimized
-- [ ] JS/CSS are minified
-
-### Mobile
-- [ ] Mobile-friendly test passes
-- [ ] Viewport is configured
-- [ ] Touch elements are properly sized
-
-### Security
-- [ ] HTTPS is enforced
-- [ ] SSL certificate is valid
-- [ ] No mixed content
-- [ ] Security headers present
-
-### Structure
-- [ ] URLs are clean and descriptive
-- [ ] Site architecture is logical
-- [ ] Internal linking is strong
-```
+- Use placeholders for domain/date/page counts in examples; never ship sample values as audit facts.
+- Include current evidence for every failed or warning row.
+- Keep robots.txt, sitemap, lastmod, HSTS, INP, and structured-data opportunities explicit.
+- Prioritize by business impact: blocked commercial pages and failed Core Web Vitals outrank minor enhancements.

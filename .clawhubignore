@@ -14,8 +14,16 @@ Thumbs.db
 
 # Internal planning (not part of skill bundles)
 docs/plans/
+.docs/
+.docs/outreach/
+memory/audits/
+memory/wiki/
+memory/geo-feedback/
 
 # Node tooling (not needed in skill bundles)
 node_modules/
 package-lock.json
 
+# npx skills install artifacts (local-only, not part of published bundle)
+.agents/
+skills-lock.json

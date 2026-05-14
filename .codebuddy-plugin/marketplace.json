@@ -4,14 +4,14 @@
     "name": "Aaron He Zhu",
     "email": "hello@zhuhe.io"
   },
-  "description": "SEO & GEO skill operating system with a shared contract, protocol-layer gates, and reusable state handoffs",
-  "version": "9.0.0",
+  "description": "SEO & GEO capability pack. Breaking v10 command rename: /seo:* -> /aaron:*; recover old commands with /aaron:auto.",
+  "version": "9.9.9",
   "plugins": [
     {
       "name": "aaron-seo-geo",
       "source": "./",
-      "description": "20 SEO and GEO skills plus 15 commands on one shared operating contract. Includes protocol-layer gates for content quality, domain trust, entity truth, and campaign memory alongside keyword research, content creation, audits, monitoring, schema markup, and AI citation optimization.",
-      "version": "9.0.0",
+      "description": "20 SEO/GEO skills and 20 commands on one shared contract for keyword research, content creation, technical audits, schema markup, monitoring, quality gates, entity truth, and campaign memory.",
+      "version": "9.9.9",
       "author": {
         "name": "Aaron He Zhu",
         "email": "hello@zhuhe.io"
@@ -38,6 +38,7 @@
       ],
       "strict": false,
       "commands": "./commands/",
+      "commandNamespace": "aaron",
       "skills": [
         "./research/competitor-analysis",
         "./research/content-gap-analysis",

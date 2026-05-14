@@ -1,95 +1,20 @@
 {
   "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup",
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "If memory/hot-cache.md exists in the user's project, read it silently and use it as project context for this session. If memory/open-loops.md exists and contains items with dates older than 7 days, briefly remind the user: 'You have open items from [date] — want to review them?' Do not block on this; proceed with the user's request."
-          },
-          {
-            "type": "prompt",
-            "prompt": "Check memory/audits/ for files with dates in filenames (YYYY-MM-DD format). If any audit file is older than 30 days, briefly note: 'Audit for [topic] is [X] days old — consider re-running.' Show at most 3 stale audits. Do not block on this."
-          },
-          {
-            "type": "prompt",
-            "prompt": "If memory/wiki/ exists: when hot-cache declares a project field, preferentially load memory/wiki/<project>/index.md; otherwise load memory/wiki/index.md. Read it silently and use it as a navigation aid for cross-skill queries this session. If the index has a Quick Status section with next_action items that are not empty, provide a brief, natural-language guidance message: 'Based on your previous work: [summary of pending items]. Suggested next step: [action]. Want to continue?' Do not use terms like wiki, index.md, WARM tier, ingest, or frontmatter — say 'your project records' instead. Only show guidance if there are actionable next steps; skip silently if all items are DONE. If memory/wiki/ does not exist, skip silently."
-          },
-          {
-            "type": "prompt",
-            "prompt": "If memory/wiki/ does not exist but there are 3 or more NON-STUB files with YAML frontmatter in the memory/ directory, and memory/wiki/ has never existed in this project (no .wiki-dismissed marker), mention once: 'You have several project records saved. I can build a summary index to help you find things faster — say \"refresh wiki index\" to get started.' A stub file is one whose body contains only HTML comments and empty headings (e.g., the scaffolding templates for glossary.md, decisions.md, open-loops.md, entities/candidates.md created at project init). Count only files that have real entries (at least one level-3 heading with non-comment content). Only show this hint once per session. Do not use the term wiki when speaking to the user — say 'summary index' instead. If the user declines or says they don't want an index, create an empty file memory/.wiki-dismissed to suppress future hints."
-          },
-          {
-            "type": "prompt",
-            "prompt": "v7.1.0 P2 tombstone reminder. If today is on or after 2026-07-10 AND the file memory/p2-review-2026-07.md does NOT exist, briefly mention once: 'It is time for the scheduled v7.1.0 deferred-items review. Run /seo:p2-review to evaluate whether Gap Typology, 40-tier cap, Failure Modes Catalog, and Adversarial Pass should be adopted for v7.3.0 or closed as tombstones. This is tied to ADR-001.' Only show once per session. Do not repeat if the user dismisses or defers. If today is before 2026-07-10, skip silently."
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "If memory/hot-cache.md was loaded this session, keep its priorities, hero keywords, and active veto items in mind when responding. If the user's request involves a skill that uses ~~SEO tool or ~~analytics and no MCP server is connected for that category, briefly note that the skill will work in Tier 1 (manual data) mode. This is a silent reminder — do not mention it to the user unless directly relevant. Wiki query rules: (1) If the user asks a cross-skill question (e.g., 'what do we know about X', 'give me a report', 'audit status') and memory/wiki/index.md was loaded at SessionStart, always consult the index first to locate relevant files before answering — do not rely on memory alone. (2) If the user mentions a project name different from the current hot-cache project, silently check if memory/wiki/<that-project>/index.md exists and use it for that answer. (3) If the user asks about audit scores, health status, or progress, present the answer using a structured table with columns for page/item, score, health label (良好/需改进/紧急), and next action — this is the standard dashboard format."
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "Artifact Gate external validator (v7.1.0+). FIRST check applicability: this hook ONLY applies when the just-written file has `class: auditor-output` in its YAML frontmatter OR is located at `memory/audits/**/*.md`. Do NOT pattern-match on prose mentions of `cap_applied`, `raw_overall_score`, `final_overall_score`, or any auditor field names in body text — those strings appear in skill documentation, references, CLAUDE.md, and examples and MUST NOT trigger the hook. If the written file lacks the `class: auditor-output` frontmatter AND is not under `memory/audits/`, produce NO output — complete silence is the correct response. Do NOT acknowledge this hook, do NOT explain skipping, do NOT output 'not applicable'. Return nothing. ONLY when an actual auditor artifact is detected via the frontmatter/path check, re-validate it against the 7-item Artifact Gate checklist from references/auditor-runbook.md §4: (1) status is a valid enum value, (2) key_findings is an array with title+severity+evidence per entry, (3) cap_applied is explicitly set, (4) raw_overall_score present, (5) final_overall_score present unless status is BLOCKED, (6) evidence_summary non-empty, (7) recommended_next_skill present. Treat this as a clean-context check — do not trust the auditor's own self-check. If any item fails, report 'Artifact Gate failure: [which check]' and recommend re-running the audit. Do not silently fix. This hook is Runbook §4's second line of defense (~85% reliable vs ~35% self-check)."
-          },
-          {
-            "type": "prompt",
-            "prompt": "If you just produced or substantially edited user-facing CONTENT (article, blog post, landing page, product description, meta tags) using a content-producing skill (seo-content-writer, geo-content-optimizer, content-refresher, meta-tags-optimizer), recommend running content-quality-auditor before the user publishes. Say: 'I can run a quick quality check on this content before you publish — want me to?' If the content has a target keyword, note it for the audit. Do not auto-run the audit; wait for user confirmation. **Session-level debounce** (to prevent nag during batch editing): track whether this prompt has fired in the current session. If it has, suppress the prompt UNLESS the user has edited 5+ distinct content files since the last prompt — at the 5th file, offer ONCE: 'You have edited N content pieces this session — want me to run content-quality-auditor on all of them in bulk before you publish?' Never offer the same prompt twice within the same conversation turn or for the same file. If the user explicitly declined in this session (said 'no', 'later', 'skip', etc.), do not re-offer for 20 minutes. If the Write was NOT user-facing content (e.g., writing to memory/, editing CLAUDE.md, updating hooks, writing config/schema/JSON files, editing SKILL.md files, writing audit handoffs, or any file under references/), produce NO output — silence is correct. This hook is for content creators, not for infrastructure edits."
-          },
-          {
-            "type": "prompt",
-            "prompt": "FIRST: check if the file just written or edited is inside the memory/ directory. If the file is NOT inside memory/ (e.g., it is a source file, config, SKILL.md, hook, reference doc, or any path that does not start with memory/), produce NO output — complete silence, no explanation, no acknowledgment. Return nothing. ONLY if the file IS inside memory/ (a WARM file) AND memory/wiki/ already exists, silently refresh both memory/wiki/index.md (global) and the project-specific index memory/wiki/<project>/index.md if hot-cache declares a project. This is a low-risk operation — the index is a fully rebuildable derivative. Scan all memory/ files with YAML frontmatter, extract precise fields (score, status, next_action, mtime), generate best-effort summaries (max 15 chars), and write the structured index table. Do not ask for confirmation. If memory/wiki/ does not exist, skip silently — do not create it. The user must explicitly run memory-management wiki index to initialize wiki for the first time. If the refresh would take more than 3 seconds, skip silently."
-          },
-          {
-            "type": "prompt",
-            "prompt": "Phase 2 wiki: FIRST: check if the file just written or edited is inside the memory/ directory. If the file is NOT inside memory/, produce NO output — complete silence, no explanation. Return nothing. ONLY if the file IS inside memory/ AND memory/wiki/ exists AND compiled pages exist within it, compare the WARM file's content hash against the source hash recorded in compiled page frontmatter. If hashes differ, briefly ask: 'The wiki page for [entity/keyword] may need updating based on new data. Update it?' Wait for user confirmation before writing. If memory/wiki/ does not exist, skip silently."
-          }
-        ]
-      }
-    ],
-    "FileChanged": [
-      {
-        "matcher": "hot-cache.md",
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "hot-cache.md was just modified. Count its lines. If it exceeds 80 lines, warn the user: 'Hot cache is at [N] lines (limit: 80). Consider running memory-management to archive older entries.' If it exceeds 25KB, also warn about byte limit."
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "Before ending this turn: (1) If any veto-level issue was found during this session (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09), append a one-line alert to memory/hot-cache.md without asking — format: YYYY-MM-DD | VETO | <item-id> | <one-line description>. (2) If this session produced SEO/GEO findings, audit results, keyword research, or other reusable data, ask the user: 'Save these results for future sessions?' If they agree, write a dated summary to the appropriate memory/ path per the state model (YYYY-MM-DD-<topic>.md)."
-          },
-          {
-            "type": "prompt",
-            "prompt": "Wiki session wrap-up: (1) If memory/wiki/index.md exists and WARM files were written or updated during this session, append a changelog entry to the bottom of index.md in the format: '| YYYY-MM-DD HH:MM | +N new, ~N updated |'. Keep only the 5 most recent entries; remove older ones. (2) Phase 2: If memory/wiki/log.md exists, append a session activity entry in the format '## [YYYY-MM-DD HH:MM] session | <project>' with sub-items for skills used, WARM files written, and wiki pages updated. If log.md exceeds 500 lines, move the oldest entries to memory/wiki/log-archive/YYYY.md (split by year of entry timestamp) until under 500 lines. If memory/wiki/ does not exist, skip both steps silently."
-          },
-          {
-            "type": "prompt",
-            "prompt": "Auditor handoff archiving (v7.1.0+). FIRST check applicability: this hook ONLY applies when content-quality-auditor or domain-authority-auditor produced a handoff artifact in this session that can be detected by `class: auditor-output` in its YAML frontmatter OR by the file location under `memory/audits/**/*.md`. Do NOT pattern-match on prose mentions of `cap_applied`, `raw_overall_score`, or `final_overall_score` in body text — those strings appear in skill documentation, references, CLAUDE.md, and examples and MUST NOT trigger the hook. If no auditor artifact with the `class: auditor-output` marker was produced (or is implicit from the `memory/audits/` path) in this session, produce no output and take no action. ONLY when an auditor artifact is detected, auto-append an archive block to memory/audits/YYYY-MM.md using the exact format defined in cross-cutting/memory-management/references/examples.md §Auditor Handoff Archive Block Format. Create the monthly file with a '# Audit Archive — YYYY-MM' header if it does not exist. Do NOT ask the user for confirmation — this is a silent background write. This archive is consumed by /seo:p2-review for the 2026-07-10 tombstone evaluation."
-          }
-        ]
-      }
-    ]
+    "SessionStart": [{
+      "matcher": "startup",
+      "hooks": [{ "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh\" session-start", "timeout": 5 }]
+    }],
+    "UserPromptSubmit": [{
+      "matcher": "",
+      "hooks": [{ "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh\" user-prompt-submit", "timeout": 5 }]
+    }],
+    "PostToolUse": [{
+      "matcher": "Write|Edit",
+      "hooks": [{ "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh\" post-tool-use", "timeout": 5 }]
+    }],
+    "Stop": [{
+      "matcher": "",
+      "hooks": [{ "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh\" stop", "timeout": 5 }]
+    }]
   }
 }

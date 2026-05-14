@@ -28,8 +28,8 @@ jobs:
               | .name="seo-geo-claude-skills"
               | .description="[DEPRECATED] This plugin has moved to aaron-seo-geo. Please reinstall: clawhub install aaron-seo-geo. This slug will no longer receive updates."' \
             .claude-plugin/plugin.json > /tmp/deprecated/.claude-plugin/plugin.json
-          # Rewrite openclaw.bundle.json id
-          jq '.id="seo-geo-claude-skills"' openclaw.bundle.json > /tmp/deprecated/openclaw.bundle.json
+          # Rewrite openclaw.plugin.json id
+          jq '.id="seo-geo-claude-skills"' openclaw.plugin.json > /tmp/deprecated/openclaw.plugin.json
           echo "---modified plugin.json---"
           jq '{id,name,version,description}' /tmp/deprecated/.claude-plugin/plugin.json
       - name: Publish deprecation pointer

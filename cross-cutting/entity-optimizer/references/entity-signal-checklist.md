@@ -2,224 +2,137 @@
 
 > Part of [entity-optimizer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/SKILL.md). See also: [knowledge-graph-guide.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/knowledge-graph-guide.md)
 
-Complete checklist of entity signals organized by priority and verification method. Use this as a systematic audit guide — work through each signal, verify its status, and note actions needed.
+Work through signals by priority tier. Mark each: present/correct, incomplete, or absent.
 
 ## Priority 1: Foundation Signals (Must-Have)
 
-These signals form the minimum viable entity identity. Without them, search engines and AI systems cannot reliably identify the entity.
-
 ### On-Site Structured Data
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 1 | Organization or Person schema on homepage | Run Google Rich Results Test on homepage | Schema present with name, url, logo, description |
-| 2 | sameAs property links to all authoritative profiles | Inspect schema markup | Links to Wikipedia, Wikidata, LinkedIn, social profiles |
-| 3 | Consistent @id used across all pages | Inspect schema on 5+ pages | Same @id (typically homepage URL + #organization) on every page |
-| 4 | About page exists with entity-rich content | Manual review | First paragraph defines entity clearly; includes founding date, key people, mission |
-| 5 | Contact page with verifiable information | Manual review | Physical address, phone, email — matches other directory listings |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 1 | Organization/Person schema on homepage | name, url, logo, description present |
+| 2 | sameAs links to authoritative profiles | Wikipedia, Wikidata, LinkedIn, social |
+| 3 | Consistent @id across all pages | Same @id on every page |
+| 4 | About page with entity-rich content | First paragraph defines entity; founding date, key people, mission |
+| 5 | Contact page with verifiable info | Physical address, phone, email matching directory listings |
 
 ### Key External Profiles
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 6 | Wikidata entry exists | Search wikidata.org | Entry with label, description, key properties, and references |
-| 7 | Google Business Profile (if applicable) | Search "[entity] Google Business" | Claimed, verified, complete profile |
-| 8 | LinkedIn company/person page | Search LinkedIn | Complete profile matching entity name and description |
-| 9 | CrunchBase profile (for companies/products) | Search crunchbase.com | Entry with description, founding info, key people |
-| 10 | Primary industry directory listing | Search top 3 industry directories | Listed with correct entity information |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 6 | Wikidata entry | Label, description, key properties, references |
+| 7 | Google Business Profile (if applicable) | Claimed, verified, complete |
+| 8 | LinkedIn page | Complete, matches entity name/description |
+| 9 | CrunchBase profile (companies/products) | Description, founding info, key people |
+| 10 | Primary industry directory listing | Listed with correct info |
 
 ### Branded Search Presence
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 11 | Branded search returns correct entity | Google "[entity name]" | Entity's website is #1; Knowledge Panel appears or SERP clearly identifies entity |
-| 12 | No disambiguation confusion | Google "[entity name]" | No other prominent entity dominates results for the same name |
-| 13 | Branded search volume exists | Check ~~SEO tool | Measurable branded search volume (any amount > 0) |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 11 | Branded search returns correct entity | Website #1; KP appears or SERP identifies entity |
+| 12 | No disambiguation confusion | No other entity dominates results |
+| 13 | Branded search volume exists | Measurable volume > 0 |
 
 ## Priority 2: Authority Signals (Should-Have)
 
-These signals establish the entity as recognized and authoritative. They separate a "registered entity" from a "known entity."
-
 ### Knowledge Graph Depth
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 14 | Google Knowledge Panel present | Google "[entity name]" | Knowledge Panel displayed with correct information |
-| 15 | Knowledge Panel attributes complete | Review Knowledge Panel | Key attributes filled (founded, CEO, location, industry, etc.) |
-| 16 | Knowledge Panel image correct | Review Knowledge Panel | Preferred image displayed |
-| 17 | Wikipedia article (or strong notability path) | Search Wikipedia | Article exists, or entity has 3+ independent reliable sources for future article |
-| 18 | Wikidata properties complete | Review Wikidata entry | 10+ properties with references |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 14 | Google Knowledge Panel present | Displayed with correct info |
+| 15 | KP attributes complete | Key attributes filled (founded, CEO, location, industry) |
+| 16 | KP image correct | Preferred image displayed |
+| 17 | Wikipedia article (or notability path) | Article exists, or 3+ independent reliable sources available |
+| 18 | Wikidata properties complete | 10+ properties with references |
 
 ### Third-Party Validation
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 19 | Authoritative media mentions | Google News search for entity | 3+ mentions in recognized publications |
-| 20 | Industry awards or recognitions | Search "[entity] award" | At least 1 verifiable award or recognition |
-| 21 | Co-citation with established entities | Search for entity alongside competitors | Appears in "X vs Y" comparisons, listicles, or industry roundups |
-| 22 | Speaking engagements or publications | Search event/conference sites | Appears as speaker, author, or contributor |
-| 23 | Reviews on third-party platforms | Check G2, Trustpilot, Yelp, etc. | Reviews exist with reasonable volume and rating |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 19 | Authoritative media mentions | 3+ in recognized publications |
+| 20 | Industry awards/recognitions | At least 1 verifiable |
+| 21 | Co-citation with established entities | Appears in comparisons, listicles, roundups |
+| 22 | Speaking/publications | Appears as speaker, author, or contributor |
+| 23 | Third-party platform reviews | Reviews exist with reasonable volume |
 
 ### Content Authority
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 24 | Topical content depth in target areas | Site search for target topics | 10+ pages covering target topics in depth |
-| 25 | Author pages with credentials | Review author pages | Author schema, credentials, sameAs to external profiles |
-| 26 | Original research or data published | Review content | At least 1 piece of original data/research cited by others |
-| 27 | Entity mentioned in own content naturally | Search site for entity name | Entity name appears contextually (not just in header/footer) |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 24 | Topical content depth | 10+ pages covering target topics |
+| 25 | Author pages with credentials | Author schema, credentials, sameAs |
+| 26 | Original research/data | At least 1 piece cited by others |
+| 27 | Entity mentioned naturally in content | Name appears contextually, not just header/footer |
 
 ## Priority 3: AI-Specific Signals (Must-Have for GEO)
 
-These signals specifically help AI systems recognize, understand, and cite the entity.
-
 ### AI Recognition
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 28 | ChatGPT recognizes entity | Ask "What is [entity]?" | Correct description returned |
-| 29 | Perplexity recognizes entity | Ask "What is [entity]?" | Correct description with source citations |
-| 30 | Google AI Overview mentions entity | Search branded + topical queries | Entity appears in AI-generated overview |
-| 31 | AI description is accurate | Compare AI output to entity's self-description | No factual errors in AI's response |
-| 32 | AI associates entity with correct topics | Ask "[entity] expertise areas" | Correct topic associations returned |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 28 | ChatGPT recognizes entity | Correct description returned |
+| 29 | Perplexity recognizes entity | Correct description with citations |
+| 30 | Google AI Overview mentions entity | Entity appears in AI overview |
+| 31 | AI description accurate | No factual errors |
+| 32 | AI associates correct topics | Correct topic associations |
 
 ### AI Optimization
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 33 | Entity definition quotable in first paragraph | Review About page and key pages | Clear, factual, self-contained definition suitable for AI quotation |
-| 34 | Factual claims are verifiable | Cross-reference claims with external sources | All claims about entity can be verified via third-party sources |
-| 35 | Entity name used consistently | Audit all platforms | Identical name format everywhere (no abbreviations in some places, full name in others) |
-| 36 | Content is crawlable by AI systems | Check robots.txt for AI bot access | Not blocking GPTBot, ClaudeBot, or other AI crawlers (unless intentional) |
-| 37 | Fresh information available | Check update dates | Key entity pages updated within last 6 months |
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 33 | Quotable entity definition in first paragraph | Clear, factual, self-contained |
+| 34 | Factual claims verifiable | All claims cross-referenceable |
+| 35 | Entity name used consistently | Identical format everywhere |
+| 36 | Content crawlable by AI systems | Not blocking GPTBot, ClaudeBot (unless intentional) |
+| 37 | Fresh information available | Key pages updated within 6 months |
 
 ## Priority 4: Advanced Signals (Nice-to-Have)
 
-These signals provide marginal gains but demonstrate thoroughness and maturity.
+| # | Signal | Pass Criteria |
+|---|--------|---------------|
+| 38 | Multi-language Wikidata entries | Labels in target market languages |
+| 39 | Google KG ID known | Entity has kg: identifier |
+| 40 | Social profiles bidirectionally linked | Website <-> social verified both directions |
+| 41 | Consistent entity description across social | Same core description, adapted for platform |
+| 42 | Strong homepage backlink profile | DR/DA above industry median |
+| 43 | Branded anchor text in backlinks | Entity name appears naturally in anchors |
 
-### Extended Knowledge Base Presence
+## Priority Action Matrix
 
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 38 | Multiple language entries in Wikidata | Check Wikidata labels | Labels and descriptions in languages matching target markets |
-| 39 | DBpedia entry | Search dbpedia.org | Entry exists (auto-generated from Wikipedia) |
-| 40 | Google Knowledge Graph ID known | Search Google Knowledge Graph API | Entity has a kg: identifier |
-| 41 | ISNI or VIAF identifier (for persons) | Search isni.org or viaf.org | Identifier exists and links correctly |
-
-### Social Entity Signals
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 42 | Social profiles bidirectionally linked | Check website links to social AND social links to website | Both directions verified on all platforms |
-| 43 | Consistent entity description across social | Compare bios on all platforms | Same core description, adapted for platform length limits |
-| 44 | Social engagement demonstrates real audience | Review engagement metrics | Engagement patterns consistent with genuine audience (not bot-like) |
-
-### Technical Entity Signals
-
-| # | Signal | Verification Method | Pass Criteria |
-|---|--------|-------------------|---------------|
-| 45 | Entity homepage has strong backlink profile | Check ~~link database | Homepage DR/DA above industry median |
-| 46 | Branded anchor text in backlinks | Analyze anchor text distribution | Entity name appears naturally in inbound link anchor text |
-| 47 | Entity subdomain consistency | Check all subdomains | Same entity schema and branding across all subdomains |
-
-## How to Use This Checklist
-
-Work through signals by priority tier. For each signal, mark status as ✅ (present and correct), ⚠️ (present but incomplete), or ❌ (absent). Focus on completing each priority tier before moving to the next.
-
-### Priority Action Matrix
-
-| Current State | Focus Area | Expected Timeline |
-|--------------|-----------|-------------------|
-| Most Priority 1 signals ❌ | Priority 1 foundation signals only | 2-4 weeks |
-| Priority 1 mostly ✅, Priority 2 mixed | Priority 2 authority signals | 1-2 months |
-| Priority 1-2 mostly ✅ | Priority 3 AI-specific signals | 2-3 months |
-| Priority 1-3 mostly ✅ | Selective Priority 4 for completeness | Ongoing |
-| All tiers mostly ✅ | Maintenance + quarterly re-audit | Quarterly review |
+| Current State | Focus Area | Timeline |
+|--------------|-----------|----------|
+| Most P1 signals absent | P1 foundation only | 2-4 weeks |
+| P1 mostly done, P2 mixed | P2 authority signals | 1-2 months |
+| P1-2 mostly done | P3 AI-specific | 2-3 months |
+| P1-3 mostly done | Selective P4 | Ongoing |
+| All tiers mostly done | Maintenance + quarterly re-audit | Quarterly |
 
 ---
 
-## Step 3: Report & Action Plan Template
+## Report & Action Plan Template
 
 ```markdown
 ## Entity Optimization Report
-
-### Overview
-
-- **Entity**: [name]
-- **Entity Type**: [type]
-- **Audit Date**: [date]
+- **Entity**: [name] | **Type**: [type] | **Date**: [date]
 
 ### Signal Category Summary
-
 | Category | Status | Key Findings |
 |----------|--------|-------------|
-| Structured Data | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Knowledge Base | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Consistency (NAP+E) | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Content-Based | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Third-Party | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| AI-Specific | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-
-### Critical Issues
-
-[List any issues that severely impact entity recognition — disambiguation problems, incorrect Knowledge Panel, missing from Knowledge Graph entirely]
+| Structured Data | Strong / Gaps / Missing | [findings] |
+| Knowledge Base | Strong / Gaps / Missing | [findings] |
+| Consistency (NAP+E) | Strong / Gaps / Missing | [findings] |
+| Third-Party | Strong / Gaps / Missing | [findings] |
+| AI-Specific | Strong / Gaps / Missing | [findings] |
 
 ### Top 5 Priority Actions
+1. **[Signal]** — [action] | Impact: [H/M] | Effort: [L/M/H]
+2-5. [Same format]
 
-Sorted by: impact on entity recognition × effort required
-
-1. **[Signal]** — [specific action]
-   - Impact: [High/Medium] | Effort: [Low/Medium/High]
-   - Why: [explanation of how this improves entity recognition]
-
-2. **[Signal]** — [specific action]
-   - Impact: [High/Medium] | Effort: [Low/Medium/High]
-   - Why: [explanation]
-
-3–5. [Same format]
-
-### Entity Building Roadmap
-
-#### Week 1-2: Foundation (Structured Data + Consistency)
-- [ ] Implement/fix Organization or Person schema with full properties
-- [ ] Add sameAs links to all authoritative profiles
-- [ ] Audit and fix NAP+E consistency across all platforms
-- [ ] Ensure About page is entity-rich and well-structured
-
-#### Month 1: Knowledge Bases
-- [ ] Create or update Wikidata entry with complete properties
-- [ ] Ensure CrunchBase / industry directory profiles are complete
-- [ ] Build Wikipedia notability (or plan path to notability)
-- [ ] Submit to relevant authoritative directories
-
-#### Month 2-3: Authority Building
-- [ ] Secure mentions on authoritative industry sites
-- [ ] Build co-citation signals with established entities
-- [ ] Create topical content clusters that reinforce entity-topic associations
-- [ ] Pursue PR opportunities that generate entity mentions
-
-#### Ongoing: AI-Specific Optimization
-- [ ] Test AI entity resolution quarterly
-- [ ] Update factual claims to remain current and verifiable
-- [ ] Monitor AI systems for incorrect entity information
-- [ ] Ensure new content reinforces entity identity signals
-
-### Cross-Reference
-
-- **CORE-EEAT relevance**: Items A07 (Knowledge Graph Presence) and A08 (Entity Consistency) directly overlap — entity optimization strengthens Authority dimension
-- **CITE relevance**: CITE I01-I10 (Identity dimension) measures entity signals at domain level — entity optimization feeds these scores
-- For content-level audit: `content-quality-auditor`
-- For domain-level audit: `domain-authority-auditor`
+### Roadmap
+**Week 1-2 (Foundation)**: Schema, sameAs, NAP+E consistency, About page
+**Month 1 (Knowledge Bases)**: Wikidata, CrunchBase, directories, Wikipedia notability path
+**Month 2-3 (Authority)**: Authoritative mentions, co-citation, topical clusters, PR
+**Ongoing (AI)**: Quarterly AI testing, update factual claims, monitor AI output
 ```
-
----
 
 ## Tips for Success
 
-1. **Start with Wikidata** — It's the single most influential editable knowledge base; a complete Wikidata entry with references often triggers Knowledge Panel creation within weeks
-2. **sameAs is your most powerful Schema.org property** — It directly tells search engines "I am this entity in the Knowledge Graph"; always include Wikidata URL first
-3. **Test AI recognition before and after** — Query ChatGPT, Claude, Perplexity, and Google AI Overview before optimizing, then again after; this is the most direct GEO metric
-4. **Entity signals compound** — Unlike content SEO, entity signals from different sources reinforce each other; 5 weak signals together are stronger than 1 strong signal alone
-5. **Consistency beats completeness** — A consistent entity name and description across 10 platforms beats a perfect profile on just 2
-6. **Don't neglect disambiguation** — If your entity name is shared with anything else, disambiguation is the first priority; all other signals are wasted if they're attributed to the wrong entity
-7. **Pair with CITE I-dimension for domain context** — Entity audit tells you how well the entity is recognized; CITE Identity (I01-I10) tells you how well the domain represents that entity; use both together
+1. **Start with Wikidata** — most influential editable KB; often triggers KP creation within weeks
+2. **sameAs is your most powerful Schema.org property** — always include Wikidata URL first
+3. **Test AI recognition before and after** — query ChatGPT, Claude, Perplexity, Google AI Overview
+4. **Entity signals compound** — 5 weak signals together > 1 strong signal alone
+5. **Consistency beats completeness** — consistent name across 10 platforms > perfect profile on 2
+6. **Don't neglect disambiguation** — if name is shared, disambiguation is first priority

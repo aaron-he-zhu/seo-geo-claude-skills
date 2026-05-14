@@ -5,16 +5,100 @@ on:
     branches: [main]
     paths:
       - "**/SKILL.md"
+      - "**/references/**"
+      - "references/**"
+      - "commands/**"
+      - "evals/**"
+      - "scripts/**"
+      - ".github/workflows/**"
+      - ".github/scripts/**"
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
+      - ".claude-plugin/**"
+      - ".codebuddy-plugin/**"
+      - ".docs/**"
+      - "docs/**"
+      - "hooks/**"
+      - "marketplaces/**"
+      - "memory/**"
+      - ".gitignore"
+      - "README.md"
+      - "CLAUDE.md"
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
+      - "CONNECTORS.md"
+      - "CITATION.cff"
+      - "VERSIONS.md"
+      - "marketplace.json"
+      - "openclaw.plugin.json"
+      - "gemini-extension.json"
+      - "qwen-extension.json"
+      - ".mcp.json"
   pull_request:
     branches: [main]
     paths:
       - "**/SKILL.md"
+      - "**/references/**"
+      - "references/**"
+      - "commands/**"
+      - "evals/**"
+      - "scripts/**"
+      - ".github/workflows/**"
+      - ".github/scripts/**"
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
+      - ".claude-plugin/**"
+      - ".codebuddy-plugin/**"
+      - ".docs/**"
+      - "docs/**"
+      - "hooks/**"
+      - "marketplaces/**"
+      - "memory/**"
+      - ".gitignore"
+      - "README.md"
+      - "CLAUDE.md"
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
+      - "CONNECTORS.md"
+      - "CITATION.cff"
+      - "VERSIONS.md"
+      - "marketplace.json"
+      - "openclaw.plugin.json"
+      - "gemini-extension.json"
+      - "qwen-extension.json"
+      - ".mcp.json"
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # v9.9.9+: fetch-depth: 2 needed by changed_paths_match in
+          # validate-slimming-guardrails.sh. Default fetch-depth=1 makes
+          # `git diff HEAD~1 HEAD` fail silently → wiki phase 3 rollback gate
+          # gets skipped on CI. With depth=2, the wiki gate fires correctly
+          # whenever a PR touches wiki-runbook.md / recover-retired-warm.sh /
+          # validate-phase3-rollback.sh.
+          fetch-depth: 2
+
+      - name: Validate release guardrails
+        # AARON_COMMAND_LINE_BUDGET_WAIVER=1 is required for the v10.1.x
+        # release cycle — the wiki Phase 2/3 spec + proposal pushes counted
+        # lines over the 20000 budget. Waiver WLB-2026-05-001 expires
+        # 2026-08-04; remove this env line then.
+        env:
+          AARON_COMMAND_LINE_BUDGET_WAIVER: "1"
+        run: |
+          set -euo pipefail
+          bash scripts/validate-slimming-guardrails.sh
+          find research build optimize monitor cross-cutting \
+            -mindepth 2 -maxdepth 2 -name SKILL.md \
+            -print | sort | while read -r file; do
+            skill="$(dirname "$file")"
+            bash scripts/validate-skill.sh "$skill"
+          done
+          bash scripts/validate-skill.sh --status
 
       - name: Get changed SKILL.md files
         id: changed
@@ -25,36 +109,8 @@ jobs:
       - name: Validate changed skills
         if: steps.changed.outputs.any_changed == 'true'
         run: |
-          npm install -g skills-ref 2>/dev/null || true
           for file in ${{ steps.changed.outputs.all_changed_files }}; do
             dir=$(dirname "$file")
             echo "Validating: $dir"
-            if command -v skills-ref &> /dev/null; then
-              skills-ref validate "$dir"
-            else
-              echo "skills-ref not available, running basic validation..."
-              # Basic YAML frontmatter validation
-              if ! head -1 "$file" | grep -q "^---$"; then
-                echo "ERROR: $file missing YAML frontmatter"
-                exit 1
-              fi
-              # Check name field exists
-              if ! grep -q "^name:" "$file"; then
-                echo "ERROR: $file missing required 'name' field"
-                exit 1
-              fi
-              # Check description field exists
-              if ! grep -q "^description:" "$file"; then
-                echo "ERROR: $file missing required 'description' field"
-                exit 1
-              fi
-              # Check name matches directory
-              skill_name=$(grep "^name:" "$file" | sed 's/name: *//')
-              dir_name=$(basename "$dir")
-              if [ "$skill_name" != "$dir_name" ]; then
-                echo "ERROR: name '$skill_name' does not match directory '$dir_name'"
-                exit 1
-              fi
-              echo "PASS: $file"
-            fi
+            bash scripts/validate-skill.sh "$dir"
           done

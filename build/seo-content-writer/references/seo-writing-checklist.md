@@ -1,250 +1,83 @@
 # SEO Writing Checklist and Content Template
 
-On-page SEO checklist, content writing template, and featured snippet optimization patterns.
+Compact checklist for drafting SEO content that is useful, scannable, and ready for a CORE-EEAT review.
 
----
+## On-Page Checklist
 
-## On-Page SEO Checklist
+| Area | Required checks |
+|------|-----------------|
+| Keyword placement | Primary keyword in title, H1, first 100 words, at least one H2, conclusion, and meta description; secondary terms in H2/H3s; related entities throughout body. |
+| Search intent | Content type, angle, depth, and CTA match the dominant SERP intent; mixed-intent pages answer the primary intent first. |
+| Quality | Comprehensive coverage, original insight or data, actionable takeaways, examples, and expert/source support where claims need evidence. |
+| Readability | 3-5 sentence paragraphs, varied sentence length, bullets/tables for dense points, bold only for key phrases, and TOC for long-form content. |
+| Technical | 2-5 relevant internal links, 2-3 authoritative external links, descriptive image alt text, concise keyword-led URL slug. |
+| Snippet targeting | Definition answers in 40-60 words, ordered steps for how-to queries, tables for comparisons, concise FAQ answers. |
 
-**Keyword Placement**:
-- [ ] Primary keyword in title
-- [ ] Primary keyword in H1
-- [ ] Primary keyword in first 100 words
-- [ ] Primary keyword in at least one H2
-- [ ] Primary keyword in conclusion
-- [ ] Primary keyword in meta description
-- [ ] Secondary keywords in H2s/H3s
-- [ ] Related terms throughout body
-
-**Content Quality**:
-- [ ] Comprehensive coverage of topic
-- [ ] Original insights or data
-- [ ] Actionable takeaways
-- [ ] Examples and illustrations
-- [ ] Expert quotes or citations (for E-E-A-T)
-
-**Readability**:
-- [ ] Paragraphs of 3-5 sentences (per CORE-EEAT O06 Section Chunking standard)
-- [ ] Varied sentence length
-- [ ] Bullet points and lists
-- [ ] Bold key phrases
-- [ ] Table of contents for long content
-
-**Technical**:
-- [ ] Internal links to relevant pages (2-5)
-- [ ] External links to authoritative sources (2-3)
-- [ ] Image alt text with keywords
-- [ ] URL slug includes keyword
-
----
-
-## Content Writing Template
+## Copy-Start Template
 
 ```markdown
 # [H1 with Primary Keyword]
 
-[Hook sentence that grabs attention]
+**Meta Description**: [150-160 char value proposition with keyword and CTA]
 
-[Problem statement or context - why this matters]
+[Hook] [Problem statement] [Promise: what the reader will learn] [Primary keyword naturally]
 
-[Promise - what the reader will learn/gain] [Include primary keyword naturally]
+## [H2 with Secondary Keyword]
+[1-2 sentence setup]
+[Useful explanation with evidence, examples, or data]
 
-[Brief overview of what's covered - can be bullet points for scanability]
+### [H3 if needed]
+- [Actionable point]
+- [Actionable point]
+- [Actionable point]
 
-## [H2 - First Main Section with Secondary Keyword]
+## [H2 for next major section]
+> **Pro Tip**: [Specific, non-obvious implementation note]
 
-[Introduction to section - 1-2 sentences]
-
-[Main content with valuable information]
-
-[Examples, data, or evidence to support points]
-
-[Transition to next section]
-
-### [H3 - Sub-section if needed]
-
-[Detailed content]
-
-[Key points in bullet format]:
-- Point 1
-- Point 2
-- Point 3
-
-## [H2 - Second Main Section]
-
-[Continue with valuable content...]
-
-> **Pro Tip**: [Highlighted tip or key insight]
-
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Data | Data | Data |
-
-## [H2 - Additional Sections as Needed]
-
-[Content...]
+| Comparison point | Option A | Option B |
+|------------------|----------|----------|
+| [Factor] | [Evidence] | [Evidence] |
 
 ## Frequently Asked Questions
 
 ### [Question from PAA or common query]?
-
-[Direct, concise answer in 40-60 words for featured snippet opportunity]
-
-### [Question 2]?
-
-[Answer]
-
-### [Question 3]?
-
-[Answer]
+[Direct 40-60 word answer that can stand alone as a snippet.]
 
 ## Conclusion
+[Summarize key points, restate the primary keyword naturally, and give one clear CTA.]
 
-[Summary of key points - include primary keyword]
-
-[Final thought or insight]
-
-[Clear call-to-action: what should reader do next?]
+**Sources**: [Source name + URL + access date], [Source name + URL + access date]
 ```
 
----
+## Snippet Patterns
 
-## Featured Snippet Optimization
+| Snippet type | Pattern |
+|--------------|---------|
+| Definition | `[Term] is [clear definition]. It matters because [outcome].` Keep to 40-60 words. |
+| List | Introduce the list under an H2, then use numbered or bulleted items with parallel phrasing. |
+| Table | Use simple headers and one idea per cell; avoid over-wide tables on mobile. |
+| How-to | Label each action `Step 1`, `Step 2`, and include prerequisites before the steps. |
+| FAQ | Answer directly first, then add nuance or caveats in the next sentence. |
 
-**For Definition Snippets**:
-"[Term] is [clear, concise definition in 40-60 words]"
+## Example Calibration Card
 
-**For List Snippets**:
-Create clear, numbered or bulleted lists under H2s
+Use this instead of copying a full sample article:
 
-**For Table Snippets**:
-Use comparison tables with clear headers
+| Field | Example shape |
+|-------|---------------|
+| User request | `Write an SEO article about [topic] for [audience] targeting [keyword].` |
+| H1 | `[Primary keyword]: [benefit/audience hook]` |
+| Meta | `[Primary keyword] + concrete benefit + CTA, 150-160 chars.` |
+| Intro | Hook, pain point, promise, then 3-5 bullets on what the reader will learn. |
+| Evidence | Cite current sources for stats; never ship stale benchmark claims without dates. |
+| FAQ answer | 40-60 words, direct first sentence, one caveat if needed. |
+| CTA | One action matched to intent: subscribe, download, book, compare, or buy. |
 
-**For How-To Snippets**:
-Number each step clearly: "Step 1:", "Step 2:", etc.
+## Final Self-Check
 
----
-
-## Example: Full SEO Article
-
-**User**: "Write an SEO-optimized article about 'email marketing best practices' targeting small businesses"
-
-**Output**:
-
-```markdown
-# Email Marketing Best Practices: A Complete Guide for Small Businesses
-
-**Meta Description**: Discover proven email marketing best practices that help small businesses increase open rates, boost engagement, and drive sales. Start improving your campaigns today. (158 chars)
-
----
-
-Want to know the secret behind small businesses that consistently turn subscribers into loyal customers? It's not luck---it's strategic email marketing.
-
-Email marketing remains one of the most effective channels for small businesses, delivering an average ROI of $42 for every $1 spent. But with inboxes more crowded than ever, following email marketing best practices isn't optional---it's essential for survival.
-
-In this guide, you'll learn:
-- How to build a quality email list that converts
-- Proven strategies to increase open and click rates
-- Advanced personalization techniques that drive results
-- Common mistakes that kill email performance
-
-Let's dive into the strategies that will transform your email marketing.
-
-## Why Email Marketing Matters for Small Businesses
-
-Before we explore the best practices, let's understand why email deserves your attention.
-
-Unlike social media where algorithms control who sees your content, email gives you direct access to your audience. You own your email list---no platform can take it away.
-
-**Key email marketing statistics for small businesses**:
-- 81% of SMBs rely on email as their primary customer acquisition channel
-- Email subscribers are 3x more likely to share content on social media
-- Personalized emails generate 6x higher transaction rates
-
-## Building a High-Quality Email List
-
-### Use Strategic Opt-in Incentives
-
-The foundation of effective email marketing is a quality list. Here's how to grow yours:
-
-**Lead magnets that convert**:
-- Industry-specific templates
-- Exclusive discounts or early access
-- Free tools or calculators
-- Educational email courses
-
-> **Pro Tip**: The best lead magnets solve a specific, immediate problem for your target audience.
-
-### Implement Double Opt-in
-
-Double opt-in confirms subscriber intent and improves deliverability. Yes, you'll have fewer subscribers, but they'll be more engaged.
-
-| Single Opt-in | Double Opt-in |
-|---------------|---------------|
-| More subscribers | Fewer subscribers |
-| Higher bounce rates | Lower bounce rates |
-| Lower engagement | Higher engagement |
-| Spam risk | Better deliverability |
-
-## Crafting Emails That Get Opened
-
-### Write Compelling Subject Lines
-
-Your subject line determines whether emails get opened or ignored.
-
-**Subject line best practices**:
-1. Keep it under 50 characters
-2. Create urgency without being spammy
-3. Use numbers and specifics
-4. Personalize when possible
-5. A/B test consistently
-
-### Optimize Preview Text
-
-The preview text (preheader) is your second chance to convince someone to open. Use it to expand on your subject line, not repeat it.
-
-## Personalization Strategies That Work
-
-Generic emails perform poorly. Here's how to personalize effectively:
-
-### Segment Your Email List
-
-Divide your list based on:
-- Purchase history
-- Engagement level
-- Demographics
-- Interests or preferences
-- Customer lifecycle stage
-
-### Use Dynamic Content
-
-Send the same email but show different content blocks based on subscriber data.
-
-## Frequently Asked Questions
-
-### How often should small businesses send marketing emails?
-
-For most small businesses, sending 1-2 emails per week strikes the right balance. This keeps you top-of-mind without overwhelming subscribers. Monitor your unsubscribe rates---if they spike after increasing frequency, scale back.
-
-### What is a good email open rate for small businesses?
-
-A good email open rate for small businesses is 20-25%. However, this varies by industry. E-commerce averages 15-20%, while B2B services often see 25-30%. Focus on improving your own benchmarks rather than industry averages.
-
-### Should I buy email lists to grow faster?
-
-Never buy email lists. Purchased lists violate GDPR and CAN-SPAM regulations, damage your sender reputation, and result in poor engagement. Organic list growth, while slower, produces much better results.
-
-## Conclusion
-
-Implementing these email marketing best practices will help your small business build stronger customer relationships and drive consistent revenue. Remember: quality always beats quantity in email marketing.
-
-Start with one improvement today. Whether it's segmenting your list, testing subject lines, or cleaning inactive subscribers, small changes compound into significant results.
-
-**Ready to level up your email marketing?** Download our free Email Marketing Checklist to ensure every campaign you send follows these best practices.
-
----
-
-*Further reading: [Internal link: "How to Write Email Copy That Converts"]*
-
-*Sources: [Litmus Email Marketing Statistics](https://litmus.com), [Campaign Monitor Email Benchmarks](https://campaignmonitor.com)*
-```
+- [ ] The draft answers the dominant search intent before selling.
+- [ ] Every claim that depends on data has a named source and date.
+- [ ] Internal links support the topic journey, not just link volume.
+- [ ] Headings form a useful outline when read alone.
+- [ ] FAQ answers are direct enough for featured snippets.
+- [ ] The conclusion gives one clear next action.

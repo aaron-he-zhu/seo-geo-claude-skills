@@ -1,0 +1,3 @@
+```yaml
+{id: routing-command-discover-serp-001, type: eval-case, status: simulated, target_skill: serp-analysis, scenario: "User asks what the SERP shows and why pages rank.", input_summary: "Analyze the SERP for payroll software, including features, AI Overview, snippets, and search intent.", expected_behavior: ["Route /aaron:discover to serp-analysis when SERP composition is the requested object.", "Separate observed SERP evidence from keyword demand estimates.", "Hand off content planning only after intent and features are clear."], failure_modes: ["Routes only to keyword-research.", "Invents SERP features.", "Writes content before SERP analysis."], evolution_use: "Use when changing discover SERP boundaries."}
+```

@@ -16,9 +16,23 @@ Thumbs.db
 # Internal planning docs
 docs/plans/
 
+# Local agent/app state
+.claude/
+.docs/*
+!.docs/README.md
+!.docs/proposal-aaron-command-architecture-v2.md
+!.docs/host-namespace-smoke.md
+!.docs/slashaaron-product-proposal.md
+!.docs/seo-geo-anchor-pack-implementation-plan.md
+!.docs/seo-geo-anchor-pack-acceptance.md
+
 # Environment variables
 .env
 .env.*
 
 # Node (if any tooling added later)
 node_modules/
+
+# npx skills install artifacts (local-only)
+.agents/
+skills-lock.json

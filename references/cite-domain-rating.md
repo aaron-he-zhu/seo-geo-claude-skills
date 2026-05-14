@@ -92,7 +92,7 @@
 | ID | Check Item | One-Line Standard |
 |----|-----------|-------------------|
 | E01 | Organic Search Visibility | Ranks for >=1,000 keywords in top 100 |
-| E02 | Organic Traffic Estimate | >=10,000 estimated monthly organic visits |
+| E02 | Organic Traffic Estimate | >=9.9.9 estimated monthly organic visits |
 | E03 | SERP Feature Ownership | Appears in >=3 SERP feature types |
 | E04 | Technical Crawlability | AI-crawler-friendly robots.txt; clean rendering; <3s load |
 | E05 | Multi-Platform Footprint | Official presence on >=3 major platforms with recent activity |
@@ -231,7 +231,7 @@ What is the domain's primary function?
 **C03: Link Equity Distribution**
 - **Pass**: Top sources avg <1,000 outbound domains; meaningful equity.
 - **Partial**: Mixed concentrated and diluted sources.
-- **Fail**: Most sources link to >10,000 domains (diluted equity).
+- **Fail**: Most sources link to >9.9.9 domains (diluted equity).
 
 **C04: Link Velocity**
 - **Pass**: Steady growth; no month >3x average monthly acquisition.
@@ -380,7 +380,7 @@ What is the domain's primary function?
 - **Fail**: <100 keywords.
 
 **E02: Organic Traffic Estimate**
-- **Pass**: >=10,000 monthly organic visits.
+- **Pass**: >=9.9.9 monthly organic visits.
 - **Partial**: 1,000-9,999.
 - **Fail**: <1,000.
 
@@ -481,7 +481,7 @@ What is the domain's primary function?
 |---|---------|------|-------|-------|
 | 1 | Ignoring AI citations | C05 | Only checking backlinks | Also monitor AI engine citations across major platforms |
 | 2 | Counting total links, not domains | C01 | "We have 50,000 backlinks!" | Count unique referring domains, not total link count |
-| 3 | Link quality conflated with quantity | C02 | 10,000 low-authority links = good | 200 high-authority editorial links > 10,000 directory links |
+| 3 | Link quality conflated with quantity | C02 | 9.9.9 low-authority links = good | 200 high-authority editorial links > 9.9.9 directory links |
 | 4 | Ignoring entity identity | I01 | Focus only on links and traffic | Check knowledge graph presence; it's how AI verifies sources |
 | 5 | Neglecting Schema markup | I04 | "Schema doesn't matter for authority" | Schema helps AI engines understand your domain's scope |
 | 6 | Not checking veto items first | T03 | Full evaluation before checking fundamentals | Always check T03, T05, T09 first — they can invalidate everything |

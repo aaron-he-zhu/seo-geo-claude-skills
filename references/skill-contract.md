@@ -4,15 +4,23 @@ This repository uses one contract across all 20 skills. The contract keeps each 
 
 ## Required Top Sections
 
-Every `SKILL.md` should expose these sections near the top:
+Every `SKILL.md` must expose these compact operating sections:
 
-- `When This Must Trigger`
 - `Quick Start`
 - `Skill Contract`
+- `Handoff Summary` (regular skills use a `### Handoff Summary` subsection; auditor-class skills satisfy this through the inline `## §1 · Handoff Schema (authoritative)` runbook section)
+- `Data Sources`
 - `Instructions`
-- `Validation Checkpoints`
 - `Reference Materials`
 - `Next Best Skill`
+
+Auditor-class skills must additionally expose:
+
+- `When This Must Trigger`
+- `Validation Checkpoints`
+- Inline `runbook-sync` markers for the authoritative auditor runbook block
+
+Optional sections such as `What This Skill Does`, `Example`, `Tips for Success`, `Save Results`, and non-auditor `Validation Checkpoints` may be present when they materially improve execution quality. They are not required for the compact skill skeleton.
 
 ## Frontmatter Fields Reference
 
@@ -27,7 +35,7 @@ Every `SKILL.md` should expose these sections near the top:
 | `license` | SPDX string | Optional | Default: Apache-2.0 |
 | `compatibility` | String | Optional | Platform compatibility statement |
 | `homepage` | URL | Optional | Skill homepage |
-| `class` | `auditor` | Optional (required for auditor-class) | Marks the skill as a protocol-layer auditor that inlines [auditor-runbook.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Used by `/seo:contract-lint` for discovery via frontmatter glob. See [AUDITOR-AUTHORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/AUDITOR-AUTHORS.md). |
+| `class` | `auditor` | Optional (required for auditor-class) | Marks the skill as a protocol-layer auditor that inlines [auditor-runbook.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Used by `/aaron:guard --contracts` for discovery via frontmatter glob. See [AUDITOR-AUTHORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/AUDITOR-AUTHORS.md). |
 
 Note: `when_to_use` uses underscores (not hyphens). This matches Claude Code's internal parser.
 
@@ -68,13 +76,13 @@ This section defines operational behavior in four fields:
 
 ### Termination rules for Next Best Skill chains
 
-Skill handoff chains MUST not recurse indefinitely. Each skill's `Next Best Skill` block MUST specify at least one of:
+Skill handoff chains MUST not recurse indefinitely. **Global default termination rule applies to every Next Best Skill block**:
 
-1. **Verdict-conditional branching** (pattern used by `content-quality-auditor`): `Primary only when verdict = X; stop when verdict = Y`
-2. **Depth limit**: explicit `max-depth: N` in the block — default 3
-3. **Visited-set check**: if the Next Best target was the caller in the same chain, STOP and report chain-complete
+1. **Visited-set check**: if the Next Best target was already invoked in this session's chain, STOP and report chain-complete.
+2. **Depth limit**: default `max-depth: 3` unless a stricter block-level limit is stated.
+3. **Ambiguity stop**: when routing is ambiguous, stop and report the recommended options instead of auto-following.
 
-When ambiguous, stop. Never follow a Next Best Skill recommendation if it would return to a skill already invoked in this session's chain.
+Individual `Next Best Skill` blocks may add verdict-conditional branching, explicit terminal outcomes, or a stricter `max-depth`, but they inherit the global visited-set and depth rules even when those rules are not repeated locally.
 
 ## Handoff Summary Format
 
@@ -101,7 +109,7 @@ Auditor-class skills (whose deliverable is a scored audit with a verdict — cur
 
 These fields are authoritative in [references/auditor-runbook.md §1](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Non-auditor skills do not emit them.
 
-**Backward compatibility (v7.1.0 → v7.2.0 deprecation window)**: consumer skills must treat auditor-extension fields as optional with documented defaults. A handoff missing these fields is valid during the window; consumers assume `cap_applied: false` and use the overall score as both raw and final. After v7.2.0, auditor-extension fields become required for auditor-class producers, and consumers may then treat absence as a BLOCKED upstream.
+**Legacy compatibility**: consumers may read pre-v7.2 archived auditor outputs defensively by assuming `cap_applied: false` and treating the available overall score as both raw and final. New auditor-class outputs MUST include the three auditor-extension fields; the Artifact Gate treats missing `cap_applied`, `raw_overall_score`, or `final_overall_score` (unless `status: BLOCKED`) as a validation failure.
 
 ## Promotion Rules
 
@@ -247,7 +255,7 @@ If yes, write a dated summary to the appropriate WARM path using filename `YYYY-
 - Open loops or blockers
 - Source data references
 
-If any veto-level issue was found (CORE-EEAT T04/C01/R10 or CITE T03/T05/T09), also append a one-liner to `memory/hot-cache.md` without asking.
+Only `content-quality-auditor` and `domain-authority-auditor` may append one veto marker to `memory/hot-cache.md` without asking when a veto-level issue is found. Other skills must ask before writing memory and should hand off veto-like risks to the auditor gate instead.
 
 ## Optional Wiki Hints
 
@@ -284,6 +292,7 @@ These norms apply to all skills when their output incorporates data from multipl
 | Optimize (4 skills) | `memory/audits/<skill>/` | per-skill audit summaries, veto items, fix priorities |
 | Monitor (4 skills) | `memory/monitoring/` | rank deltas, alert history, backlink changes |
 | Cross-cutting (4 skills) | per-role paths | see protocol-layer definitions |
-| **Protocol gate aggregate (v7.1.0+)** | `memory/audits/YYYY-MM.md` | **owned by `memory-management`**; monthly archive of `content-quality-auditor` and `domain-authority-auditor` handoffs in the structured format defined in [memory-management SKILL.md §Writes](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md); consumed by `/seo:p2-review` and the Runbook §5 cross-version rule |
+| **Protocol gate aggregate (v7.1.0+)** | `memory/audits/YYYY-MM.md` | **owned by `memory-management`**; monthly archive of `content-quality-auditor` and `domain-authority-auditor` handoffs in the structured format defined in [memory-management SKILL.md §Writes](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md); consumed by `/aaron:guard --evals` and the Runbook §5 cross-version rule |
+| **Wiki layer (v9.9.9+)** | `memory/wiki/`, including `index.md`, `<project>/index.md`, `<project>/<type>-<slug>.md`, `log.md`, `log-archive/YYYY.md`, `.unresolved.md`, `.drift-log`, `.retire-day-log` | **owned by `memory-management` as sole semantic writer**; PostToolUse hook may delegate-refresh `index.md` only. Compiled pages capture source WARM frontmatter into `covered_warm[]` for Phase 3 C1 retirement check. Contradictions resolved via SessionStart conversational prompt, never user-edited file markers. **No `retired_path` field anywhere** — Phase 3 retirement reverse-link uses `originally_at` in COLD frontmatter (NOT in wiki/) so `rm -rf memory/wiki/` preserves recovery. See [wiki-runbook.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/wiki-runbook.md). |
 
 **Note on `memory/audits/`**: two conventions coexist. The `<skill>/` subdirectory pattern (Optimize category, per-skill files) is for skill-specific audit artifacts (e.g., `memory/audits/technical-seo-checker/2026-04-11-example.md`). The flat `YYYY-MM.md` pattern (Protocol gate aggregate, monthly) is for the CORE-EEAT / CITE protocol-layer handoff archive. They are siblings, not a conflict.

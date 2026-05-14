@@ -9,7 +9,7 @@ created: 2026-04-17
 
 > Custom terminology, nicknames, and internal shorthand that Claude should understand when you reference them. Populated on demand by `memory-management` as the project matures. Safe to leave empty for new projects.
 >
-> **Scope note**: this file is for **YOUR project's** custom terminology (product names, internal jargon, KPI definitions). For library-level concepts like CORE-EEAT, CITE, veto, cap, gate verdict, HOT/WARM/COLD tiers, see the root [GLOSSARY.md](../GLOSSARY.md).
+> **Scope note**: this file is for **YOUR project's** custom terminology (product names, internal jargon, KPI definitions). For library-level concepts like CORE-EEAT, CITE, veto, cap, gate verdict, HOT/WARM/COLD tiers, see the [README Terminology section](../README.md#terminology).
 
 ## Terms
 

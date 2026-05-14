@@ -51,8 +51,12 @@ if [ "$1" = "--status" ]; then
 
         # Determine status
         if [ -z "$skill_ver" ]; then
-            status="${YELLOW}SKIP${NC}"
-        elif [ -z "$meta_ver" ] || [ "$skill_ver" = "$meta_ver" ]; then
+            status="${RED}MISSING${NC}"
+            SPLIT=1
+        elif [ -z "$meta_ver" ]; then
+            status="${RED}MISSING${NC}"
+            SPLIT=1
+        elif [ "$skill_ver" = "$meta_ver" ]; then
             status="${GREEN}OK${NC}"
         else
             status="${RED}SPLIT${NC}"  # version: and metadata.version: disagree within SKILL.md
@@ -73,6 +77,7 @@ if [ "$1" = "--status" ]; then
     fi
 fi
 
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SKILL_DIR="${1:-.}"
 SKILL_FILE="$SKILL_DIR/SKILL.md"
 
@@ -83,6 +88,26 @@ WARN=0
 pass() { echo -e "${GREEN}  ✅ PASS${NC}: $1"; PASS=$((PASS + 1)); }
 fail() { echo -e "${RED}  ❌ FAIL${NC}: $1"; FAIL=$((FAIL + 1)); }
 warn() { echo -e "${YELLOW}  ⚠️  WARN${NC}: $1"; WARN=$((WARN + 1)); }
+
+hash_file() {
+    if command -v shasum >/dev/null 2>&1; then
+        shasum -a 256 "$1" | awk '{print $1}'
+    else
+        sha256sum "$1" | awk '{print $1}'
+    fi
+}
+
+hash_stdin() {
+    if command -v shasum >/dev/null 2>&1; then
+        shasum -a 256 | awk '{print $1}'
+    else
+        sha256sum | awk '{print $1}'
+    fi
+}
+
+extract_runbook_execution_block() {
+    awk 'BEGIN{found=0} /^## §1 · Handoff Schema/{found=1} /^## §6 /{if(found) exit} found{print}' "$1"
+}
 
 echo ""
 echo "Validating: $SKILL_FILE"
@@ -133,6 +158,16 @@ else
     else
         pass "name matches directory name"
     fi
+fi
+
+# --- Required field: version ---
+VERSION=$(echo "$FRONTMATTER" | grep -E '^version:' | sed 's/version: *//' | tr -d '"'"'" | tr -d '\r')
+if [ -z "$VERSION" ]; then
+    fail "Missing required field: version"
+elif echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9]+)?$'; then
+    pass "version is valid semver-like value: $VERSION"
+else
+    fail "version must be semver-like (got: $VERSION)"
 fi
 
 # --- Required field: description ---
@@ -206,15 +241,131 @@ fi
 
 # --- Body length check ---
 BODY_LINES=$(awk 'BEGIN{n=0} /^---/{n++; next} n>=2{print}' "$SKILL_FILE" | wc -l | tr -d ' ')
-if [ "$BODY_LINES" -gt 400 ]; then
-    warn "Skill body is $BODY_LINES lines (recommended: <350 lines / ~4000 tokens). Move reference data to references/ subdirectory."
+IS_AUDITOR=$(echo "$FRONTMATTER" | grep -qE '^class: *auditor' && echo "yes" || echo "no")
+RUNBOOK_START_COUNT=$(grep -c 'runbook-sync start' "$SKILL_FILE" 2>/dev/null || true)
+RUNBOOK_END_COUNT=$(grep -c 'runbook-sync end' "$SKILL_FILE" 2>/dev/null || true)
+RUNBOOK_START_LINE=""
+RUNBOOK_END_LINE=""
+HAS_RUNBOOK_SYNC="no"
+
+if [ "$RUNBOOK_START_COUNT" -eq 1 ] && [ "$RUNBOOK_END_COUNT" -eq 1 ]; then
+    RUNBOOK_START_LINE=$(grep -n 'runbook-sync start' "$SKILL_FILE" | cut -d: -f1)
+    RUNBOOK_END_LINE=$(grep -n 'runbook-sync end' "$SKILL_FILE" | cut -d: -f1)
+    if [ "$RUNBOOK_START_LINE" -lt "$RUNBOOK_END_LINE" ]; then
+        HAS_RUNBOOK_SYNC="yes"
+    fi
+fi
+
+if [ "$IS_AUDITOR" = "yes" ] && [ "$HAS_RUNBOOK_SYNC" = "yes" ]; then
+    if [ "$BODY_LINES" -gt 750 ]; then
+        warn "Auditor inline runbook is $BODY_LINES lines (allowed target: ≤750). Keep protocol-critical runbook inline, but consider trimming examples."
+    else
+        pass "Auditor inline runbook length OK: $BODY_LINES lines (≤750 exception)"
+    fi
+elif [ "$BODY_LINES" -gt 350 ]; then
+    warn "Skill body is $BODY_LINES lines (recommended: ≤350 lines / ~4000 tokens). Move reference data to references/ subdirectory."
 else
     pass "Skill body length OK: $BODY_LINES lines"
 fi
 
 # --- Check for references/ directory if body is large ---
-if [ "$BODY_LINES" -gt 250 ] && [ ! -d "$SKILL_DIR/references" ]; then
+if [ "$IS_AUDITOR" = "yes" ] && [ "$HAS_RUNBOOK_SYNC" = "yes" ]; then
+    pass "Auditor inline runbook keeps protocol detail in SKILL.md by design"
+elif [ "$BODY_LINES" -gt 250 ] && [ ! -d "$SKILL_DIR/references" ]; then
     warn "Skill body is $BODY_LINES lines but no references/ directory found. Consider extracting detailed tables/rubrics."
+fi
+
+# --- Shared contract section checks ---
+REQUIRED_HEADINGS=(
+    "## Quick Start"
+    "## Skill Contract"
+    "## Data Sources"
+    "## Instructions"
+    "## Reference Materials"
+    "## Next Best Skill"
+)
+
+for heading in "${REQUIRED_HEADINGS[@]}"; do
+    if grep -Fxq "$heading" "$SKILL_FILE"; then
+        pass "shared contract heading present: $heading"
+    else
+        fail "Missing shared contract heading: $heading"
+    fi
+done
+
+if grep -Fxq "### Handoff Summary" "$SKILL_FILE"; then
+    pass "shared contract handoff heading present: ### Handoff Summary"
+elif [ "$IS_AUDITOR" = "yes" ] && grep -Fxq "## §1 · Handoff Schema (authoritative)" "$SKILL_FILE"; then
+    pass "auditor handoff schema section satisfies Handoff Summary contract"
+else
+    fail "Missing shared contract handoff section: ### Handoff Summary"
+fi
+
+if [ "$IS_AUDITOR" = "yes" ]; then
+    if grep -Fxq "## When This Must Trigger" "$SKILL_FILE"; then
+        pass "auditor heading present: ## When This Must Trigger"
+    else
+        fail "Auditor skill missing heading: ## When This Must Trigger"
+    fi
+    if grep -Fxq "## Validation Checkpoints" "$SKILL_FILE"; then
+        pass "auditor heading present: ## Validation Checkpoints"
+    else
+        fail "Auditor skill missing heading: ## Validation Checkpoints"
+    fi
+    if [ "$HAS_RUNBOOK_SYNC" = "yes" ]; then
+        pass "auditor runbook-sync start/end markers present and ordered"
+    else
+        fail "Auditor skill must have exactly one ordered runbook-sync start marker and end marker"
+    fi
+
+    if [ "$HAS_RUNBOOK_SYNC" = "yes" ]; then
+        RUNBOOK_SOURCE="$REPO_ROOT/references/auditor-runbook.md"
+        MARKER_LINE=$(sed -n "${RUNBOOK_START_LINE}p" "$SKILL_FILE")
+        DECLARED_SOURCE_SHA=$(echo "$MARKER_LINE" | sed -n 's/.*source_sha256=\([0-9a-f]\{64\}\).*/\1/p')
+        DECLARED_BLOCK_SHA=$(echo "$MARKER_LINE" | sed -n 's/.*block_sha256=\([0-9a-f]\{64\}\).*/\1/p')
+
+        if [ -z "$DECLARED_SOURCE_SHA" ]; then
+            fail "Auditor runbook-sync start marker missing source_sha256"
+        elif [ -f "$RUNBOOK_SOURCE" ]; then
+            ACTUAL_SOURCE_SHA=$(hash_file "$RUNBOOK_SOURCE")
+            if [ "$DECLARED_SOURCE_SHA" = "$ACTUAL_SOURCE_SHA" ]; then
+                pass "auditor runbook source_sha256 matches references/auditor-runbook.md"
+            else
+                fail "Auditor runbook source_sha256 drift: expected $ACTUAL_SOURCE_SHA, found $DECLARED_SOURCE_SHA"
+            fi
+        else
+            fail "Missing references/auditor-runbook.md for auditor hash validation"
+        fi
+
+        if [ -z "$DECLARED_BLOCK_SHA" ]; then
+            fail "Auditor runbook-sync start marker missing block_sha256"
+        else
+            ACTUAL_BLOCK_SHA=$(awk -v s="$RUNBOOK_START_LINE" -v e="$RUNBOOK_END_LINE" 'NR>s && NR<e {print}' "$SKILL_FILE" | hash_stdin)
+            SOURCE_BLOCK_SHA=$(extract_runbook_execution_block "$RUNBOOK_SOURCE" | hash_stdin)
+            if [ "$DECLARED_BLOCK_SHA" = "$ACTUAL_BLOCK_SHA" ]; then
+                pass "auditor runbook block_sha256 matches inline block"
+            else
+                fail "Auditor runbook block_sha256 drift: expected $ACTUAL_BLOCK_SHA, found $DECLARED_BLOCK_SHA"
+            fi
+            if [ "$DECLARED_BLOCK_SHA" = "$SOURCE_BLOCK_SHA" ]; then
+                pass "auditor runbook block_sha256 matches source §1-5"
+            else
+                fail "Auditor runbook source §1-5 drift: expected $SOURCE_BLOCK_SHA, found $DECLARED_BLOCK_SHA"
+            fi
+        fi
+    fi
+fi
+
+# --- Next Best Skill termination contract ---
+NEXT_BEST_BLOCK=$(awk 'found && /^## /{exit} found{print} /^## Next Best Skill$/{found=1}' "$SKILL_FILE")
+if [ -z "$NEXT_BEST_BLOCK" ]; then
+    fail "Next Best Skill block is empty"
+elif echo "$NEXT_BEST_BLOCK" | grep -qiE 'visited-set|chain-complete|terminal|verdict|max-depth|stop|BLOCK|SHIP|TRUSTED|CAUTIOUS|UNTRUSTED|FIX'; then
+    pass "Next Best Skill block has explicit termination or branching language"
+elif grep -q "Global default termination rule applies to every Next Best Skill block" "$REPO_ROOT/references/skill-contract.md"; then
+    pass "Next Best Skill block inherits global visited-set/max-depth termination contract"
+else
+    fail "Next Best Skill block lacks termination language and no global default contract was found"
 fi
 
 # --- ClawHub: file type check (text only, no binaries) ---

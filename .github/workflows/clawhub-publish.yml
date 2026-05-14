@@ -16,28 +16,49 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
       - id: check
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
         run: |
           set -euo pipefail
           NEW=$(jq -r .version .claude-plugin/plugin.json)
           echo "version=$NEW" >> "$GITHUB_OUTPUT"
 
-          # Manual dispatch or tag push → always publish
-          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]] || [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+          # Manual dispatch → publish the checked-out manifest version
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "Trigger=$GITHUB_EVENT_NAME → publish $NEW"
             echo "should-publish=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          # Push to main → only publish if plugin.json version bumped
-          if ! git cat-file -e HEAD^:.claude-plugin/plugin.json 2>/dev/null; then
+          # Tag push → tag name must match the checked-out manifest version
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            TAG_VERSION="${GITHUB_REF_NAME#v}"
+            if [[ "$TAG_VERSION" != "$NEW" ]]; then
+              echo "::error::Tag ${GITHUB_REF_NAME} does not match .claude-plugin/plugin.json version $NEW."
+              exit 1
+            fi
+            echo "Tag ${GITHUB_REF_NAME} matches plugin version $NEW → publish"
+            echo "should-publish=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Push to main → compare against the push's before SHA, not HEAD^,
+          # so multi-commit pushes still publish when any pushed commit bumped the version.
+          if [[ -z "${BEFORE_SHA:-}" ]] || [[ "$BEFORE_SHA" =~ ^0+$ ]]; then
+            echo "No usable before SHA → publish $NEW"
+            echo "should-publish=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if ! git cat-file -e "$BEFORE_SHA":.claude-plugin/plugin.json 2>/dev/null; then
             echo "First commit introducing plugin.json → publish $NEW"
             echo "should-publish=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          OLD=$(git show HEAD^:.claude-plugin/plugin.json | jq -r .version)
+          OLD=$(git show "$BEFORE_SHA":.claude-plugin/plugin.json | jq -r .version)
           if [[ "$OLD" == "$NEW" ]]; then
             echo "Version unchanged ($OLD) — skipping publish"
             echo "should-publish=false" >> "$GITHUB_OUTPUT"
@@ -53,9 +74,70 @@ jobs:
           echo "Version bumped: $OLD → $NEW → publish"
           echo "should-publish=true" >> "$GITHUB_OUTPUT"
 
+  # ───────────── Release guardrails ─────────────
+  release-guardrails:
+    needs: detect-version
+    if: needs.detect-version.outputs.should-publish == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Validate slimming guardrails
+        # AARON_COMMAND_LINE_BUDGET_WAIVER=1 is required for the v10.1.x
+        # release cycle (waiver WLB-2026-05-001, expires 2026-08-04).
+        env:
+          AARON_COMMAND_LINE_BUDGET_WAIVER: "1"
+        run: bash scripts/validate-slimming-guardrails.sh
+      - name: Validate all skills
+        run: |
+          set -euo pipefail
+          for skill in \
+            research/keyword-research \
+            research/competitor-analysis \
+            research/serp-analysis \
+            research/content-gap-analysis \
+            build/seo-content-writer \
+            build/geo-content-optimizer \
+            build/meta-tags-optimizer \
+            build/schema-markup-generator \
+            optimize/on-page-seo-auditor \
+            optimize/technical-seo-checker \
+            optimize/internal-linking-optimizer \
+            optimize/content-refresher \
+            monitor/rank-tracker \
+            monitor/backlink-analyzer \
+            monitor/performance-reporter \
+            monitor/alert-manager \
+            cross-cutting/content-quality-auditor \
+            cross-cutting/domain-authority-auditor \
+            cross-cutting/entity-optimizer \
+            cross-cutting/memory-management
+          do
+            bash scripts/validate-skill.sh "$skill"
+          done
+          bash scripts/validate-skill.sh --status
+      - name: Validate release files
+        run: |
+          set -euo pipefail
+          jq empty .claude-plugin/plugin.json
+          jq empty marketplace.json
+          jq empty .claude-plugin/marketplace.json
+          jq empty gemini-extension.json
+          jq empty qwen-extension.json
+          jq empty .codebuddy-plugin/marketplace.json
+          jq empty hooks/hooks.json
+          jq empty .mcp.json
+          cmp -s marketplace.json .claude-plugin/marketplace.json
+          if git rev-parse HEAD^ >/dev/null 2>&1; then
+            git diff --check HEAD^ HEAD
+          else
+            git diff --check
+          fi
+
   # ───────────── Bundle plugin track (inline) ─────────────
   bundle-publish:
-    needs: detect-version
+    needs: [detect-version, release-guardrails]
     if: needs.detect-version.outputs.should-publish == 'true'
     runs-on: ubuntu-latest
     steps:
@@ -70,7 +152,7 @@ jobs:
           clawhub package publish . \
             --family bundle-plugin \
             --bundle-format claude-plugin \
-            --host-targets claude-code \
+            --host-targets claude-code,openclaw \
             --name aaron-seo-geo \
             --display-name "Aaron SEO GEO" \
             --version "${{ needs.detect-version.outputs.version }}" \
@@ -82,7 +164,7 @@ jobs:
 
   # ───────────── 20-skill matrix track ─────────────
   skills-publish:
-    needs: detect-version
+    needs: [detect-version, release-guardrails]
     if: needs.detect-version.outputs.should-publish == 'true'
     runs-on: ubuntu-latest
     strategy:

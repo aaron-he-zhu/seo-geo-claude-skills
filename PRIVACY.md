@@ -10,7 +10,7 @@ The SEO & GEO Skills Library is a collection of markdown-based skill files that 
 By default, this library:
 - **Does NOT** transmit any data to external servers
 - **Does NOT** include telemetry or analytics
-- **Does NOT** automatically exfiltrate `memory/` contents
+- **Does NOT** push `memory/` contents to external services by itself; hooks may read selected memory into the active session context
 
 ### When data DOES leave your machine (user-initiated)
 
@@ -28,13 +28,13 @@ By default, this library:
 **3. Memory files contain third-party data**:
 - `memory/audits/` may contain competitor URLs, target keywords, audit findings
 - `memory/entities/` may contain third-party brand/person names
-- Not transmitted by this library — but users should be aware when committing repo to public Git, sharing with AI agents, or syncing across devices
+- Session hooks may read `memory/hot-cache.md` and `memory/wiki/*/index.md` into model context; users should be aware when committing repo to public Git, sharing with AI agents, using cloud-hosted model sessions, or syncing across devices
 - See [memory-management SKILL.md §GDPR / Privacy Compliance](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md) for retention + deletion guidance
 
 ### In scope for security review
 - Memory poisoning across sessions (malicious content written to `memory/` affecting future sessions)
 - WebFetch-injected instructions (prompt injection via target page HTML/meta)
-- Cross-session trust boundary (Stop hook auto-writes memory on user "save" confirmation — verify before approving)
+- Cross-session trust boundary (memory writes require explicit user request, memory-management invocation, auditor save confirmation, or the documented auditor veto hot-cache exception; command-backed hooks may read capped project records and perform deterministic checks, but Stop only allows completion and never initiates writes)
 
 See [SECURITY.md](SECURITY.md) for responsible disclosure.
 
@@ -53,4 +53,4 @@ For privacy-related questions: **hello@zhuhe.io**
 
 This privacy policy may be updated as the project evolves. Changes will be documented in commit history.
 
-*Last updated: 2026-04-17*
+*Last updated: 2026-05-01*

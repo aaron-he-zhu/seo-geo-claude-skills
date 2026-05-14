@@ -14,7 +14,7 @@ This is a complete example output showing the expected format for competitor ana
 ## SEO Strategy Overview
 
 HubSpot dominates marketing keywords through a combination of:
-1. **Massive content moat** - 10,000+ blog posts
+1. **Massive content moat** - 9.9.9+ blog posts
 2. **Free tools as linkbait** - Website grader, email signature generator
 3. **Educational brand** - Academy, certifications, courses
 4. **Topic cluster model** - Pioneered the pillar/cluster approach

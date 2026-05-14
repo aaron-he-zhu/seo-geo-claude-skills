@@ -1,204 +1,102 @@
-# Internal Linking Optimizer — Output Templates
+# Internal Linking Optimizer Output Templates
 
-Detailed output templates for internal-linking-optimizer steps 3-7. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/SKILL.md).
+Compact templates for `internal-linking-optimizer` steps 3-7. Keep thresholds intact when slimming: orphan pages target **0**, over-optimized anchors target **<10%**, and exact-match anchors should stay at **10-20%**.
 
----
-
-## Step 3: Analyze Anchor Text Distribution
-
-**CORE-EEAT alignment**: Internal linking quality maps to R08 (Internal Link Graph) in the CORE-EEAT benchmark -- use descriptive anchors, ensure links support topical authority. See [content-quality-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/content-quality-auditor/SKILL.md) for full audit.
+## Step 3: Anchor Text Analysis
 
 ```markdown
 ## Anchor Text Analysis
 
-### Current Anchor Text Patterns
+CORE-EEAT alignment: R08 Internal Link Graph.
 
-**Most Used Anchors**:
+| Check | Finding | Risk | Action |
+|-------|---------|------|--------|
+| Most-used anchors | [anchor + count] | [generic/over-optimized/unclear] | [rewrite or diversify] |
+| Target-page distribution | [URL + anchor mix] | [cannibalization or repetition] | [recommended variation set] |
+| Generic anchors | [X instances] | Poor context | Replace with descriptive anchors |
+| Same anchor to multiple pages | [anchor + targets] | Ambiguous relevance | Assign one primary target |
 
-| Anchor Text | Count | Target Pages | Assessment |
-|-------------|-------|--------------|------------|
-| "click here" | [X] | [X] pages | ❌ Not descriptive |
-| "read more" | [X] | [X] pages | ❌ Not descriptive |
-| "[exact keyword]" | [X] | [page] | ⚠️ May be over-optimized |
-| "[descriptive phrase]" | [X] | [page] | ✅ Good |
-
-### Anchor Text Distribution by Page
-
-**Page: [Important URL]**
-
-| Anchor Text | Source Page | Status |
-|-------------|-------------|--------|
-| "[anchor 1]" | [source URL] | ✅/⚠️/❌ |
-| "[anchor 2]" | [source URL] | ✅/⚠️/❌ |
-
-**Issues Found**:
-- Over-optimized anchors: [X] instances
-- Generic anchors: [X] instances
-- Same anchor to multiple pages: [X] instances
-
-### Anchor Text Recommendations
-
-**For Page: [URL]**
-
-Current: "[current anchor]" used [X] times
-
-Recommended variety:
-- "[variation 1]" - Use from [page type]
-- "[variation 2]" - Use from [page type]
-- "[variation 3]" - Use from [page type]
+### Recommended Variations for [URL]
+| Anchor type | Usage target | Examples |
+|-------------|--------------|----------|
+| Exact match | 10-20% | "[primary keyword]" |
+| Partial match | 30-40% | "[keyword + modifier]" |
+| Branded | 10-20% | "[Brand]'s guide to..." |
+| Natural | 20-30% | "this checklist", "the full guide" |
 
 **Anchor Score**: [X]/10
 ```
 
----
-
-## Step 4: Create Topic Cluster Link Strategy
+## Step 4: Topic Cluster Link Strategy
 
 ```markdown
 ## Topic Cluster Internal Linking
 
-### Cluster: [Main Topic]
+**Cluster**: [Main topic]
+**Pillar page**: [URL]
+**Cluster articles**: [count]
 
-**Pillar Page**: [URL]
-**Cluster Articles**: [X]
-
-### Current Link Map
-
-```
-[Pillar Page]
-   ├── [Cluster Article 1] ←→ [linked?]
-   ├── [Cluster Article 2] ←→ [linked?]
-   ├── [Cluster Article 3] ←→ [linked?]
-   └── [Cluster Article 4] ←→ [linked?]
-```
-
-### Recommended Link Structure
-
-```
-[Pillar Page]
-   ├── Links TO all cluster articles ✅
-   │
-   ├── [Cluster Article 1]
-   │   ├── Link TO pillar ✅
-   │   └── Link TO related cluster articles
-   │
-   ├── [Cluster Article 2]
-   │   ├── Link TO pillar ✅
-   │   └── Link TO related cluster articles
-   │
-   └── [etc.]
-```
+### Required Link Pattern
+| Link path | Requirement | Status |
+|-----------|-------------|--------|
+| Pillar -> cluster | Pillar links to every indexable cluster article | [pass/fail] |
+| Cluster -> pillar | Every cluster article links back to pillar | [pass/fail] |
+| Cluster -> cluster | Related articles cross-link where context helps users | [pass/fail] |
 
 ### Links to Add
-
-| From Page | To Page | Anchor Text | Location |
-|-----------|---------|-------------|----------|
-| [URL 1] | [URL 2] | "[anchor]" | [paragraph/section] |
-| [URL 2] | [URL 3] | "[anchor]" | [paragraph/section] |
-| [Pillar] | [Cluster 1] | "[anchor]" | [section] |
+| From page | To page | Anchor text | Location | Priority |
+|-----------|---------|-------------|----------|----------|
+| [URL] | [URL] | "[anchor]" | [section/paragraph] | [High/Med/Low] |
 ```
 
----
-
-## Step 5: Find Contextual Link Opportunities
+## Step 5: Contextual Link Opportunities
 
 ```markdown
 ## Contextual Link Opportunities
 
-### Link Opportunity Analysis
-
-For each page, find relevant pages to link to based on:
-- Topic relevance
-- Keyword overlap
-- User journey logic
-- Authority distribution needs
-
-### Opportunities Found
-
-**Page: [URL 1]**
+**Page**: [URL]
 **Topic**: [topic]
-**Current internal links**: [X]
+**Current internal links**: [count]
 
-| Opportunity | Target Page | Anchor Text | Why Link |
-|-------------|-------------|-------------|----------|
-| Paragraph 2 mentions "[topic]" | [URL] | "[topic phrase]" | Topic match |
-| Section on "[subject]" | [URL] | "[anchor]" | Related guide |
-| CTA at end | [URL] | "[anchor]" | User journey |
+| Source context | Target page | Anchor text | Reason | Priority |
+|----------------|-------------|-------------|--------|----------|
+| Paragraph mentions "[topic]" | [URL] | "[topic phrase]" | Topic match | [High/Med/Low] |
+| Section covers "[subject]" | [URL] | "[anchor]" | Supports next step | [High/Med/Low] |
 
-**Page: [URL 2]**
-[Continue for each page...]
-
-### Priority Link Additions
-
-**High Impact Links** (add these first):
-
-1. **From**: [Source URL]
-   **To**: [Target URL]
-   **Anchor**: "[anchor text]"
-   **Why**: [reason - e.g., "Target page needs authority boost"]
-   **Where to add**: [specific location in content]
-
-2. **From**: [Source URL]
-   **To**: [Target URL]
-   [etc.]
+### Priority Addition
+**From**: [source URL]
+**To**: [target URL]
+**Anchor**: "[anchor text]"
+**Where**: [specific sentence/section]
+**Why now**: [ranking, orphan fix, crawl depth, conversion path]
 ```
 
----
-
-## Step 6: Optimize Navigation and Footer Links
+## Step 6: Navigation and Footer Optimization
 
 ```markdown
 ## Site-Wide Link Optimization
 
-### Current Navigation Analysis
-
-**Main Navigation**:
-- Links present: [list]
-- Missing important pages: [list]
-- Too many links: [Yes/No]
-
-**Footer Navigation**:
-- Links present: [list]
-- SEO value: [assessment]
-
-### Navigation Recommendations
-
 | Element | Current | Recommended | Reason |
 |---------|---------|-------------|--------|
-| Main nav | [X] links | [Y] links | [reason] |
-| Footer | [X] links | [Y] links | [reason] |
-| Sidebar | [status] | [recommendation] | [reason] |
-| Breadcrumbs | [status] | [recommendation] | [reason] |
+| Main nav | [links/status] | [change] | [priority page/user path] |
+| Footer | [links/status] | [change] | [support/commercial path] |
+| Sidebar | [status] | [change] | [context] |
+| Breadcrumbs | [status] | [change] | [crawl path/user clarity] |
 
-### Pages to Add to Navigation
-
-1. [Page] - Add to [location] because [reason]
-2. [Page] - Add to [location] because [reason]
-
-### Pages to Remove from Navigation
-
-1. [Page] - Move to [footer/remove] because [reason]
+### Add, Demote, Remove
+| Page | Action | Location | Reason |
+|------|--------|----------|--------|
+| [URL] | [add/demote/remove] | [nav/footer/sidebar] | [reason] |
 ```
 
----
-
-## Step 7: Generate Link Implementation Plan
+## Step 7: Implementation Plan
 
 ```markdown
 # Internal Linking Optimization Plan
 
-**Site**: [domain]
-**Analysis Date**: [date]
+**Site**: [domain] | **Analysis date**: [date]
 
-## Executive Summary
-
-- Total link opportunities found: [X]
-- Orphan pages to fix: [X]
-- Estimated traffic impact: [+X%]
-- Priority actions: [X]
-
-## Current State
-
+## Summary
 | Metric | Current | Target | Gap |
 |--------|---------|--------|-----|
 | Avg links per page | [X] | [X] | [X] |
@@ -206,62 +104,17 @@ For each page, find relevant pages to link to based on:
 | Over-optimized anchors | [X]% | <10% | [X]% |
 | Topic cluster coverage | [X]% | 100% | [X]% |
 
-## Priority Actions
+## Phased Work
+| Phase | Timing | Required actions |
+|-------|--------|------------------|
+| Critical fixes | Week 1 | Fix orphan pages; add high-value contextual links from authority pages. |
+| Topic clusters | Weeks 2-3 | Ensure pillar -> cluster, cluster -> pillar, and useful cluster cross-links. |
+| Optimization | Week 4+ | Diversify anchors, adjust nav/footer, and rebalance under-linked priority pages. |
 
-### Phase 1: Critical Fixes (Week 1)
-
-**Fix Orphan Pages**:
-- [ ] [URL] - Add links from [X] pages
-- [ ] [URL] - Add links from [X] pages
-
-**High-Value Link Additions**:
-- [ ] Link [Page A] to [Page B] with "[anchor]"
-- [ ] Link [Page A] to [Page C] with "[anchor]"
-
-### Phase 2: Topic Clusters (Week 2-3)
-
-**Cluster 1: [Topic]**
-- [ ] Ensure pillar links to all [X] cluster articles
-- [ ] Add [X] cross-links between cluster articles
-
-**Cluster 2: [Topic]**
-- [ ] [Tasks]
-
-### Phase 3: Optimization (Week 4+)
-
-**Anchor Text Diversity**:
-- [ ] Vary anchors for [Page] - currently [X]% exact match
-- [ ] [Additional tasks]
-
-**Navigation Updates**:
-- [ ] Add [Page] to main navigation
-- [ ] Update footer links
-
-## Implementation Guide
-
-### Adding Internal Links
-
-Best practices:
-1. Add links contextually within content
-2. Use descriptive anchor text (not "click here")
-3. Link to relevant, helpful pages
-4. Aim for 3-10 internal links per 1,000 words
-5. Vary anchor text for the same target
-
-### Anchor Text Guidelines
-
-| Type | Example | Usage |
-|------|---------|-------|
-| Exact match | "keyword research" | 10-20% |
-| Partial match | "tips for keyword research" | 30-40% |
-| Branded | "Brand's guide to..." | 10-20% |
-| Natural | "this article", "learn more" | 20-30% |
-
-## Tracking Success
-
-Monitor these metrics weekly:
+## Tracking
 - [ ] Rankings for target keywords
 - [ ] Traffic to previously orphan pages
-- [ ] Crawl stats in ~~search console
+- [ ] Crawl stats in Search Console
 - [ ] Internal link distribution changes
+- [ ] Over-optimized anchors below 10%
 ```

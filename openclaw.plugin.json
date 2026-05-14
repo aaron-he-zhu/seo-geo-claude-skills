@@ -1,0 +1,10 @@
+{
+  "id": "aaron-seo-geo",
+  "version": "9.9.9",
+  "format": "claude-plugin",
+  "source": ".claude-plugin/plugin.json",
+  "commands": ["./commands/"],
+  "commandNamespace": "aaron",
+  "commandCount": 20,
+  "hostTargets": ["claude-code", "openclaw"]
+}

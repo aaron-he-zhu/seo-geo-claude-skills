@@ -1,10 +1,16 @@
 # Schema.org JSON-LD Templates
 
-Complete, copy-ready structured data templates for all major schema types. Customize the bracketed values to match your content.
+Compact starter blocks. Replace placeholders, remove unused fields, and validate before ship.
 
-## FAQPage Schema
+## Shared Rules
 
-For pages with frequently asked questions. Minimum 2 Q&A pairs required.
+- Match visible page content exactly; omit fields that are not visible or verified.
+- Use absolute canonical URLs.
+- Use ISO 8601 for dates and durations.
+- Remove placeholders before publishing.
+- Only emit `aggregateRating` or `review` when visible, verifiable user reviews support the exact values.
+
+## FAQPage
 
 ```json
 {
@@ -13,299 +19,129 @@ For pages with frequently asked questions. Minimum 2 Q&A pairs required.
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "[Question text - exactly as shown on page]",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "[Complete answer text - must match visible content]"
-      }
+      "name": "[Question text 1]",
+      "acceptedAnswer": { "@type": "Answer", "text": "[Answer text 1]" }
     },
     {
       "@type": "Question",
-      "name": "[Question 2]",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "[Answer 2]"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "[Question 3]",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "[Answer 3]"
-      }
+      "name": "[Question text 2]",
+      "acceptedAnswer": { "@type": "Answer", "text": "[Answer text 2]" }
     }
   ]
 }
 ```
 
-**Requirements**: Questions must be complete questions, answers must be comprehensive, content must match visible page content.
-
----
-
-## HowTo Schema
-
-For step-by-step instructional content.
+## HowTo
 
 ```json
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "name": "[How-to title - what will users learn]",
-  "description": "[Brief description of what this tutorial teaches]",
-  "image": {
-    "@type": "ImageObject",
-    "url": "[Main image URL]",
-    "height": "[height in pixels]",
-    "width": "[width in pixels]"
-  },
-  "totalTime": "PT[X]H[Y]M",
-  "estimatedCost": {
-    "@type": "MonetaryAmount",
-    "currency": "USD",
-    "value": "[estimated cost or 0]"
-  },
-  "supply": [
-    {
-      "@type": "HowToSupply",
-      "name": "[Supply item 1]"
-    },
-    {
-      "@type": "HowToSupply",
-      "name": "[Supply item 2]"
-    }
-  ],
-  "tool": [
-    {
-      "@type": "HowToTool",
-      "name": "[Tool 1]"
-    },
-    {
-      "@type": "HowToTool",
-      "name": "[Tool 2]"
-    }
-  ],
-  "step": [
-    {
-      "@type": "HowToStep",
-      "position": 1,
-      "name": "[Step 1 title]",
-      "text": "[Step 1 detailed instructions]",
-      "url": "[Page URL]#step1",
-      "image": "[Step 1 image URL - optional]"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 2,
-      "name": "[Step 2 title]",
-      "text": "[Step 2 detailed instructions]",
-      "url": "[Page URL]#step2",
-      "image": "[Step 2 image URL - optional]"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 3,
-      "name": "[Step 3 title]",
-      "text": "[Step 3 detailed instructions]",
-      "url": "[Page URL]#step3",
-      "image": "[Step 3 image URL - optional]"
-    }
-  ]
+  "name": "[How-to title]",
+  "description": "[Brief description]",
+  "totalTime": "PT[hours]H[minutes]M",
+  "supply": [{ "@type": "HowToSupply", "name": "[Supply item]" }],
+  "tool": [{ "@type": "HowToTool", "name": "[Tool]" }],
+  "step": [{ "@type": "HowToStep", "position": 1, "name": "[Step title]", "text": "[Instructions]", "url": "[Page URL]#step1" }]
 }
 ```
 
-**Time format**: PT[X]H[Y]M where X = hours, Y = minutes. Example: PT1H30M = 1 hour 30 minutes.
+## Article / BlogPosting
 
----
-
-## Article / BlogPosting / NewsArticle Schema
-
-For blog posts, articles, and news content.
+Use `Article`, `BlogPosting`, `NewsArticle`, or `TechArticle` as `@type`.
 
 ```json
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "[Article title - max 110 characters for best display]",
-  "description": "[Article summary or excerpt]",
-  "image": [
-    "[Featured image URL - 1200px wide recommended]",
-    "[Alternative image URL - 4:3 ratio]",
-    "[Alternative image URL - 16:9 ratio]"
-  ],
-  "datePublished": "[ISO 8601 date: 2024-01-15T08:00:00+00:00]",
-  "dateModified": "[ISO 8601 date - same as published if never modified]",
-  "author": {
-    "@type": "Person",
-    "name": "[Author Full Name]",
-    "url": "[Author profile URL]",
-    "jobTitle": "[Author job title - optional]"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "[Publisher/Company Name]",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "[Publisher logo URL - max 600px wide, 60px high]",
-      "width": "[width]",
-      "height": "[height]"
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "[Canonical URL of this article]"
-  },
-  "articleBody": "[Full article text - optional but recommended]",
-  "wordCount": "[word count - optional]"
+  "headline": "[Title]",
+  "description": "[Summary]",
+  "image": ["[Image URL]"],
+  "datePublished": "[ISO 8601 publish date-time]",
+  "dateModified": "[ISO 8601 modified date-time]",
+  "author": { "@type": "Person", "name": "[Author Name]" },
+  "publisher": { "@type": "Organization", "name": "[Publisher Name]", "logo": { "@type": "ImageObject", "url": "[Logo URL]" } },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "[Canonical URL]" }
 }
 ```
 
-**Type variants**: Use `Article` for general articles, `BlogPosting` for blog posts, `NewsArticle` for news content, `TechArticle` for technical documentation.
+## Product
 
----
-
-## Product Schema
-
-For e-commerce product pages.
+Use `aggregateRating` and `review` only when counts and values match visible, verified user reviews.
+Use `price`, `priceCurrency`, and `availability` only when the page shows current purchasable offer details.
 
 ```json
 {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "[Product Name]",
-  "image": [
-    "[Product image URL 1]",
-    "[Product image URL 2]",
-    "[Product image URL 3]"
-  ],
+  "image": ["[Image URL]"],
   "description": "[Product description]",
-  "sku": "[SKU code]",
-  "mpn": "[Manufacturer Part Number - optional]",
-  "brand": {
-    "@type": "Brand",
-    "name": "[Brand Name]"
-  },
+  "sku": "[SKU]",
+  "brand": { "@type": "Brand", "name": "[Brand Name]" },
   "offers": {
     "@type": "Offer",
     "url": "[Product page URL]",
-    "priceCurrency": "USD",
-    "price": "[Price as number: 29.99]",
-    "priceValidUntil": "[Date price is valid until: 2024-12-31]",
-    "availability": "https://schema.org/InStock",
-    "seller": {
-      "@type": "Organization",
-      "name": "[Seller/Store Name]"
-    },
-    "shippingDetails": {
-      "@type": "OfferShippingDetails",
-      "shippingRate": {
-        "@type": "MonetaryAmount",
-        "value": "[shipping cost]",
-        "currency": "USD"
-      },
-      "shippingDestination": {
-        "@type": "DefinedRegion",
-        "addressCountry": "US"
-      }
-    }
-  },
-```
-
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
-
-```json
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "[4.5]",
-    "reviewCount": "[89]",
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  "review": [
-    {
-      "@type": "Review",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "[5]",
-        "bestRating": "5"
-      },
-      "author": {
-        "@type": "Person",
-        "name": "[Reviewer Name]"
-      },
-      "reviewBody": "[Review text]",
-      "datePublished": "[Review date: 2024-01-15]"
-    }
-  ]
+    "priceCurrency": "[ISO 4217 currency code]",
+    "price": "[price]",
+    "availability": "https://schema.org/[InStock/OutOfStock/PreOrder]"
+  }
 }
 ```
 
-**Availability options**: `InStock`, `OutOfStock`, `PreOrder`, `Discontinued`, `LimitedAvailability`, `OnlineOnly`, `InStoreOnly`, `SoldOut`
+**Optional review extension**: add only when the page shows visible, verifiable user reviews that match the numbers.
 
----
+```json
+"aggregateRating": {
+  "@type": "AggregateRating",
+  "ratingValue": "[rating value]",
+  "reviewCount": "[review count]",
+  "bestRating": "5",
+  "worstRating": "1"
+},
+"review": [{
+  "@type": "Review",
+  "author": { "@type": "Person", "name": "[Reviewer Name]" },
+  "reviewRating": { "@type": "Rating", "ratingValue": "[rating value]", "bestRating": "5" },
+  "reviewBody": "[Review text]",
+  "datePublished": "[ISO 8601 review date]"
+}]
+```
 
-## LocalBusiness Schema
+## LocalBusiness
 
-For local business pages with physical locations.
+Use a specific subtype when possible, such as `Restaurant`, `Store`, `LegalService`, `Dentist`, or `AutoRepair`. Include `@id`, name, URL, phone, address, opening hours, and price range only when visible. **Optional review extension**: reuse the Product review fragment only when local-business reviews are visible, verifiable, and policy-eligible.
 
 ```json
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": "[Business canonical URL]#localbusiness",
   "name": "[Business Name]",
-  "image": "[Business image or logo URL]",
-  "@id": "[Business page URL]",
-  "url": "[Website URL]",
-  "telephone": "[Phone number: +1-555-555-5555]",
-  "priceRange": "[$$$ or price range like $10-$50]",
+  "url": "[Business canonical URL]",
+  "image": ["[Business image URL]"],
+  "telephone": "[Phone]",
+  "priceRange": "[Visible price range]",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "[Street address]",
     "addressLocality": "[City]",
-    "addressRegion": "[State/Province]",
-    "postalCode": "[ZIP/Postal code]",
-    "addressCountry": "US"
+    "addressRegion": "[Region]",
+    "postalCode": "[Postal code]",
+    "addressCountry": "[Country code]"
   },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "[latitude as number: 40.7128]",
-    "longitude": "[longitude as number: -74.0060]"
-  },
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00",
-      "closes": "17:00"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Saturday",
-      "opens": "10:00",
-      "closes": "15:00"
-    }
-  ],
-```
-
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
-
-```json
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "[4.5]",
-    "reviewCount": "[123]"
-  },
-  "servesCuisine": "[Cuisine type - for restaurants only]"
+  "geo": { "@type": "GeoCoordinates", "latitude": "[latitude]", "longitude": "[longitude]" },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["[DayOfWeek]"],
+    "opens": "[HH:MM]",
+    "closes": "[HH:MM]"
+  }],
+  "sameAs": ["[Profile URL]"]
 }
 ```
 
-**Type variants**: Use more specific types when applicable: `Restaurant`, `Store`, `AutoRepair`, `HealthAndBeautyBusiness`, `LegalService`, etc.
-
----
-
-## Organization Schema
-
-For brand/company homepage.
+## Organization
 
 ```json
 {
@@ -313,339 +149,45 @@ For brand/company homepage.
   "@type": "Organization",
   "name": "[Organization Name]",
   "url": "[Website URL]",
-  "logo": "[Logo URL - recommended 112x112px or larger]",
+  "logo": "[Logo URL]",
   "description": "[Company description]",
-  "sameAs": [
-    "[Facebook URL]",
-    "[Twitter URL]",
-    "[LinkedIn URL]",
-    "[Instagram URL]",
-    "[YouTube URL]"
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "[Phone number]",
-    "contactType": "customer service",
-    "email": "[Email address]",
-    "availableLanguage": ["English", "Spanish"],
-    "areaServed": "US"
-  },
-  "founder": {
-    "@type": "Person",
-    "name": "[Founder name - optional]"
-  },
-  "foundingDate": "[YYYY-MM-DD - optional]",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "[Street address]",
-    "addressLocality": "[City]",
-    "addressRegion": "[State]",
-    "postalCode": "[ZIP]",
-    "addressCountry": "US"
-  }
+  "sameAs": ["[LinkedIn URL]", "[YouTube URL]"],
+  "contactPoint": { "@type": "ContactPoint", "telephone": "[Phone]", "contactType": "[contact type]" }
 }
 ```
 
----
-
-## BreadcrumbList Schema
-
-For navigation breadcrumbs.
+## BreadcrumbList
 
 ```json
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "[Homepage URL]"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "[Category Name]",
-      "item": "[Category URL]"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "[Subcategory Name]",
-      "item": "[Subcategory URL]"
-    },
-    {
-      "@type": "ListItem",
-      "position": 4,
-      "name": "[Current Page Name]",
-      "item": "[Current Page URL]"
-    }
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "[Homepage URL]" },
+    { "@type": "ListItem", "position": 2, "name": "[Category]", "item": "[Category URL]" },
+    { "@type": "ListItem", "position": 3, "name": "[Current Page]", "item": "[Page URL]" }
   ]
 }
 ```
 
-**Important**: Position numbers must be sequential starting from 1. Last item should be the current page.
+## Other Types Matrix
 
----
+| Type | Required starter fields | Notes |
+|------|-------------------------|-------|
+| VideoObject | name, description, thumbnailUrl, uploadDate, duration, embedUrl | Use visible video metadata |
+| PodcastEpisode | name, description, url, datePublished, partOfSeries | Align with RSS/episode source-of-truth |
+| Event | name, description, startDate, status, attendance mode, location, organizer | Keep status current |
+| Course | name, description, provider, course instance | Use CourseInstance for mode/workload |
+| Recipe | name, image, author, description, times, yield, ingredients, instructions | Optional review extension only when visible |
+| SoftwareApplication | name, operatingSystem, applicationCategory, offers, version, downloadUrl | Price can be `[price or 0]` only when visible |
 
-## VideoObject Schema
+## Combined Array
 
-For video content.
+Place multiple complete objects inside one array in a single `<script type="application/ld+json">` block when the page needs more than one schema type.
 
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "VideoObject",
-  "name": "[Video title]",
-  "description": "[Video description]",
-  "thumbnailUrl": "[Video thumbnail URL - minimum 160x90px]",
-  "uploadDate": "[ISO 8601 date: 2024-01-15T08:00:00+00:00]",
-  "duration": "PT[X]M[Y]S",
-  "contentUrl": "[Video file URL]",
-  "embedUrl": "[Video embed URL]",
-  "interactionStatistic": {
-    "@type": "InteractionCounter",
-    "interactionType": { "@type": "WatchAction" },
-    "userInteractionCount": "[view count]"
-  }
-}
-```
+## Preflight Checklist
 
-**Duration format**: PT[X]M[Y]S where X = minutes, Y = seconds. Example: PT5M30S = 5 minutes 30 seconds.
-
----
-
-## Event Schema
-
-For events, conferences, concerts, etc.
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "Event",
-  "name": "[Event Name]",
-  "description": "[Event description]",
-  "image": "[Event image URL]",
-  "startDate": "[ISO 8601 date: 2024-06-15T19:00:00-05:00]",
-  "endDate": "[ISO 8601 date: 2024-06-15T22:00:00-05:00]",
-  "eventStatus": "https://schema.org/EventScheduled",
-  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-  "location": {
-    "@type": "Place",
-    "name": "[Venue Name]",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "[Street address]",
-      "addressLocality": "[City]",
-      "addressRegion": "[State]",
-      "postalCode": "[ZIP]",
-      "addressCountry": "US"
-    }
-  },
-  "offers": {
-    "@type": "Offer",
-    "url": "[Ticket purchase URL]",
-    "price": "[ticket price]",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "validFrom": "[Sale start date]"
-  },
-  "organizer": {
-    "@type": "Organization",
-    "name": "[Organizer name]",
-    "url": "[Organizer website]"
-  }
-}
-```
-
-**Event status options**: `EventScheduled`, `EventCancelled`, `EventPostponed`, `EventRescheduled`, `EventMovedOnline`
-
-**Attendance mode**: `OfflineEventAttendanceMode`, `OnlineEventAttendanceMode`, `MixedEventAttendanceMode`
-
----
-
-## Course Schema
-
-For online courses and educational content.
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "Course",
-  "name": "[Course Name]",
-  "description": "[Course description]",
-  "provider": {
-    "@type": "Organization",
-    "name": "[Provider name]",
-    "sameAs": "[Provider URL]"
-  },
-  "offers": {
-    "@type": "Offer",
-    "category": "Paid",
-    "price": "[price]",
-    "priceCurrency": "USD"
-  },
-  "hasCourseInstance": {
-    "@type": "CourseInstance",
-    "courseMode": "online",
-    "courseWorkload": "PT[X]H",
-    "instructor": {
-      "@type": "Person",
-      "name": "[Instructor name]"
-    }
-  }
-}
-```
-
----
-
-## Recipe Schema
-
-For cooking recipes.
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "Recipe",
-  "name": "[Recipe name]",
-  "image": "[Recipe image URL]",
-  "author": {
-    "@type": "Person",
-    "name": "[Author name]"
-  },
-  "datePublished": "[ISO 8601 date]",
-  "description": "[Recipe description]",
-  "prepTime": "PT[X]M",
-  "cookTime": "PT[X]M",
-  "totalTime": "PT[X]M",
-  "recipeYield": "[Servings: e.g., '4 servings']",
-  "recipeCategory": "[Category: e.g., 'Dinner']",
-  "recipeCuisine": "[Cuisine: e.g., 'Italian']",
-  "keywords": "[comma, separated, keywords]",
-  "nutrition": {
-    "@type": "NutritionInformation",
-    "calories": "[calories per serving]"
-  },
-  "recipeIngredient": [
-    "[Ingredient 1 with quantity]",
-    "[Ingredient 2 with quantity]",
-    "[Ingredient 3 with quantity]"
-  ],
-  "recipeInstructions": [
-    {
-      "@type": "HowToStep",
-      "text": "[Step 1 instructions]"
-    },
-    {
-      "@type": "HowToStep",
-      "text": "[Step 2 instructions]"
-    }
-  ],
-```
-
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
-
-```json
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "[4.5]",
-    "reviewCount": "[number of reviews]"
-  }
-}
-```
-
----
-
-## SoftwareApplication Schema
-
-For software, apps, and tools.
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "[Software name]",
-  "operatingSystem": "[Windows, macOS, iOS, Android, Web]",
-  "applicationCategory": "BusinessApplication",
-  "offers": {
-    "@type": "Offer",
-    "price": "[price or 0 for free]",
-    "priceCurrency": "USD"
-  },
-```
-
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
-
-```json
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "[4.5]",
-    "reviewCount": "[number of reviews]"
-  },
-  "screenshot": "[Screenshot URL - optional]",
-  "softwareVersion": "[version number]",
-  "fileSize": "[file size with units: e.g., '50MB']",
-  "datePublished": "[Release date]",
-  "downloadUrl": "[Download URL - optional]"
-}
-```
-
----
-
-## Multiple Schema Types (Combined Array)
-
-To include multiple schema types on one page, wrap them in an array:
-
-```html
-<script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "[Article title]",
-    "author": {
-      "@type": "Person",
-      "name": "[Author]"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "[Question]",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "[Answer]"
-        }
-      }
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "[URL]"
-      }
-    ]
-  }
-]
-</script>
-```
-
----
-
-## Implementation Notes
-
-- Always validate schema at https://validator.schema.org/ and https://search.google.com/test/rich-results
-- Remove bracketed placeholders and replace with actual content
-- Use absolute URLs, not relative paths
-- Dates must be in ISO 8601 format
-- Schema must match visible page content (Google policy requirement)
-- No trailing commas in JSON (invalid syntax)
+- Validate with `validator.schema.org` and Google Rich Results Test.
+- Use truthful review data only; if unsure, omit review properties.
+- Keep URLs canonical and accessible.
+- Remove trailing commas and placeholder text before publishing.

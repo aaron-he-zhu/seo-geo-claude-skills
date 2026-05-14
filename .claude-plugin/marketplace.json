@@ -1,1 +1,61 @@
-../marketplace.json
+{
+  "name": "aaron-seo-geo",
+  "owner": {
+    "name": "Aaron He Zhu",
+    "url": "https://github.com/aaron-he-zhu"
+  },
+  "metadata": {
+    "description": "SEO & GEO capability pack. Breaking v10 command rename: /seo:* -> /aaron:*; recover old commands with /aaron:auto.",
+    "version": "9.9.9",
+    "repository": "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
+  },
+  "plugins": [
+    {
+      "name": "aaron-seo-geo",
+      "source": "./",
+      "description": "20 SEO/GEO skills and 20 commands on one shared contract for keyword research, content creation, technical audits, schema markup, monitoring, quality gates, entity truth, and campaign memory.",
+      "version": "9.9.9",
+      "category": "marketing",
+      "commands": "./commands/",
+      "commandNamespace": "aaron",
+      "tags": [
+        "seo",
+        "geo",
+        "content-optimization",
+        "search-engine-optimization",
+        "generative-engine-optimization",
+        "ai-citation",
+        "core-eeat",
+        "cite-framework",
+        "keyword-research",
+        "content-writing",
+        "technical-seo",
+        "schema-markup",
+        "rank-tracking",
+        "backlink-analysis"
+      ],
+      "skills": [
+        "./research/competitor-analysis",
+        "./research/content-gap-analysis",
+        "./research/keyword-research",
+        "./research/serp-analysis",
+        "./build/geo-content-optimizer",
+        "./build/meta-tags-optimizer",
+        "./build/schema-markup-generator",
+        "./build/seo-content-writer",
+        "./optimize/content-refresher",
+        "./optimize/internal-linking-optimizer",
+        "./optimize/on-page-seo-auditor",
+        "./optimize/technical-seo-checker",
+        "./monitor/alert-manager",
+        "./monitor/backlink-analyzer",
+        "./monitor/performance-reporter",
+        "./monitor/rank-tracker",
+        "./cross-cutting/content-quality-auditor",
+        "./cross-cutting/domain-authority-auditor",
+        "./cross-cutting/entity-optimizer",
+        "./cross-cutting/memory-management"
+      ]
+    }
+  ]
+}

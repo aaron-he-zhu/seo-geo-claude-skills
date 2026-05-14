@@ -27,6 +27,8 @@ url: https://example.com/blog/email-marketing-guide
 predicted_geo_score: 72              # CORE avg at audit time
 audit_date: 2026-04-17
 first_measured: 2026-05-01           # at least 2 weeks post-audit
+next_measurement_date: 2026-05-01    # due date used by /aaron:watch --geo-drift
+evidence_mode: user_provided         # tool_backed | user_provided | no_tool_estimate
 ---
 
 ## Measurements
@@ -51,6 +53,8 @@ first_measured: 2026-05-01           # at least 2 weeks post-audit
 **Predicted GEO Score**: 72
 **Delta**: −2 (within noise; prediction tracked actual)
 
+Machine-readable measurement fields: `measurement_window: T+14`, `actual_citation_rate: 70`, `delta: -2`, `evidence_mode: user_provided`, `next_measurement_date: 2026-06-01`.
+
 ### 2026-06-01 (T+45)
 
 <same structure>
@@ -59,14 +63,16 @@ first_measured: 2026-05-01           # at least 2 weeks post-audit
 
 ## Drift assessment (after N≥10 records)
 
-Run monthly via `/seo:geo-drift-review`:
+Run monthly via `/aaron:watch --geo-drift`:
 
 - Mean absolute error (|predicted − actual|)
 - Rank correlation (Spearman) between predicted scores and actual citation rates
 - Systematic bias direction (does the model over- or under-predict on average?)
 - Per-dimension attribution (does weighting the dimensions differently help?)
 
-If drift > 15 points MAE across 10+ records, the GEO Score formula itself needs revisiting. This is a governance signal for the Auditor Runbook `§6 Lint Coverage Manifest`.
+If drift > 15 points MAE across 10+ records, the GEO Score formula itself needs revisiting. This is a governance signal for the Auditor Runbook `§6 Lint Coverage Manifest`. `aggregate_threshold_met` is derived, not asserted: it is true only when `cohort_sample_size >= 10`, `cohort_mae > 15`, and evidence is tool-backed or user-provided rather than `no_tool_estimate`.
+
+Aggregation fields: `cohort_id`, `cohort_sample_size`, `cohort_min_n: 10`, `cohort_mae`, `drift_threshold: 15`, `aggregate_threshold_met`, and `governance_signal`. Boundary rule: 9 records, MAE exactly 15, or `no_tool_estimate` cannot produce `draft_evolution_signal`.
 ```
 
 ## Measurement protocol
@@ -126,7 +132,7 @@ Agencies and serious GEO teams should feed data into this loop monthly. Individu
 geo_validation:
   predicted_geo_score: 72
   feedback_record: memory/geo-feedback/2026-04.md  # path where prediction was seeded
-  measurement_due: 2026-05-01                      # T+14
+  next_measurement_date: 2026-05-01                # T+14
 ```
 
 These fields are OPTIONAL — omit for single-use audits. Include when the user is running on a tracked project that wants long-term GEO quality signals.

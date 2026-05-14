@@ -4,9 +4,9 @@
 
 | Version | Supported |
 |---------|-----------|
-| 5.x     | Yes       |
-| 4.x     | Security fixes only |
-| < 4.0   | No        |
+| 10.x    | Yes       |
+| 9.x     | Security fixes only |
+| < 9.0   | No        |
 
 ## Reporting a Vulnerability
 
@@ -41,7 +41,7 @@ This project consists of markdown-based skill files with no runtime dependencies
 ## Security Design Principles
 
 - **Zero runtime dependencies**: No packages to compromise via supply chain attacks
-- **No credential storage**: Skills never store API keys; credentials live in user-managed `.mcp.json`
+- **No credential storage**: Skills never store API keys; `.mcp.json` declares endpoints only, while credentials stay in user-managed host/OAuth secrets
 - **Tool-agnostic placeholders**: Skills reference tools by category (`~~SEO tool`), never by hardcoded API endpoints
 - **Apache 2.0 license**: Full source available for security review
 
@@ -49,7 +49,7 @@ This project consists of markdown-based skill files with no runtime dependencies
 
 > **⚠️ Not legal advice.** The citations below summarize publicly reported authority as of 2026-04-17. Statutes, case law, and regulator guidance evolve; jurisdictional coverage varies. Consult counsel for your specific jurisdiction and fact pattern before acting on any boundary below.
 
-Several skills in this library involve crawling, fetching, or extracting content from web domains (e.g., `competitor-analysis`, `technical-seo-checker`, `on-page-seo-auditor`, `internal-linking-optimizer`, `backlink-analyzer`). Before invoking these skills against a domain that you do not own or operate under written authorization, Claude and the user must verify the following:
+Several skills in this library involve crawling, fetching, or extracting content from web domains (e.g., `content-quality-auditor`, `schema-markup-generator`, `serp-analysis`, `technical-seo-checker`, `on-page-seo-auditor`, `competitor-analysis`, `internal-linking-optimizer`, `backlink-analyzer`). Before invoking these skills against a domain that you do not own or operate under written authorization, Claude and the user must verify the following:
 
 ### 1. robots.txt compliance
 
@@ -80,7 +80,7 @@ When `robots.txt` declares `Crawl-delay: N`, pause at least N seconds between re
 
 ### 5. Skill-level pre-flight
 
-Each skill that performs crawling ships a pre-flight preamble in its Data Sources section reiterating these boundaries. Users remain responsible for confirming authorization before acting on any scraping recommendation the skills produce.
+Each WebFetch/crawler workflow must apply this pre-flight before third-party fetching. Users remain responsible for confirming authorization before acting on any scraping recommendation the skills produce.
 
 ---
 

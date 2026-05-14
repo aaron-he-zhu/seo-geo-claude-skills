@@ -2,7 +2,8 @@
  * Sync skills manifest
  *
  * Scans category directories for SKILL.md files and updates
- * marketplace.json and plugin.json with the complete skills list.
+ * marketplace.json, plugin.json, and CodeBuddy with the complete skills list.
+ * Use --check to fail if generated files are stale without writing them.
  */
 
 const fs = require("fs");
@@ -18,7 +19,10 @@ const CATEGORIES = [
 
 const ROOT = path.resolve(__dirname, "../..");
 const MARKETPLACE_PATH = path.join(ROOT, "marketplace.json");
+const MARKETPLACE_PLUGIN_PATH = path.join(ROOT, ".claude-plugin", "marketplace.json");
 const PLUGIN_PATH = path.join(ROOT, ".claude-plugin", "plugin.json");
+const CODEBUDDY_PATH = path.join(ROOT, ".codebuddy-plugin", "marketplace.json");
+const CHECK_ONLY = process.argv.includes("--check");
 
 function discoverSkills() {
   const skills = [];
@@ -48,33 +52,53 @@ function discoverSkills() {
   });
 }
 
-function updateMarketplace(skills) {
-  const data = JSON.parse(fs.readFileSync(MARKETPLACE_PATH, "utf8"));
-  data.plugins[0].skills = skills;
-  fs.writeFileSync(
-    MARKETPLACE_PATH,
-    JSON.stringify(data, null, 2) + "\n",
-    "utf8"
-  );
-  console.log(
-    `Updated marketplace.json with ${skills.length} skills`
-  );
+function writeOrCheck(filePath, serialized, label) {
+  const current = fs.readFileSync(filePath, "utf8");
+  if (current === serialized) {
+    console.log(`OK ${label}`);
+    return false;
+  }
+
+  if (CHECK_ONLY) {
+    console.error(`STALE ${label}`);
+    return true;
+  }
+
+  fs.writeFileSync(filePath, serialized, "utf8");
+  console.log(`Updated ${label}`);
+  return true;
 }
 
-function updatePlugin(skills) {
+function marketplaceContent(skills) {
+  const data = JSON.parse(fs.readFileSync(MARKETPLACE_PATH, "utf8"));
+  data.plugins[0].skills = skills;
+  return JSON.stringify(data, null, 2) + "\n";
+}
+
+function pluginContent(skills) {
   const data = JSON.parse(fs.readFileSync(PLUGIN_PATH, "utf8"));
   data.skills = skills;
-  fs.writeFileSync(
-    PLUGIN_PATH,
-    JSON.stringify(data, null, 2) + "\n",
-    "utf8"
-  );
-  console.log(`Updated plugin.json with ${skills.length} skills`);
+  return JSON.stringify(data, null, 2) + "\n";
+}
+
+function codeBuddyContent(skills) {
+  const data = JSON.parse(fs.readFileSync(CODEBUDDY_PATH, "utf8"));
+  data.plugins[0].skills = skills;
+  return JSON.stringify(data, null, 2) + "\n";
 }
 
 const skills = discoverSkills();
 console.log(`Discovered ${skills.length} skills:`);
 skills.forEach((s) => console.log(`  ${s}`));
 
-updateMarketplace(skills);
-updatePlugin(skills);
+let stale = false;
+const marketplace = marketplaceContent(skills);
+stale = writeOrCheck(MARKETPLACE_PATH, marketplace, "marketplace.json") || stale;
+stale = writeOrCheck(MARKETPLACE_PLUGIN_PATH, marketplace, ".claude-plugin/marketplace.json") || stale;
+stale = writeOrCheck(PLUGIN_PATH, pluginContent(skills), ".claude-plugin/plugin.json") || stale;
+stale = writeOrCheck(CODEBUDDY_PATH, codeBuddyContent(skills), ".codebuddy-plugin/marketplace.json") || stale;
+
+if (CHECK_ONLY && stale) {
+  console.error("Run `node .github/scripts/sync-skills.js` and commit the generated manifest changes.");
+  process.exit(1);
+}

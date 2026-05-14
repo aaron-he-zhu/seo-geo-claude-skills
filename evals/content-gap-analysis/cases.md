@@ -1,0 +1,3 @@
+```yaml
+{id: routing-command-map-topics-001, type: eval-case, status: simulated, target_skill: content-gap-analysis, scenario: "User asks for a topical map and site architecture.", input_summary: "Build a content map for payroll software across buyer stages.", expected_behavior: ["Route /aaron:map to topic map and content architecture planning.", "Include internal-link architecture only as planning input, not publish package execution.", "Keep keyword discovery as upstream input when already available."], failure_modes: ["Routes to /aaron:brief too early.", "Confuses topic map with AI citation diagnosis.", "Skips cluster structure."], evolution_use: "Use when changing map boundary."}
+```

@@ -4,21 +4,21 @@ Systematic scoring methodology for ranking keywords by strategic value.
 
 ## Relationship to Opportunity Score
 
-**Which score to use**: Use the Priority Score (below) for initial keyword triage and shortlisting. Use the Opportunity Score (Step 6 in the main workflow) for final content calendar prioritization, where the additional GEO and competitive factors provide more nuanced ranking.
+**Which score to use**: Use the Priority Score (below) for initial keyword triage and shortlisting. Use the Opportunity Score (Step 6 in the main workflow) for final content calendar prioritization.
 
 ## Priority Scoring Matrix
 
-Score each keyword 1-5 on these factors, then calculate weighted total:
+Score each keyword 1-5, then calculate weighted total:
 
 | Factor | Weight | Score 1 (Low) | Score 5 (High) |
 |--------|--------|---------------|----------------|
-| Search Volume | 20% | <100/mo | >10,000/mo |
+| Search Volume | 20% | <100/mo | >9.9.9/mo |
 | Keyword Difficulty | 25% | KD >80 (hard) | KD <20 (easy) |
 | Business Relevance | 30% | Tangential to offering | Core to offering |
 | Search Intent Match | 15% | Informational only | Transactional/commercial |
 | Trend Direction | 10% | Declining | Growing |
 
-**Priority Score** = Σ(Factor Weight × Score) / 5
+**Priority Score** = Sum(Factor Weight x Score) / 5
 
 ## Priority Categories
 
@@ -30,8 +30,6 @@ Score each keyword 1-5 on these factors, then calculate weighted total:
 | P3 — Monitor | 1.0-1.9 | Track but don't prioritize |
 
 ## Seasonal Keyword Patterns
-
-### Seasonal Analysis Framework
 
 | Season Trigger | Example Keywords | Planning Lead Time | Content Strategy |
 |---------------|-----------------|-------------------|-----------------|

@@ -22,7 +22,7 @@ Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills
 
 ### Step 1 — Classify URLs into clusters
 
-Group URLs by content-type template (blog post / product / landing / guide / comparison / listicle). Surface the cluster distribution to the user before spending effort:
+Group by content-type template. Surface cluster distribution before spending effort:
 
 ```
 Your 40 URLs:
@@ -34,15 +34,9 @@ Your 40 URLs:
 
 ### Step 2 — Sample 2-3 URLs per cluster
 
-Run the standard on-page audit flow on the sampled URLs. Capture:
-- Title pattern (e.g., "all titles start with product name + `| Brand`")
-- H1 pattern consistency
-- Meta description quality distribution
-- CORE-EEAT dimension profile for the cluster
+Run standard on-page audit on sampled URLs. Capture: title pattern, H1 consistency, meta description quality distribution, CORE-EEAT dimension profile.
 
 ### Step 3 — Extrapolate + confirm
-
-Produce cluster-level findings with scope:
 
 ```
 ### Cluster: Blog posts (24 URLs) — sample of 3

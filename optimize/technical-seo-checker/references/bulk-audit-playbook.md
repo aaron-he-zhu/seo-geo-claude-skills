@@ -24,13 +24,7 @@ Bulk mode accepts **any one** of the following:
 
 ### Step 1 — Inventory + group
 
-Parse input into a URL inventory. Group by pattern:
-
-- Content type: product page / category / blog / legal / tool
-- Template: detected via URL path, meta signals, or sampling 3 pages per cluster
-- Known issue from input (if GSC): indexed / excluded / crawl error / duplicate without user-selected canonical / soft 404
-
-Output a table like:
+Parse input into a URL inventory. Group by content type, template (detected via URL path / meta signals / sampling 3 pages per cluster), and known issue (if GSC: indexed / excluded / crawl error / duplicate / soft 404).
 
 ```
 | Group              | Count | Template | Known Issue        |
@@ -43,9 +37,7 @@ Output a table like:
 
 ### Step 2 — Sample deep, summarize shallow
 
-Run the single-URL audit flow on **2 representative URLs per group** (the most and least recently indexed). Report pattern-level findings instead of per-URL findings.
-
-**Output shape**:
+Run single-URL audit on **2 representative URLs per group** (most and least recently indexed). Report pattern-level findings.
 
 ```
 ### Group: /product/[slug] — 32 pages
@@ -59,7 +51,7 @@ Run the single-URL audit flow on **2 representative URLs per group** (the most a
 
 ### Step 3 — Portfolio-level prioritization
 
-Produce a single prioritized list across all groups, not per-page:
+Produce a single prioritized list across all groups:
 
 ```
 P0 (fix affects 10+ pages):
@@ -86,8 +78,6 @@ P2 (single-page):
 
 ## Minimum viable bulk input
 
-If user has none of the above:
-
 ```
 Paste or describe your site's URL patterns:
 
@@ -102,11 +92,9 @@ Paste or describe your site's URL patterns:
 5. Any template/theme you know the issue is scoped to?
 ```
 
-Then proceed from Step 1 with the user-provided inventory.
+Then proceed from Step 1.
 
 ## E-commerce pattern reference
-
-Common bulk-level issues and their usual fix locations:
 
 | Symptom | Usual root cause | Check file |
 |---------|------------------|-----------|

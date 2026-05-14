@@ -25,8 +25,8 @@ Plan C standardizes where reusable project state belongs. All state follows a th
 - Nature: read-only compiled index and synthesis of WARM files — a derived layer, not an independent temperature tier
 - Project isolation: `memory/wiki/<project>/index.md` partitioned by hot-cache `project` field; no `project` field = global index only
 - Auto-loaded: SessionStart loads the current project's `index.md` (skips silently if absent)
-- Auto-refreshed: PostToolUse silently updates `index.md` after any WARM file write (low risk — fully rebuildable)
-- **Sole writer**: `memory-management` owns all wiki writes semantically. For performance, two narrowly-scoped auto-refresh operations are delegated to PostToolUse and Stop hooks (updating `memory/wiki/index.md` and `memory/wiki/log.md`). These hooks act on behalf of `memory-management` and MUST use the schema documented in [memory-management SKILL.md §Wiki Layer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md). Any wiki-compiled page (entity/keyword/topic) still requires explicit `memory-management` invocation.
+- Refresh: `memory-management` updates `index.md`; PostToolUse only performs deterministic checks and does not rewrite wiki files.
+- **Sole writer**: `memory-management` owns all wiki writes semantically. Wiki index refreshes, wiki log updates, and compiled pages remain explicit `memory-management` operations using the schema documented in [memory-management SKILL.md §Wiki Layer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md). Any wiki-compiled page (entity/keyword/topic) still requires explicit `memory-management` invocation.
 - Rollback: delete `memory/wiki/` to return to pre-wiki behavior with zero side effects
 - Does not participate in promotion/demotion lifecycle
 - Index fields are split into **precise** (score, status, next_action, mtime — extracted directly) and **best-effort** (summary — LLM inferred)
@@ -40,7 +40,10 @@ Capacity rules:
 | Global `index.md` | 300 lines |
 | Changelog (index bottom) | 5 entries (older entries move to `log.md` in Phase 2) |
 | `log.md` (Phase 2) | 500 lines; overflow archived to `log-archive/YYYY.md` |
-| Compiled pages (Phase 2) | 200 lines per page |
+| Compiled pages (Phase 2) | 200 lines per page; spill to `<slug>-part1.md` / `-part2.md` with `part: 1/N` field |
+| `.unresolved.md` (Phase 2) | 200 lines (overflow → memory-management archives oldest 50%) |
+| `.drift-log` (Phase 2) | 200 lines (overflow → memory-management truncates to last 100) |
+| `.retire-day-log` (Phase 3) | 30 lines (one entry per completed batch, 30-day rolling window) |
 
 WARM file frontmatter optional extension:
 
@@ -68,11 +71,26 @@ last_compiled: 2026-04-05
 
 Log timeline (Phase 2): `memory/wiki/log.md` — append-only record of ingest, query, and lint operations. 500-line limit; overflow archived annually to `memory/wiki/log-archive/YYYY.md`. Parseable: `grep "^## \[" memory/wiki/log.md | tail -5`
 
-Contradiction reconciliation (Phase 2): each resolution tagged `confidence: HIGH | MEDIUM | LOW`. LOW-confidence resolutions marked `[待确认]` in compiled pages; lint reminds until user confirms.
+Contradiction reconciliation (Phase 2): each resolution tagged `confidence: HIGH | MEDIUM | LOW`. HIGH (time-series) auto-resolved by recency; MEDIUM/LOW insert `[CONTRADICTION-{id}]` marker in compiled page body and append entry to `memory/wiki/.unresolved.md`. Resolution happens via SessionStart conversational prompt `(a) keep A · (b) keep B · (s) snooze 7d · (i) ignore for 90d` — never via user-edited file markers. See [wiki-runbook.md §4-§5](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/wiki-runbook.md).
 
-Terminal architecture (Phase 3): when wiki compiled pages fully cover a WARM category, those WARM files become retirement candidates. Use `wiki-lint --retire-preview` to list candidates (dry-run only). After user confirmation, retired WARM files move to COLD (`memory/archive/YYYY-MM-DD-filename.md`). The terminal model is HOT / WIKI / COLD — wiki absorbs WARM's role as the primary knowledge layer, with COLD holding raw source files.
+### Phase 3 — User-Initiated Retirement
 
-> Full specification: [proposal-wiki-layer-v3.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/proposal-wiki-layer-v3.md)
+WARM files covered by compiled wiki pages MAY be retired to `memory/archive/` on user request. **Retirement is never automatic.**
+
+**Triggers**:
+- `/aaron:guard --wiki --retire-preview` lists candidates (dry-run, never moves files — `allowed-tools` excludes Bash/Write/Edit)
+- User explicitly says "retire <slug>" or "retire all safe candidates" (or Chinese equivalents from `commands/auto.md` routing)
+
+**Recovery invariant**: COLD files store `originally_at`, `retired_on`, and `retired_because_compiled` in their own frontmatter. `rm -rf memory/wiki/` does NOT destroy retirement history — recovery script `scripts/recover-retired-warm.sh` restores all retired files to their original WARM paths. Validated by `scripts/validate-phase3-rollback.sh` (4-fixture matrix: plain LF, no-trailing-NL, CRLF, multi-line YAML).
+
+**Safety caps**:
+- Single call: max 5 files
+- Single day: max 20 files (UTC midnight boundary; tracked in `memory/wiki/.retire-day-log`)
+- "Covered" requires C1-C5 hard checks (frontmatter capture via `covered_warm[]` + hash match + 90-day mtime + not in hot-cache + ≥1 compile reference)
+
+**Terminal architecture HOT / WIKI / COLD is a ceiling, not a goal**. Most projects will sit indefinitely in HOT/WARM/WIKI/COLD coexistence; full WARM retirement is opt-in optimization for projects with 50+ WARM files where storage hygiene matters. See [wiki-runbook.md §7](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/wiki-runbook.md) for the 10-step atomic retire procedure.
+
+> Design archive: [proposal-wiki-layer-v3.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/proposal-wiki-layer-v3.md). Active rules in this file and `memory-management` take precedence.
 
 ### COLD — `memory/archive/`
 
@@ -92,7 +110,7 @@ Terminal architecture (Phase 3): when wiki compiled pages fully cover a WARM cat
 
 ### Dual Truncation Rule
 
-HOT tier is limited to 80 lines AND 25KB (whichever triggers first). Truncation occurs at newline boundaries — no mid-line cuts. If exceeded, the FileChanged hook warns the user.
+HOT tier is limited to 80 lines AND 25KB (whichever triggers first). Truncation occurs at newline boundaries — no mid-line cuts. If exceeded after Claude Write/Edit, the PostToolUse hook warns the user.
 
 ### Staleness Protocol
 

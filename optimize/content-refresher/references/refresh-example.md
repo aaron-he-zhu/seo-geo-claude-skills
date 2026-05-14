@@ -8,98 +8,58 @@ Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills
 
 **User**: "Refresh my blog post about 'best cloud hosting providers'"
 
-**Output**:
-
 ```markdown
 ### CORE-EEAT Quick Assessment
+**Content**: "Best Cloud Hosting Providers 2023" | **Type**: Commercial comparison
 
-**Content**: "Best Cloud Hosting Providers 2023"
-**Content Type**: Commercial comparison / listicle
+| Dimension | Score | Key Weakness | Priority |
+|-----------|-------|--------------|----------|
+| C — Contextual Clarity | 60 | Title says 2023 — stale | High |
+| O — Organization | 75 | No summary box | Med |
+| R — Referenceability | 35 | Pricing from Q1 2023, 3 broken links | High |
+| E — Exclusivity | 50 | No original benchmarks | Med |
+| Exp — Experience | 30 | No first-person testing | High |
+| Ept — Expertise | 65 | Author bio lacks credentials | Med |
+| A — Authority | 55 | 12 backlinks, was page 1 | Low |
+| T — Trust | 60 | Affiliate links not disclosed | High |
 
-| Dimension | Quick Score | Key Weakness | Refresh Priority |
-|-----------|-----------|--------------|-----------------|
-| C — Contextual Clarity | 60/100 | Title says 2023 — stale intent signal | 🔴 |
-| O — Organization | 75/100 | Good comparison tables but no summary box | 🟡 |
-| R — Referenceability | 35/100 | Pricing from Q1 2023, 3 broken links | 🔴 |
-| E — Exclusivity | 50/100 | No original benchmarks or test data | 🟡 |
-| Exp — Experience | 30/100 | No first-person testing narrative | 🔴 |
-| Ept — Expertise | 65/100 | Author bio present but lacks credentials | 🟡 |
-| A — Authority | 55/100 | 12 backlinks, was ranking page 1 | 🟢 |
-| T — Trust | 60/100 | Affiliate links present but not disclosed | 🔴 |
+**Focus**: Experience (add testing results) + Referenceability (update all data)
 
-**Weakest Dimensions** (focus refresh here):
-1. **Experience** — Add hands-on testing results ("We migrated a test site to each provider")
-2. **Referenceability** — Replace all 2023 pricing/uptime data with current figures
+## Analysis
+**URL**: cloudhosting.com/best-cloud-hosting | **Published**: 2023-02-14 | **Last Updated**: Never | **Words**: 2,100
 
-## Content Refresh Analysis: Best Cloud Hosting Providers 2023
-
-**URL**: cloudhosting.com/best-cloud-hosting
-**Published**: 2023-02-14
-**Last Updated**: Never
-**Word Count**: 2,100
-
-### Performance Metrics
-
+### Performance
 | Metric | 6 Mo Ago | Current | Change |
 |--------|----------|---------|--------|
 | Organic Traffic | 3,200/mo | 1,400/mo | -56% |
-| Avg Position | 4.2 | 14.8 | ↓ 10.6 |
+| Avg Position | 4.2 | 14.8 | -10.6 |
 | Impressions | 18,000 | 9,500 | -47% |
-| CTR | 6.1% | 2.3% | -3.8% |
 
-### Content Decay Signals Identified
-
-1. **Outdated year in title and H1** — "2023" signals stale content to users and search engines
-2. **Pricing data 18+ months old** — AWS Lightsail listed at $3.50/mo (now $5/mo), DigitalOcean at $4/mo (now $6/mo)
-3. **Missing new entrants** — No mention of Hetzner Cloud or Vultr, which 4/5 top competitors now cover
-4. **3 broken outbound links** — Provider comparison pages that have moved or been retired
+### Decay Signals
+1. Outdated "2023" in title/H1
+2. Pricing 18+ months old (AWS Lightsail $3.50 now $5, DigitalOcean $4 now $6)
+3. Missing Hetzner Cloud and Vultr (4/5 competitors cover them)
+4. 3 broken outbound links
 
 ### Refresh vs. Rewrite Decision
+Good structure + 12 referring domains + <50% needs updating = **REFRESH** (keep URL, update in place)
 
-| Factor | Assessment |
-|--------|-----------|
-| Content quality | Good structure, solid comparison tables — foundation is sound |
-| URL equity | 12 referring domains, 18 months old |
-| Scope of changes | ~40% of content needs updating |
-| Search intent | Unchanged — still commercial comparison |
+## Refresh Plan
+**New Title**: "Best Cloud Hosting Providers 2024: 7 Platforms Tested & Compared"
 
-**Decision**: **REFRESH** — The URL has earned backlinks, the structure is solid, and less than 50% needs rewriting. Keep the URL, update in place.
+1. **Update pricing and specs** (~30 min) — current data for all providers, uptime stats, feature table
+2. **Add 2 providers + testing narrative** (~600 words) — Hetzner Cloud, Vultr; benchmark intro paragraph
+3. **Add disclosure + FAQ** (~200 words) — affiliate disclosure, 4 PAA questions, FAQPage schema
+4. **Fix links + add internal links** (~15 min) — replace 3 broken links, add 2 internal links
 
-## Content Refresh Plan
-
-**Current Title**: "Best Cloud Hosting Providers 2023"
-**Refreshed Title**: "Best Cloud Hosting Providers 2024: 7 Platforms Tested & Compared"
-
-### Specific Refresh Actions
-
-1. **Update all pricing and specs** (~30 min)
-   - Replace 2023 pricing for all 5 listed providers with current data
-   - Add uptime stats from the last 12 months (source: UptimeRobot public status pages)
-   - Update feature comparison table with current plan tiers
-
-2. **Add 2 missing providers + testing narrative** (~600 words)
-   - Add Hetzner Cloud and Vultr sections with same comparison format
-   - Write intro paragraph: "We deployed a WordPress benchmark site to each provider and measured TTFB, uptime, and support response times over 30 days"
-
-3. **Add affiliate disclosure and FAQ section** (~200 words)
-   - Add disclosure statement below introduction: "This post contains affiliate links. See our editorial policy."
-   - Add FAQ with 4 questions targeting People Also Ask (e.g., "What is the cheapest cloud hosting?", "Is cloud hosting faster than shared hosting?")
-   - Implement FAQ schema markup for rich result eligibility
-
-4. **Fix broken links and update internal links** (~15 min)
-   - Replace 3 broken outbound links with current provider URLs
-   - Add internal links to cloudhosting.com/vps-vs-cloud and cloudhosting.com/hosting-speed-test
-
-### Republishing Strategy
-
-**Recommendation**: Update Published Date — this is a major overhaul (40%+ new content, new providers, fresh test data). Update `dateModified` in Article schema, resubmit URL in Search Console, and share on social as "Updated for 2024."
+### Republishing
+Update `dateModified` in Article schema, resubmit in Search Console, share as "Updated for 2024."
 
 ### Expected Outcomes
-
-| Metric | Current | 30-Day Target | 90-Day Target |
-|--------|---------|---------------|---------------|
+| Metric | Current | 30-Day | 90-Day |
+|--------|---------|--------|--------|
 | Avg Position | 14.8 | 8-10 | 3-6 |
-| Organic Traffic | 1,400/mo | 2,200/mo | 3,500/mo |
+| Traffic | 1,400/mo | 2,200/mo | 3,500/mo |
 | Featured Snippets | 0 | 1 (FAQ) | 2+ |
 ```
 
@@ -117,14 +77,12 @@ Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills
 ### Content Updates
 - [ ] Update year references
 - [ ] Refresh statistics with sources
-- [ ] Add new examples and case studies
+- [ ] Add new examples/case studies
 - [ ] Expand thin sections
-- [ ] Add new relevant sections
-- [ ] Create FAQ section
+- [ ] Add FAQ section
 
 ### SEO Updates
-- [ ] Update title tag
-- [ ] Refresh meta description
+- [ ] Update title tag and meta description
 - [ ] Optimize headers
 - [ ] Update internal links
 - [ ] Add new images with alt text

@@ -3,7 +3,6 @@
 Reference tables for entity types, key signals, and disambiguation strategies.
 
 ## Entity Types and Key Signals
-
 | Entity Type | Primary Signals | Secondary Signals | Key Schema |
 |-------------|----------------|-------------------|------------|
 | **Person** | Author pages, social profiles, publication history | Speaking, awards, media mentions | Person, ProfilePage |
@@ -14,11 +13,10 @@ Reference tables for entity types, key signals, and disambiguation strategies.
 | **Event** | Event listings, press coverage, social buzz | Sponsorships, speaker profiles, attendance | Event |
 
 ## Disambiguation Strategy by Situation
-
 | Situation | Strategy |
 |-----------|----------|
 | **Common name, unique entity** | Strengthen all signals; let signal volume resolve ambiguity |
-| **Name collision with larger entity** | Add qualifier consistently (e.g., "Acme Software" not just "Acme"); use sameAs extensively; build topic-specific authority that differentiates |
-| **Name collision with similar entity** | Geographic, industry, or product qualifiers; ensure Schema @id is unique and consistent; prioritize Wikidata disambiguation |
-| **Abbreviation/acronym conflict** | Prefer full name in structured data; use abbreviation only in contexts where entity is already established |
-| **Merged or renamed entity** | Redirect old entity signals; update all structured data; create explicit "formerly known as" content; update Wikidata |
+| **Name collision with larger entity** | Add qualifier consistently (e.g., "Acme Software" not just "Acme"); use sameAs extensively; build topic-specific authority |
+| **Name collision with similar entity** | Geographic, industry, or product qualifiers; ensure Schema @id is unique; prioritize Wikidata disambiguation |
+| **Abbreviation/acronym conflict** | Prefer full name in structured data; use abbreviation only where entity is established |
+| **Merged or renamed entity** | Redirect old signals; update all structured data; create "formerly known as" content; update Wikidata |

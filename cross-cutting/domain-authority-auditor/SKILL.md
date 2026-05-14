@@ -1,16 +1,16 @@
 ---
 name: domain-authority-auditor
-description: '40-item CITE domain audit: citation, impact, trust, entity scoring with veto checks. 域名权威/网站可信度'
-version: "9.0.0"
+description: 'Use when auditing domain authority, trust, citations, or 域名权威/网站可信度. Runs 40-item CITE scoring with veto checks.'
+version: "9.9.9"
 license: Apache-2.0
-compatibility: "Claude Code ≥1.0, skills.sh marketplace, ClawHub marketplace, Vercel Labs skills ecosystem. No system packages required. Optional: MCP network access for SEO tool integrations."
+compatibility: "Claude Code, skills.sh, ClawHub, Vercel Labs, Cursor, Windsurf, Codex CLI, Amp, Gemini CLI, Kimi Code, Qwen Code, CodeBuddy"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
 when_to_use: "Use when auditing domain trust and authority. Runs CITE 40-item scoring with veto checks. Also when the user asks about domain credibility or citation trustworthiness."
 argument-hint: "<domain>"
 class: auditor
 metadata:
   author: aaron-he-zhu
-  version: "9.0.0"
+  version: "9.9.9"
   geo-relevance: "medium"
   tags:
     - seo
@@ -29,14 +29,11 @@ metadata:
     - "audit domain authority"
     - "CITE audit"
     - "domain trust score"
-    - "domain credibility check"
     - "domain rating"
     - "site authority"
     # EN-casual
     - "how trustworthy is my site"
     - "is my domain credible"
-    - "is my domain trustworthy"
-    - "domain credibility score"
     - "Google penalty recovery"
     - "my site got penalized"
     # EN-question
@@ -61,25 +58,16 @@ metadata:
     - "auditoría de dominio"
     # PT
     - "autoridade de domínio"
-    # Misspellings
-    - "domain autority"
 ---
 
 # Domain Authority Auditor
 
 > Based on [CITE Domain Rating](https://github.com/aaron-he-zhu/cite-domain-rating). Full benchmark reference: [references/cite-domain-rating.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/cite-domain-rating.md)
-
-> **[SEO & GEO Skills Library](https://github.com/aaron-he-zhu/seo-geo-claude-skills)** · 20 skills for SEO + GEO · [ClawHub](https://clawhub.ai/u/aaron-he-zhu) · [skills.sh](https://skills.sh/aaron-he-zhu/seo-geo-claude-skills)
-> **System Mode**: This cross-cutting skill is part of the protocol layer and follows the shared [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) and [State Model](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/state-model.md).
-
-
 This skill evaluates domain authority across 40 standardized criteria organized in 4 dimensions. It produces a comprehensive audit report with per-item scoring, dimension and weighted scores by domain type, veto item checks, and a prioritized action plan.
 
 **Sister skill**: [content-quality-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/content-quality-auditor/SKILL.md) evaluates content at the page level (80 items). This skill evaluates the domain behind the content (40 items). Together they provide a complete 120-item assessment.
 
 > **Namespace note**: CITE uses C01-C10 for Citation items; CORE-EEAT uses C01-C10 for Contextual Clarity items. In combined 120-item assessments, prefix with the framework name (e.g., CITE-C01 vs CORE-C01) to avoid confusion.
-
-**System role**: Citation Trust Gate. It decides whether a domain is credible enough to support ranking, citation, and brand authority work.
 
 ## When This Must Trigger
 
@@ -143,7 +131,7 @@ Run full 120-item assessment on [domain]: CITE domain audit + CORE-EEAT content 
 - **Reads**: the target domain, supporting authority signals, comparison domains, and prior decisions from [CLAUDE.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CLAUDE.md) and the shared [State Model](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/state-model.md) when available.
 - **Writes**: a user-facing authority report plus a reusable summary that can be stored under `memory/audits/domain/`.
 - **Promotes**: veto items and domain risks to `memory/hot-cache.md` (auto-saved). Authority context to `memory/audits/domain/`. Results feed into entity-optimizer as authority input for brand's canonical profile.
-- **Next handoff**: use the `Next Best Skill` below once the trust picture is clear.
+- **Primary next skill**: use the `Next Best Skill` below once the trust picture is clear.
 
 ## Data Sources
 
@@ -256,10 +244,10 @@ Same format for Trust and Eminence dimensions.
 
 **Note**: Some items require specialized data (C05-C08 AI citation data, I01 knowledge graph queries, T04-T05 IP/profile analysis). Score what is observable; mark unverifiable items as "N/A — requires [data source]" and exclude from dimension average.
 
-<!-- runbook-sync start: source_sha256=4a5e414fe8ca7082b173cd76f09a081504997534b80ac4dabd45084f80440a61 block_sha256=260ff0119ba5a4719c2dd3c1fce59771f73cbfa4c55acba45f9c010a9e5ddd0a -->
+<!-- runbook-sync start: source_sha256=6920bed5f82fd3fe0d6538d71e797e35823385fecfeabdfd81257d2c9d7922d3 block_sha256=be2750a3a71e6e1158c336ae276a2f0c74473b0cf02e1a40b7292d31c7517b12 -->
 ## §1 · Handoff Schema (authoritative)
 
-Every auditor-class handoff MUST follow this shape. Emitted audit artifact files (e.g., `memory/audits/**/*.md`) MUST include `class: auditor-output` in their YAML frontmatter so the PostToolUse Artifact Gate and Stop-time archiving hooks can detect them by frontmatter class instead of prose pattern-matching. Files lacking this marker are not treated as audit artifacts regardless of body content.
+Every auditor-class handoff MUST follow this shape. Emitted audit artifact files (e.g., `memory/audits/**/*.md`) MUST include `class: auditor-output` in their YAML frontmatter so the PostToolUse Artifact Gate and guarded auditor archive checks can detect them by frontmatter class instead of prose pattern-matching. Files lacking this marker are not treated as audit artifacts regardless of body content.
 
 ```yaml
 ---
@@ -282,15 +270,17 @@ raw_overall_score: <number>      # REQUIRED for auditors; score before cap
 final_overall_score: <number>    # REQUIRED for auditors; score after cap
 ```
 
-### Backward compatibility (v7.1.0 → v7.2.0 deprecation window)
+### Legacy compatibility for archived outputs
 
-Downstream skills consuming handoffs must treat the cap-related fields as **optional with documented defaults** during the deprecation window. If absent, apply these defaults:
+New auditor-class outputs MUST include the cap-related fields. The Artifact Gate treats missing `cap_applied`, `raw_overall_score`, or `final_overall_score` (unless `status: BLOCKED`) as a validation failure.
+
+Consumers reading pre-v7.2 archived outputs may apply these defaults:
 
 - `cap_applied: false` (assume no cap when field missing)
 - `raw_overall_score: <use final_overall_score>` (treat as equal)
 - `final_overall_score: <use the overall score from the audit, whatever field name>`
 
-This prevents breakage when an audit produced before the upgrade is consumed by a skill after the upgrade. A consuming skill MUST never error on missing cap fields during the deprecation window. After v7.2.0, fields become required for all auditor-class producers; consumers may then treat absence as a BLOCKED upstream.
+This compatibility rule is read-time only; it does not permit new auditor artifacts to omit required auditor-extension fields.
 
 ### Non-auditor skills
 
@@ -400,7 +390,7 @@ Handoff:
       evidence: "..."
 ```
 
-**Why BLOCKED, not "capped at 40"**: the 40-tier cap number is unvalidated. Blocking forces manual review, which is more honest than publishing an eyeballed number. Calibration trigger: 30+ real multi-veto audits in `memory/audits/`. Review date: 2026-07-10 via `/seo:p2-review`.
+**Why BLOCKED, not "capped at 40"**: the 40-tier cap number is unvalidated. Blocking forces manual review, which is more honest than publishing an eyeballed number. Calibration trigger: 30+ real multi-veto audits in `memory/audits/`, reviewed through `/aaron:guard --evals` plus maintainer calibration.
 
 **Note on dimension vs count**: the 2+ veto threshold counts **total veto failures across all dimensions**, not per-dimension. Example 3 shows T04 (Trust dim) + R10 (Referenceability dim) on different dimensions, but T03 + T09 both on the Trust dimension would also trigger BLOCKED. The veto count is dimension-agnostic.
 
@@ -446,7 +436,7 @@ Before emitting the handoff, the auditor verifies:
 
 If any check fails, force `status: BLOCKED` with `open_loops: ["artifact_gate_failed: <which check>"]`.
 
-> **Reliability note**: v7.2.0 adds a PostToolUse hook that re-validates this checklist outside the self-check loop, in a clean LLM context. Self-check is first line of defense (~35% reliable); external hook is second line (~85%). Together: ~95%. Until the hook ships, rely on self-check with awareness that it is not robust against the auditor's own output bias.
+> **Reliability note**: v9.9.9 adds a command-backed PostToolUse Artifact Gate that blocks malformed auditor artifacts with `class: auditor-output`. Self-check remains first line of defense; the hook enforces deterministic structural fields without reading artifact prose as instructions.
 
 ---
 
@@ -459,6 +449,7 @@ Before rendering to the user, translate internal language. This respects [skill-
 - Veto item IDs (T04, C01, R10, T03, T05, T09, and any future IDs)
 - Phrases combining "dimension" or "capped at" with raw numbers
 - Internal field names: `cap_applied`, `raw_overall_score`, `final_overall_score`, `gap_type`
+- Internal severity labels: `P0`, `P1`, `P2`, `severity: veto`, `severity: high`, `severity: medium`, `severity: low` — translate to plain language using the mapping table below
 - Raw score deltas like "82 → 60" as the primary presentation
 
 ### Required pattern when cap is applied
@@ -536,6 +527,15 @@ However, if a user request ever surfaces `open_loops` to the user directly — f
 | "cap_applied: true" | "capped due to N critical issue(s)" |
 | "raw_overall_score: 78" | "your score rises to approximately 78 once this is fixed" |
 | "dimension capped at 60" | (never expose; describe the underlying fix instead) |
+| "P0" / "severity: veto" | "critical issue" |
+| "P1" / "severity: high" | "should-fix" |
+| "P2" / "severity: medium" / "severity: low" | "nice-to-have" |
+
+### Severity tier routing (internal)
+
+Each `key_findings.severity` maps to a P-tier per [contract-fail-caps.md §Severity Tiers](contract-fail-caps.md): `veto` → **P0**, `high` → **P1**, `medium`/`low` → **P2**. Downstream skills consume P-tier ordering; the P-tier label never reaches users (translate via the table above).
+
+When rendering a multi-finding report, group by tier (critical first, should-fix, nice-to-have); within each tier sort by `weight × points lost`. **Augments, does not replace, the Top 5 Priority Improvements ranking** — Top 5 remains the cross-tier highlight reel; severity grouping is the primary structural breakdown that precedes it.
 
 ---
 
@@ -591,9 +591,24 @@ Calculate scores and generate the final report:
 | ... | ... | ... | ... |
 | E10 | Industry Share of Voice | [Pass/Partial/Fail] | [observation] |
 
+### Findings by Severity Tier
+
+Render BEFORE "Top 5 Priority Improvements". Group every `key_findings` entry by `severity` per [Runbook §5 Severity tier routing](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md): `veto` → **Critical issues (must fix)**, `high` → **Should-fix**, `medium`/`low` → **Nice-to-have**. Within each tier sort by `weight × points lost` (highest first). Apply the §5 Never say → Always say translation — no `P0/P1/P2` or `severity:` literals in user output. Omit empty-tier headers.
+
+```markdown
+**Critical issues (must fix)**
+- [Item Name] — [plain-language observation]
+
+**Should-fix**
+- [Item Name] — [observation]
+
+**Nice-to-have**
+- [Item Name] — [observation]
+```
+
 ### Top 5 Priority Improvements
 
-Sorted by: weight × points lost (highest impact first)
+Sorted by: weight × points lost across all tiers (highest impact first). This is the cross-tier highlight; the per-tier breakdown above is the full picture.
 
 1. **[ID] [Name]** — [specific modification suggestion]
    - Current: [Fail/Partial] | Potential gain: [X] weighted points
@@ -636,7 +651,7 @@ For a complete assessment, pair this CITE audit with a CORE-EEAT content audit:
 - For content improvement: use `content-quality-auditor` on key pages
 - For backlink strategy: use `backlink-analyzer` for detailed link analysis
 - For competitor benchmarking: use `competitor-analysis` with CITE scores
-- For tracking progress: run `/seo:report` with CITE score trends
+- For tracking progress: run `/aaron:report` with CITE score trends
 ```
 
 ### Step 4.5: Apply Scoring Runbook
@@ -649,17 +664,7 @@ Execute in order, referring to the `## Scoring Runbook (authoritative)` block ea
 
 ### Save Results
 
-After delivering findings to the user, ask:
-
-> "Save these results for future sessions?"
-
-If yes, write a dated summary to the appropriate `memory/` path using filename `YYYY-MM-DD-<topic>.md` containing:
-- One-line verdict or headline finding
-- Top 3-5 actionable items
-- Open loops or blockers
-- Source data references
-
-If any veto-level issue was found (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09), also append a one-liner to `memory/hot-cache.md` without asking.
+Ask "Save these results for future sessions?" — if yes, write `YYYY-MM-DD-<topic>.md` to `memory/`. Auto-save veto issues to `memory/hot-cache.md`.
 
 ## Validation Checkpoints
 
@@ -674,9 +679,11 @@ If any veto-level issue was found (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09
 - [ ] All 4 dimension scores calculated correctly
 - [ ] Weighted CITE Score matches domain-type weight configuration
 - [ ] All 3 veto items checked first and flagged if triggered
+- [ ] **Findings by Severity Tier section rendered before Top 5** — at least one tier (Critical / Should-fix / Nice-to-have) is non-empty when key_findings has items; empty-tier headers are omitted
 - [ ] Top 5 improvements sorted by weighted impact, not arbitrary
 - [ ] Every recommendation is specific and actionable (not generic advice)
 - [ ] Action plan includes concrete steps with effort estimates
+- [ ] No P0/P1/P2 or `severity: …` literals in user-visible output (translation per Runbook §5)
 
 ## Example
 
@@ -697,9 +704,4 @@ See [references/example-report.md](https://github.com/aaron-he-zhu/seo-geo-claud
 
 ## Next Best Skill
 
-Follows the verdict-conditional branching pattern in [skill-contract.md §Termination rules for Next Best Skill chains](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md). Visited-set rule applies: if the caller in this chain is the recommended target, STOP and report chain-complete.
-
-- **Verdict = CAUTIOUS AND specific issue is link-quality** → Primary: [backlink-analyzer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/SKILL.md) — turn link-quality trust issues into link-level investigation.
-- **Verdict = UNTRUSTED** → Primary: [entity-optimizer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/SKILL.md) — trust-building requires canonical entity work, not more link analysis.
-- **Verdict = TRUSTED** → Terminal (no recommendation). Chain ends.
-- **Visited-set exception**: if `backlink-analyzer` invoked this audit (toxic ratio > 15% gate check), do NOT hand back to `backlink-analyzer` regardless of verdict — STOP chain and report chain-complete.
+CAUTIOUS + link-quality: [backlink-analyzer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/SKILL.md). UNTRUSTED: [entity-optimizer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/SKILL.md). TRUSTED: terminal. Visited-set rule applies per [skill-contract.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).

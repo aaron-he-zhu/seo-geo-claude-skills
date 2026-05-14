@@ -1,0 +1,3 @@
+```yaml
+{id: routing-command-publish-schema-001, type: eval-case, status: simulated, target_skill: schema-markup-generator, scenario: "User asks for JSON-LD structured data.", input_summary: "Generate Article, FAQ, Product, or LocalBusiness schema from visible page facts.", expected_behavior: ["Route /aaron:publish --schema to schema-markup-generator for JSON-LD.", "Require visible page facts before emitting rich-result data.", "Do not use unsafe placeholders for dates, prices, ratings, or reviews."], failure_modes: ["Invents schema facts.", "Uses hidden FAQ content.", "Skips validation guidance."], evolution_use: "Use when changing publish schema routing."}
+```

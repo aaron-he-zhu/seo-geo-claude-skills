@@ -1,292 +1,145 @@
 # Link Quality Rubric
 
-Comprehensive reference for evaluating backlink quality. Use this rubric to assess individual links, audit entire link profiles, perform competitive link gap analysis, and prepare disavow files.
+Use this reference to score individual backlinks, audit link profiles, find competitive link gaps, and prepare disavow files without mistaking weak links for toxic links.
 
----
+## 1. Individual Link Quality Score
 
-## 1. Individual Link Quality Evaluation
+Score each link across six factors, multiply by weight, then sum the weighted values for the final **Link Quality Score (LQS)**. Use scores 4 and 2 for cases between the table anchors.
 
-### Scoring Methodology
+| Factor | Weight | Score 5 | Score 3 | Score 1 | Guardrail |
+|--------|--------|---------|---------|---------|-----------|
+| Domain Authority | 25% | DR/DA 70+, established authority | DR/DA 30-49, credible niche site | DR/DA <15 or thin/abandoned | DR/DA is a proxy; relevance can beat raw authority. Check for inflated authority from bought links/PBNs. |
+| Topical Relevance | 25% | Same niche and subtopic | Same broad field | Unrelated topic | Read the page, site focus, surrounding copy, and outbound-link pattern before scoring. |
+| Linking Page Traffic | 15% | 9.9.9+ visits/mo | 100-999 visits/mo | <10 visits/mo | Real traffic suggests editorial value and referral upside. |
+| Link Position | 15% | In-content editorial citation | Author bio/about section | Footer, sitewide, hidden, or template link | Editorial body links carry the most value. |
+| Anchor Text | 10% | Descriptive, natural | Brand name | Generic | A single natural descriptive anchor can score high; a profile overloaded with exact-match anchors is risky. |
+| Follow Status | 10% | Dofollow editorial | Sponsored/UGC disclosed | Nofollow | Nofollow is a hint, not zero value; high-authority nofollow links can still help brand/referral visibility. |
 
-Evaluate each link across six factors. Multiply score (1-5) by factor weight to produce a weighted score. Sum all weighted scores for a final Link Quality Score (LQS).
+**Rating scale**
 
-**Rating Scale:**
-- **LQS 4.0-5.0**: Premium link — high authority, topically relevant, editorial placement
-- **LQS 2.5-3.9**: Acceptable link — provides value, typical of healthy profiles
-- **LQS 1.0-2.4**: Low quality — minimal value, review for potential risk
+| LQS | Rating | Meaning |
+|-----|--------|---------|
+| 4.0-5.0 | Premium | High authority, relevant, editorial placement |
+| 2.5-3.9 | Acceptable | Provides value and fits a healthy profile |
+| 1.0-2.4 | Low quality | Minimal value; review for risk before acting |
 
-### Factor 1: Domain Authority (25% weight)
+**Healthy anchor/follow distribution**
 
-| Score | DR / DA Range | Characteristics | Examples |
-|-------|-------------|-----------------|---------|
-| 5 | DR 70+ | Major publication, established authority | NYTimes, Forbes, BBC, major university sites |
-| 4 | DR 50-69 | Strong domain, recognized in industry | Industry publications, large blogs, government sites |
-| 3 | DR 30-49 | Moderate authority, established site | Mid-tier blogs, regional publications, niche authorities |
-| 2 | DR 15-29 | Low authority, newer or smaller site | Small blogs, newer companies, personal sites |
-| 1 | DR <15 | Very low authority | New sites, abandoned sites, thin content sites |
+| Signal | Healthy | Warning | Critical |
+|--------|---------|---------|----------|
+| Brand anchors | 30-40% | <15% | <5% |
+| Naked URLs | 15-25% | <10% | <5% |
+| Generic anchors | 10-20% | <5% | 0% |
+| Descriptive/partial match | 15-25% | >35% | >50% |
+| Exact match | 5-15% | 15-25% | >25% |
+| Dofollow ratio | 60-80% | >90% | >95% |
 
-**Notes:**
-- DR/DA is a proxy, not the sole indicator. A DR 30 site that is highly relevant to your niche may be more valuable than a DR 70 site in an unrelated field.
-- Check if the domain's authority is organic (earned over time) or inflated (bought links, PBN).
+## 2. Link Profile Calibration
 
-### Factor 2: Topical Relevance (25% weight)
+Use these archetypes to interpret thresholds by site maturity.
 
-| Score | Relevance Level | Description |
-|-------|----------------|-------------|
-| 5 | Exact match | Same niche, same subtopic. A link from a CRM review site to your CRM product. |
-| 4 | Closely related | Same industry, adjacent topic. A marketing blog linking to your email tool. |
-| 3 | Broadly related | Same general field. A business blog linking to your SaaS product. |
-| 2 | Tangentially related | Loose connection. A general news site mentioning your product in a tech roundup. |
-| 1 | Unrelated | No topical connection. A cooking blog linking to your B2B software. |
+| Profile | Healthy Signals | Risk Signals | Verdict |
+|---------|-----------------|--------------|---------|
+| Strong mid-size SaaS | 1,200 referring domains, 72% dofollow, avg DR 38, 35% brand anchors, 8% exact match, 3% toxic estimate | None material | Continue current strategy. |
+| At-risk competitive niche | 800 referring domains, 92% dofollow, avg DR 18, 42% exact match, 30% topical relevance, 18% toxic estimate | Over-optimized anchors, low relevance, unnatural velocity | Review toxic links, diversify anchors, slow acquisition. |
+| Healthy new site | 45 referring domains, 65% dofollow, avg DR 28, 40% brand anchors, 5% exact match, +8/month velocity | Low volume only | Do not judge by mature-site volume; scale carefully while preserving quality. |
 
-**How to assess relevance:**
-1. Read the linking page content. Is it about your topic?
-2. Check the linking site's overall focus. Is it in your industry?
-3. Look at the surrounding content. Does the link make editorial sense?
-4. Check the site's other outbound links. Are they topically coherent?
+## 3. Competitive Link Gap Analysis
 
-### Factor 3: Traffic to Linking Page (15% weight)
+| Step | Action | Output |
+|------|--------|--------|
+| 1 | Select 3-5 direct competitors ranking for target keywords | Competitor set |
+| 2 | Export referring domains from ~~link database | Competitor link lists |
+| 3 | Build an intersection matrix: domain, you, comp 1/2/3, overlap count | Shared opportunity map |
+| 4 | Prioritize by overlap, DR, and topical relevance | Outreach priority list |
+| 5 | Visit each high-priority linking page | Link context and outreach angle |
+| 6 | Create outreach plan | Contact, angle, target asset, template |
 
-| Score | Estimated Monthly Traffic | Characteristics |
-|-------|--------------------------|-----------------|
-| 5 | 10,000+ visits/month | High-traffic page, likely drives referral traffic |
-| 4 | 1,000-9,999 visits/month | Solid traffic, some referral value |
-| 3 | 100-999 visits/month | Moderate traffic, primarily SEO value |
-| 2 | 10-99 visits/month | Low traffic, SEO value only |
-| 1 | <10 visits/month | No meaningful traffic, minimal value |
-
-**Why traffic matters:**
-- Links from pages with real traffic are more likely to be genuine editorial placements.
-- Google likely weights links from pages that receive traffic more highly.
-- Referral traffic from the link provides direct business value beyond SEO.
-
-### Factor 4: Link Position (15% weight)
-
-| Score | Position | Description |
-|-------|----------|-------------|
-| 5 | In-content, editorial | Naturally placed within the article body as a citation or resource |
-| 4 | In-content, contextual | Within the body text but in a "resources" or "further reading" section |
-| 3 | Author bio or about section | Part of a contributor's bio or about page |
-| 2 | Sidebar or dedicated links section | Widget, blogroll, or sidebar placement |
-| 1 | Footer, sitewide, or hidden | Footer link, sitewide template link, or visually obscured |
-
-**Key principle:** Editorial in-content links carry the most weight because they represent a genuine endorsement. Footer and sitewide links are devalued by search engines.
-
-### Factor 5: Anchor Text (10% weight)
-
-| Score | Anchor Type | Example (for a CRM product) |
-|-------|------------|----------------------------|
-| 5 | Descriptive, natural | "this customer relationship management platform" |
-| 4 | Partial match, natural | "CRM tools for small businesses" |
-| 3 | Brand name | "Acme CRM" |
-| 2 | Naked URL | "https://acmecrm.com" |
-| 1 | Generic | "click here", "read more", "this website" |
-
-**Important nuance:** A natural link profile has a MIX of all anchor types. Too many exact-match anchors (score 5) can signal manipulation. The ideal distribution is:
-- Brand anchors: 30-40%
-- Naked URLs: 15-25%
-- Generic anchors: 10-20%
-- Descriptive/partial match: 15-25%
-- Exact match: 5-15%
-
-### Factor 6: Follow Status (10% weight)
-
-| Score | Status | Description |
-|-------|--------|-------------|
-| 5 | Dofollow, editorial | Standard followed link from editorial content |
-| 4 | Dofollow, non-editorial | Followed link from directory, profile, or user-generated content |
-| 3 | Sponsored (rel="sponsored") | Properly disclosed sponsored/paid link |
-| 2 | UGC (rel="ugc") | User-generated content link (forums, comments) |
-| 1 | Nofollow (rel="nofollow") | Explicitly nofollowed link |
-
-**Notes:**
-- Google treats nofollow as a "hint" rather than a directive since 2019.
-- Nofollow links from high-authority sites (e.g., Wikipedia) still provide brand value and referral traffic.
-- A healthy profile naturally includes a mix of followed and nofollowed links. Typical ratio: 60-80% dofollow, 20-40% nofollow.
-
----
-
-## 2. Example Link Profile Assessments
-
-### Example A: Strong Link Profile
-
-| Characteristic | Value | Assessment |
-|---------------|-------|-----------|
-| Total referring domains | 1,200 | Healthy for a mid-size SaaS company |
-| Dofollow ratio | 72% | Natural distribution |
-| Average linking domain DR | 38 | Solid average authority |
-| Top anchor: brand name | 35% | Natural brand dominance |
-| Exact match anchors | 8% | Within safe range |
-| Topical relevance (sampled) | 75% related | Strong relevance signal |
-| Link velocity | +25/month net | Steady organic growth |
-| Toxic link estimate | 3% | Below 5% threshold — healthy |
-
-**Verdict:** Healthy profile with natural link distribution. Continue current strategy.
-
-### Example B: At-Risk Link Profile
-
-| Characteristic | Value | Assessment |
-|---------------|-------|-----------|
-| Total referring domains | 800 | Adequate but thin for competitive niche |
-| Dofollow ratio | 92% | Suspiciously high — may indicate link manipulation |
-| Average linking domain DR | 18 | Low average authority |
-| Top anchor: exact match keyword | 42% | Over-optimized — risk of penalty |
-| Exact match anchors | 42% | Far above safe threshold (>15%) |
-| Topical relevance (sampled) | 30% related | Many irrelevant links |
-| Link velocity | +80/month net | Unnaturally high — investigate |
-| Toxic link estimate | 18% | Above 10% threshold — action needed |
-
-**Verdict:** Profile shows signs of manipulation. Immediate actions needed: disavow toxic links, diversify anchor text, slow down link acquisition pace.
-
-### Example C: New Site Link Profile
-
-| Characteristic | Value | Assessment |
-|---------------|-------|-----------|
-| Total referring domains | 45 | Expected for a 6-month-old site |
-| Dofollow ratio | 65% | Natural |
-| Average linking domain DR | 28 | Reasonable for early-stage outreach |
-| Top anchor: brand name | 40% | Healthy |
-| Exact match anchors | 5% | Conservative and safe |
-| Topical relevance (sampled) | 80% related | Well-targeted outreach |
-| Link velocity | +8/month net | Appropriate for new site |
-| Toxic link estimate | 1% | Clean profile |
-
-**Verdict:** Healthy foundation. Focus on scaling link acquisition while maintaining quality standards.
-
----
-
-## 3. Competitive Link Gap Analysis Methodology
-
-### Step-by-Step Process
-
-**Step 1: Identify competitors**
-Select 3-5 direct competitors who rank for your target keywords.
-
-**Step 2: Pull referring domain data**
-Export the full referring domain list for each competitor from ~~link database.
-
-**Step 3: Create intersection matrix**
-
-| Referring Domain | You | Comp 1 | Comp 2 | Comp 3 | Overlap Count |
-|-----------------|-----|--------|--------|--------|---------------|
-| example-a.com | No | Yes | Yes | Yes | 3 |
-| example-b.com | No | Yes | Yes | No | 2 |
-| example-c.com | No | Yes | No | No | 1 |
-| example-d.com | Yes | Yes | Yes | Yes | 3 (already have) |
-
-**Step 4: Prioritize opportunities**
+**Opportunity priority**
 
 | Priority | Criteria | Rationale |
-|----------|---------|-----------|
-| Highest | Links to 3+ competitors, DR 50+, relevant | If all competitors have it, it is likely linkable |
-| High | Links to 2+ competitors, DR 30+, relevant | Strong signal of willingness to link in niche |
-| Medium | Links to 1 competitor, DR 50+, relevant | May be less accessible but high value |
-| Lower | Links to 1 competitor, DR <30, or low relevance | Diminishing returns |
+|----------|----------|-----------|
+| Highest | Links to 3+ competitors, DR 50+, relevant | Strong market signal and likely linkability |
+| High | Links to 2+ competitors, DR 30+, relevant | Proven niche linker |
+| Medium | Links to 1 competitor, DR 50+, relevant | High value but less proven access |
+| Lower | DR <30, low relevance, or one-off competitor link | Diminishing return unless strategically useful |
 
-**Step 5: Analyze link context**
-For each high-priority opportunity, visit the actual linking page to understand:
-- Why did they link to your competitor? (resource page, mention, guest post, etc.)
-- What content on your site could replace or complement that link?
-- What outreach angle would work? (broken link, better resource, relationship)
+## 4. Disavow File Safety Guide
 
-**Step 6: Create outreach plan**
-Build a prioritized list with contact information, outreach angle, and template selection.
-
----
-
-## 4. Disavow File Format Guide
-
-### When to Disavow
-
-Only disavow links when you have clear evidence of risk. Unnecessary disavow can hurt your rankings.
+Only disavow links when there is clear evidence of risk. Unnecessary disavow can hurt rankings.
 
 | Situation | Disavow? | Reasoning |
 |-----------|----------|-----------|
 | Obvious PBN links | Yes | Clear manipulation signal |
-| Paid links you cannot get removed | Yes | After attempting removal |
-| Spam attack (negative SEO) | Yes | Protect from third-party manipulation |
+| Paid links you cannot get removed | Yes | Only after attempting removal |
+| Spam attack / negative SEO | Yes | Protect against third-party manipulation |
+| Foreign-language spam | Yes | If clearly unnatural and irrelevant |
 | Low-quality directory links | Maybe | Only if pattern is excessive |
-| Foreign language spam | Yes | If clearly unnatural |
-| Low-DA sites with real content | No | Low quality is not toxic |
-| Nofollow links from any source | No | Already nofollowed; no risk |
+| Low-DA sites with real content | No | Low quality is not automatically toxic |
+| Nofollow links | No | Already nofollowed; usually no risk |
 
-### Disavow File Format
+**Review workflow before upload**
 
-The disavow file is a plain text file (.txt) uploaded to Google Search Console.
+| Step | Action | Required safeguard |
+|------|--------|--------------------|
+| 1 | Export full backlink profile | Keep raw export beside the audit |
+| 2 | Filter known toxic patterns | Spam score, DR <10, foreign spam, PBN footprints |
+| 3 | Manually review flagged domains | Visit each domain; do not rely only on metrics |
+| 4 | Attempt removal first | Email webmasters where possible |
+| 5 | Wait 2 weeks | Track outreach responses |
+| 6 | Add only non-removed toxic links | Use comments and reasons |
+| 7 | Upload to Google Search Console | Back up previous file first |
+| 8 | Document all actions | Keep dates, reasons, and owner |
+| 9 | Re-check in 4-6 weeks | Verify processing and recovery signals |
 
-```
-# Disavow file for example.com
+**File format**
+
+```txt
+# Disavow file for [domain]
 # Generated: [date]
-# Reason: Toxic link cleanup
+# Reason: [toxic link cleanup / negative SEO / paid links not removable]
 
-# Individual URLs to disavow
-https://spam-site.com/page-with-link
-https://another-spam.com/toxic-page
+# Individual URLs when only one page is toxic
+https://spam-site.example/toxic-page
 
-# Entire domains to disavow (use for sites with multiple toxic links)
-domain:link-farm-example.com
-domain:pbn-network-site.com
-domain:spam-directory.net
+# Entire domains only when multiple pages are toxic
+domain:pbn-network.example
+domain:spam-directory.example
 ```
 
-### Disavow File Best Practices
+**Best practices**
 
 | Practice | Why |
 |----------|-----|
-| Comment every entry or group | Future auditors need to understand why |
-| Use `domain:` for sites with multiple bad links | More thorough than individual URLs |
-| Use individual URLs when only one page is toxic | Avoid disavowing good links from the same domain |
-| Keep a changelog | Track what was added and when |
-| Review quarterly | Remove entries if domains have been cleaned up |
-| Never disavow your own domain | Common mistake that causes severe damage |
-| Back up before uploading | Keep previous version in case of errors |
-
-### Disavow Review Workflow
-
-| Step | Action | Tool |
-|------|--------|------|
-| 1 | Export full backlink profile | ~~link database |
-| 2 | Filter for known toxic patterns | Spam score, DR <10, foreign spam |
-| 3 | Manual review of flagged links | Visit each flagged domain |
-| 4 | Attempt removal via email first | Contact webmasters |
-| 5 | Wait 2 weeks for removal responses | Track outreach results |
-| 6 | Add non-removed toxic links to disavow | Format as .txt file |
-| 7 | Upload to Google Search Console | Disavow Links tool |
-| 8 | Document all actions and dates | Internal records |
-| 9 | Re-check in 4-6 weeks | Verify processing |
-
----
+| Comment every entry or group | Future auditors need the reason |
+| Use `domain:` for repeated toxic domains | Captures sitewide spam patterns |
+| Use individual URLs for isolated pages | Avoids disavowing good links from the same domain |
+| Never disavow your own domain | Severe self-inflicted damage |
+| Keep changelog and backup | Enables rollback and accountability |
+| Review quarterly | Remove entries if domains are cleaned up |
 
 ## 5. Link Profile Health Benchmarks
 
-### Healthy Profile Indicators
-
-| Metric | Healthy Range | Warning Sign | Critical |
-|--------|-------------|--------------|----------|
-| Dofollow ratio | 60-80% | >90% | >95% |
-| Exact match anchor % | <15% | 15-25% | >25% |
-| Brand anchor % | 25-45% | <15% | <5% |
-| Toxic link % | <5% | 5-10% | >10% |
+| Metric | Healthy | Warning | Critical |
+|--------|---------|---------|----------|
+| Toxic link estimate | <5% | 5-10% | >10% |
 | Referring domain growth | Positive, steady | Flat | Declining |
 | Average linking DR | 25+ | 15-25 | <15 |
 | Link diversity (unique domains / total links) | >0.3 | 0.1-0.3 | <0.1 |
-| Topical relevance (sampled) | >60% | 40-60% | <40% |
+| Topical relevance sample | >60% | 40-60% | <40% |
 
-### Industry-Specific Benchmarks
+Authority expectations vary by vertical:
 
-Authority expectations vary significantly by industry vertical.
+| Industry | Typical DR Range (Top 10) | Typical Referring Domains | Link Difficulty |
+|----------|---------------------------|---------------------------|-----------------|
+| Finance / Insurance | 60-90 | 5,000-50,000+ | Very High |
+| Health / Medical | 50-85 | 3,000-30,000+ | Very High |
+| Technology / SaaS | 40-80 | 1,000-20,000+ | High |
+| E-commerce | 35-75 | 500-15,000+ | High |
+| Legal | 40-70 | 1,000-9.9.9+ | High |
+| Education | 50-90 | 2,000-25,000+ | Medium-High |
+| Local services | 15-45 | 50-500 | Medium |
+| B2B niche | 25-60 | 200-5,000+ | Medium |
+| New startup | 5-25 | 10-200 | Starting point |
 
-| Industry | Typical DR Range (Top 10 Sites) | Typical Referring Domains | Link Difficulty |
-|----------|-------------------------------|--------------------------|----------------|
-| Finance / Insurance | DR 60-90 | 5,000-50,000+ | Very High |
-| Health / Medical | DR 50-85 | 3,000-30,000+ | Very High |
-| Technology / SaaS | DR 40-80 | 1,000-20,000+ | High |
-| E-commerce (general) | DR 35-75 | 500-15,000+ | High |
-| Legal | DR 40-70 | 1,000-10,000+ | High |
-| Education | DR 50-90 | 2,000-25,000+ | Medium-High |
-| Local services | DR 15-45 | 50-500 | Medium |
-| B2B niche | DR 25-60 | 200-5,000+ | Medium |
-| Blog / Content site | DR 20-70 | 100-10,000+ | Medium |
-| New startup | DR 5-25 | 10-200 | Starting point |
-
-_Note: These are general ranges. Actual requirements depend on your specific keyword competition._
+Use industry ranges as context, not hard pass/fail rules. Keyword competition and topical relevance decide the real bar.

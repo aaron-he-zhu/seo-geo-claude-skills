@@ -1,6 +1,6 @@
 # Contract Fail Caps (single source of truth)
 
-> **This file is the ONE place cap numbers live.** All other files link here. Do not restate cap numbers anywhere else. Drift is flagged by `/seo:contract-lint`.
+> **This file owns cap policy.** The auditor runbook may restate active numbers inside its hash-synced executable block; all other files link here. Drift is flagged by `/aaron:guard --contracts`.
 
 **Scope**: numbers only. Arithmetic rules and worked examples live in [auditor-runbook.md §2](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Item definitions (which items are vetos) live in the framework files.
 
@@ -8,10 +8,20 @@
 
 ## Cap Table
 
-| Condition | Dimension cap | Overall cap | Status |
+| Condition | Dimension cap | Overall cap | Status | Severity |
+|---|---|---|---|---|
+| 1 veto item failed | **60/100** | **60/100** | active (v7.1.0) | **P0** |
+| 2+ veto items failed | `[calibration pending v7.3]` — use BLOCKED path per auditor-runbook §2 Worked Example 3 | `[calibration pending v7.3]` | deferred | **P0** (each veto) |
+
+## Severity Tiers (v10.0.x)
+
+Internal routing label for finding prioritization. Never rendered to users — user-facing translation lives in [auditor-runbook.md §5](auditor-runbook.md). Caps in the table above still apply only to veto failures; P-tiers govern fix ordering, not score gating.
+
+| Tier | Internal | Mapping | User-facing |
 |---|---|---|---|
-| 1 veto item failed | **60/100** | **60/100** | active (v7.1.0) |
-| 2+ veto items failed | `[calibration pending v7.3]` — use BLOCKED path per auditor-runbook §2 Worked Example 3 | `[calibration pending v7.3]` | deferred |
+| **P0** | `severity: veto` | Veto item failure (T03/T04/T05/T09/C01/R10) | "critical issue" |
+| **P1** | `severity: high` | Non-veto Fail with item weight ≥ 8 | "should-fix" |
+| **P2** | `severity: medium`/`low` | Partial, or Fail with weight < 8 | "nice-to-have" |
 
 ---
 
@@ -55,7 +65,7 @@ The cap is a **ceiling only**. If raw dim is already below 60, it stays at its n
 
 ## Who consumes this file
 
-These files reference cap numbers defined here. None of them restate the numbers — they all LINK:
+These files consume cap policy defined here. Only hash-synced auditor execution surfaces may restate active numbers:
 
 - [references/auditor-runbook.md §2](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md) — arithmetic and worked examples
 - [references/core-eeat-benchmark.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/core-eeat-benchmark.md) — veto item definitions, links here for caps
@@ -70,11 +80,11 @@ These files reference cap numbers defined here. None of them restate the numbers
 The 40-tier cap for 2+ veto fails is deferred until real data exists.
 
 - **Trigger condition**: 30+ audits in `memory/audits/` with multi-veto fail scenarios
-- **Review date**: 2026-07-10
-- **Runner**: `/seo:p2-review` command (reads `memory/audits/` and reports trigger status)
+- **Review trigger**: when 30+ real multi-veto audits exist, or during the next maintainer calibration review
+- **Runner**: `/aaron:guard --evals` plus maintainer review of `memory/audits/` evidence
 - **Owner**: project maintainer (aaron-he-zhu)
 - **Action on trigger met**: propose numeric 40-tier cap for v7.3, back-calibrated against the 30+ observed multi-veto cases
-- **Action on trigger unmet at 2026-07-10**: close the deferred item; no 40-tier cap ever ships; BLOCKED path remains authoritative for multi-veto cases
+- **Action on trigger unmet**: keep the deferred item closed for release; no 40-tier cap ships; BLOCKED path remains authoritative for multi-veto cases
 
 ---
 
@@ -83,7 +93,7 @@ The 40-tier cap for 2+ veto fails is deferred until real data exists.
 If you need to change 60 or the deferred 40:
 
 1. Edit THIS file
-2. Re-run `/seo:contract-lint` to verify no other file still restates the old number (none should — it's a lint rule)
+2. Re-run `/aaron:guard --contracts` to verify no other file still restates the old number (none should — it's a lint rule)
 3. Re-sync [auditor-runbook.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md) worked examples if the new number changes their arithmetic
 4. Propagate the updated Runbook to both auditor SKILL.md inline copies (per [AUDITOR-AUTHORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/AUDITOR-AUTHORS.md) runbook update procedure)
 5. Write an ADR in `references/decisions/` explaining why the number changed

@@ -1,147 +1,90 @@
 # SEO & GEO 技能库
 
-**20 个技能。15 个命令。搜索排名 + AI 引用，一次搞定。**
+**20 个技能。20 个命令。规划、审计、监控 SEO/GEO 工作。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
-[![Version](https://img.shields.io/badge/version-9.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
+[![Version](https://img.shields.io/badge/version-9.9.9-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 
-[English](../README.md) | **中文** | [日本語](README.ja.md) | [한국어](README.ko.md) | [Español](README.es.md) | [Português](README.pt.md)
+[English](../README.md) | **中文**
 
-面向搜索引擎优化（SEO）和生成式引擎优化（GEO）的 Claude 技能与命令集。零依赖，原生支持 [Claude Code](https://claude.ai/download)、[OpenClaw](https://openclaw.com)、[Gemini CLI](https://geminicli.com)、[Qwen Code](https://qwenlm.github.io/qwen-code-docs/)、[Amp](https://ampcode.com)、[Kimi](https://moonshotai.github.io/kimi-cli/)、[CodeBuddy](https://codebuddy.ai)，以及 [35+ 其他代理](https://github.com/vercel-labs/skills#supported-agents) 通过 `npx skills`。内容质量由 [CORE-EEAT 基准](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)（80 项）评分，域名权威由 [CITE 域名评级](https://github.com/aaron-he-zhu/cite-domain-rating)（40 项）评分。
-
-> **SEO** 让你在搜索结果中获得排名。**GEO** 让你被 AI 系统（ChatGPT、Perplexity、Google AI Overviews）引用。本库同时覆盖两者。
-
-不熟悉术语？请查看 [GLOSSARY.md](../GLOSSARY.md)。
-
-### 为什么选择这个技能库
-
-- **120 项质量评分框架** — CORE-EEAT（80 项）+ CITE（40 项），带一票否决机制
-- **8 种语言，750+ 触发词** — 中英日韩西葡，含正式、口语和拼写变体
-- **零依赖** — 纯 Markdown 技能文件，无需 Python、虚拟环境或 API 密钥
-- **工具无关** — 独立运行，或通过 14 个 MCP 服务器连接（Ahrefs、Semrush、Cloudflare 等）
-- **7 个代理原生安装** — Claude Code、OpenClaw、Gemini CLI、Qwen Code、Amp、Kimi、CodeBuddy — 外加 35+ 代理通过 `npx skills`
+面向搜索引擎优化（SEO）和生成式引擎优化（GEO）的 Claude 技能与命令集。本仓库是 slash-aaron 的候选 SEO/GEO anchor 能力包。技能内容为零依赖 Markdown；Claude Code hooks 使用轻量 Bash runner。安装入口、发布面和支持证据统一维护在 [Marketplace 模块](../marketplaces/README.md) 与 [平台注册表](../distribution/platforms.json)。内容质量使用 CORE-EEAT（80 项），域名权威使用 CITE（40 项）。
 
 ## 快速开始
 
-```bash
-# Claude Code
-/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
+常用安装方式如下。支持级别、证据、manifest 归属与发布规则见 [marketplaces/README.md](../marketplaces/README.md) 和 [distribution/platforms.json](../distribution/platforms.json)。
 
-# OpenClaw / ClawHub
-clawhub install aaron-he-zhu/<skill>
+| 工具 | 安装 |
+|------|------|
+| Claude Code | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` |
+| ClawHub.ai / OpenClaw | 整包：`clawhub install aaron-he-zhu/aaron-seo-geo`；单技能：`clawhub install aaron-he-zhu/<skill>` |
+| Gemini CLI | `gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
+| Qwen Code | `qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
+| Amp | `amp skill add aaron-he-zhu/seo-geo-claude-skills` |
+| Kimi Code CLI | `kimi plugin install https://github.com/aaron-he-zhu/seo-geo-claude-skills.git` |
+| CodeBuddy | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` 后 `/plugin install aaron-seo-geo` |
+| skills.sh / 通用 Agent Skills 宿主 | `npx skills add aaron-he-zhu/seo-geo-claude-skills` |
 
-# Gemini CLI
-gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+单技能安装：`npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research`。
 
-# Qwen Code
-qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+自然语言示例（需宿主支持自动路由）：
 
-# Amp
-amp skill add aaron-he-zhu/seo-geo-claude-skills
-
-# Kimi Code CLI
-kimi plugin install https://github.com/aaron-he-zhu/seo-geo-claude-skills.git
-
-# CodeBuddy（应用内，2 步）
-/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
-/plugin install aaron-seo-geo
-
-# 通用回退（Cursor、Codex、opencode、Windsurf、Copilot 等 35+ 代理）
-npx skills add aaron-he-zhu/seo-geo-claude-skills
-
-# 仅安装单个技能
-npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
-```
-
-安装后即可使用：
-```
+```text
 帮我研究"云原生"相关的关键词机会
 ```
 
-或运行命令：
+Slash 命令宿主的稳定入口：
+
+```text
+/aaron:auto audit https://example.com
 ```
-/seo:audit-page https://example.com
-```
 
-## 技能总览
+## 技能
 
-### 研究阶段 — 创建内容前先了解市场
-
-| 技能 | 功能 |
-|------|------|
-| `keyword-research` | 关键词发现、意图分析、难度评分、话题聚类 |
-| `competitor-analysis` | 竞争对手 SEO/GEO 策略分析 |
-| `serp-analysis` | 搜索结果和 AI 回答模式分析 |
-| `content-gap-analysis` | 发现竞争对手覆盖但你缺失的内容机会 |
-
-### 构建阶段 — 创建搜索和 AI 优化内容
-
-| 技能 | 功能 |
-|------|------|
-| `seo-content-writer` | 编写搜索优化内容 |
-| `geo-content-optimizer` | 让内容更容易被 AI 系统引用 |
-| `meta-tags-optimizer` | 优化标题、描述和 Open Graph 标签 |
-| `schema-markup-generator` | 生成 JSON-LD 结构化数据 |
-
-### 优化阶段 — 改进现有内容和技术健康度
-
-| 技能 | 功能 |
-|------|------|
-| `on-page-seo-auditor` | 页面 SEO 审计，含评分报告 |
-| `technical-seo-checker` | 可爬取性、索引、Core Web Vitals 检查 |
-| `internal-linking-optimizer` | 优化内链结构 |
-| `content-refresher` | 更新过时内容以恢复排名 |
-
-### 监控阶段 — 追踪表现，及早发现问题
-
-| 技能 | 功能 |
-|------|------|
-| `rank-tracker` | 追踪关键词在搜索和 AI 中的排名 |
-| `backlink-analyzer` | 外链分析，发现机会和有毒链接 |
-| `performance-reporter` | 生成 SEO/GEO 表现报告 |
-| `alert-manager` | 排名下降、流量变化、技术问题告警 |
-
-### 协议层 — 跨所有阶段的质量控制
-
-| 技能 | 功能 |
-|------|------|
-| `content-quality-auditor` | 80 项 CORE-EEAT 内容质量审计 |
-| `domain-authority-auditor` | 40 项 CITE 域名权威审计 |
-| `entity-optimizer` | 品牌/实体知识图谱优化 |
-| `memory-management` | 项目上下文的跨会话持久化 |
+| 阶段 | 技能与用途 |
+|------|------------|
+| 研究 | `keyword-research` 关键词机会与选题；`competitor-analysis` 竞品差距；`serp-analysis` 搜索结果与意图；`content-gap-analysis` 内容缺口与编辑日历 |
+| 构建 | `seo-content-writer` SEO/GEO 内容草稿；`geo-content-optimizer` AI 引用优化；`meta-tags-optimizer` 标题与元描述；`schema-markup-generator` JSON-LD 结构化数据 |
+| 优化 | `on-page-seo-auditor` 页面 SEO 与 CORE-EEAT；`technical-seo-checker` 抓取、索引、速度、安全；`internal-linking-optimizer` 内链与站点架构；`content-refresher` 旧内容刷新 |
+| 监控 | `rank-tracker` 排名与 SERP 变化；`backlink-analyzer` 外链质量与机会；`performance-reporter` SEO/GEO 报告；`alert-manager` 预警与监控规则 |
+| 协议层 | `content-quality-auditor` 发布质量门；`domain-authority-auditor` CITE 域名可信度；`entity-optimizer` 实体与知识图谱；`memory-management` 项目记忆 |
 
 ## 命令
+SEO/GEO pack-local 入口：`/aaron:auto`；例外最大深度模式：`/aaron:max`（二者也包含在用户命令中）。
+用户命令：`/aaron:auto`, `/aaron:max`, `/aaron:discover`, `/aaron:compete`, `/aaron:map`, `/aaron:brief`, `/aaron:write`, `/aaron:series`, `/aaron:refresh`, `/aaron:publish`, `/aaron:audit`, `/aaron:visibility`, `/aaron:tech`, `/aaron:authority`, `/aaron:watch`, `/aaron:report`, `/aaron:remember`。
 
-| 命令 | 说明 |
+维护命令：`/aaron:skillify`, `/aaron:evolve`, `/aaron:guard`。
+
+日常 SEO/GEO 工作通常从 `/aaron:auto` 开始；它会按用户目标执行 SEO/GEO pack-local 工作流，并只在阻塞决策点暂停。只有明确需要当前 pack 内最大深度、穷尽式分析或压力测试时才使用 `/aaron:max`。其余命令是重复任务的专家快捷入口。检查拟新增技能或路由时使用 `/aaron:skillify`；改进技能库本身时使用 `/aaron:evolve`；维护验收时使用 `/aaron:guard`。
+
+破坏性改名说明：当前命令使用 `/aaron:`。旧 `/seo:*` 命令可粘贴给 `/aaron:auto` 来恢复新路由；例如 `/aaron:auto /seo:audit-page https://example.com/blog/post` 会返回 `/aaron:audit https://example.com/blog/post`。
+
+## 运行模型
+
+每个技能都遵循统一结构：Quick Start、Skill Contract、Handoff Summary、Data Sources、Instructions、Reference Materials、Next Best Skill。四个跨阶段技能负责协议层：`content-quality-auditor` 做发布质量门，`domain-authority-auditor` 做信任门，`entity-optimizer` 维护实体事实，`memory-management` 管理 HOT/WARM/COLD 项目记忆。
+
+可选工具连接器见 [CONNECTORS.md](../CONNECTORS.md)；没有工具时，每个技能仍可用用户提供的数据运行。
+
+## 质量框架
+
+| 框架 | 作用 |
 |------|------|
-| `/seo:audit-page <URL>` | 页面 SEO + CORE-EEAT 内容质量审计 |
-| `/seo:check-technical <URL>` | 技术 SEO 健康检查 |
-| `/seo:generate-schema <type>` | 生成 JSON-LD 结构化数据 |
-| `/seo:optimize-meta <URL>` | 优化标题、描述和 OG 标签 |
-| `/seo:report <domain> <period>` | SEO/GEO 综合表现报告 |
-| `/seo:audit-domain <domain>` | CITE 域名权威审计 |
-| `/seo:write-content <topic>` | SEO + GEO 优化内容写作 |
-| `/seo:keyword-research <seed>` | 关键词研究与分析 |
-| `/seo:setup-alert <metric>` | 配置监控告警 |
-| `/seo:geo-drift-check [URL]` | (实验性,v9.0+) 验证预测 GEO Score 与 AI 引擎实际引用情况的偏差 |
+| [CORE-EEAT](../references/core-eeat-benchmark.md) | 80 项内容质量评分 |
+| [CITE](../references/cite-domain-rating.md) | 40 项域名权威评分 |
+| [Auditor Runbook](../references/auditor-runbook.md) | 审计 handoff、分数封顶、Artifact Gate |
 
-### 维护命令(供库维护者 / 高级用户,日常可忽略)
+## 贡献与许可
 
-| 命令 | 说明 |
-|------|------|
-| `/seo:wiki-lint` | Wiki 健康检查:矛盾、孤儿、过时声明、缺失页面 |
-| `/seo:contract-lint` | Auditor Runbook 漂移检测、handoff schema 检查、术语泄漏扫描 (v7.1.0+) |
-| `/seo:p2-review` | 评估 v7.1.0 延期项目触发条件;tombstone 复审 (2026-07-10) |
-| `/seo:sync-versions` | 将 `.claude-plugin/plugin.json` 的版本号传播到所有跨 agent manifest(v9.0+,替代 `scripts/sync-versions.py`) |
-| `/seo:validate-library` | 库级质量闸:描述预算、YAML 字段顺序、语言覆盖、重复触发词检测(v9.0+,替代 `scripts/validate-descriptions.py`) |
+贡献规则见 [CONTRIBUTING.md](../CONTRIBUTING.md)。版本见 [VERSIONS.md](../VERSIONS.md)。许可证：Apache License 2.0。
 
-## 贡献
+*最后同步英文 README：v9.9.9*
 
-欢迎贡献！请参阅 [CONTRIBUTING.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONTRIBUTING.md)。
+## Star History
 
-## 许可证
-
-Apache License 2.0
-
-*最后同步英文 README：v9.0.0*
+<a href="https://www.star-history.com/?repos=aaron-he-zhu%2Fseo-geo-claude-skills&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=aaron-he-zhu/seo-geo-claude-skills&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=aaron-he-zhu/seo-geo-claude-skills&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=aaron-he-zhu/seo-geo-claude-skills&type=date&legend=top-left" />
+ </picture>
+</a>

@@ -1,427 +1,113 @@
-# On-Page SEO Auditor — Output Templates
+# On-Page SEO Auditor - Compact Output Templates
 
-Detailed output templates for on-page-seo-auditor steps 1-11. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/on-page-seo-auditor/SKILL.md).
+Use one shape: evidence -> checks -> issues -> fix -> score. Keep only sections that match page type.
 
----
+## Shared Conventions
 
-## Step 1: Gather Page Information
+| Item | Rule |
+|------|------|
+| Status | `✅` pass, `⚠️` partial risk, `❌` fail |
+| Severity | `P0` blocks ranking/indexing, `P1` suppresses performance, `P2` hygiene |
+| Evidence | Page state, crawl date, competitor set, inferred keyword |
+| Scores | `/10` sections; final roll-up `/100` |
 
-```markdown
-### Audit Setup
+## Step Map
 
-**Page URL**: [URL]
-**Target Keyword**: [primary keyword]
-**Secondary Keywords**: [additional keywords]
-**Page Type**: [blog/product/landing/service]
-**Business Goal**: [traffic/conversions/authority]
-```
+| Step | Focus | Must Capture |
+|------|-------|--------------|
+| 1 | Setup | URL, keyword, page type, goal |
+| 2 | Title | length, keyword position, clickability |
+| 3 | Meta description | length, CTA, intent match |
+| 4 | Headers | single H1, hierarchy, keyword coverage |
+| 5 | Content quality | depth, proof, freshness, readability |
+| 6 | Keyword usage | placement, related terms, overuse |
+| 7 | Internal links | count, anchor quality, gaps |
+| 8 | Images | alt text, file names, size, format, lazy load |
+| 9 | Technical on-page | URL, canonical, speed, mobile, schema |
+| 10 | CORE-EEAT quick scan | 17 page-level checks |
+| 11 | Summary | priorities, quick wins, checklist |
 
----
+## Setup
 
-## Step 2: Audit Title Tag
+Page URL, target keyword, secondary keywords, page type, business goal, competitor set.
 
-```markdown
-## Title Tag Analysis
+## Title Tag
 
-**Current Title**: [title]
-**Character Count**: [X] characters
+Current title, character count, length 50-60 chars, primary keyword, front-loaded wording, intent/clickability, recommended title, score.
 
-| Criterion | Status | Notes |
-|-----------|--------|-------|
-| Length (50-60 chars) | Pass/Warn/Fail | [notes] |
-| Keyword included | Pass/Warn/Fail | Position: [front/middle/end] |
-| Keyword at front | Pass/Warn/Fail | [notes] |
-| Unique across site | Pass/Warn/Fail | [notes] |
-| Compelling/clickable | Pass/Warn/Fail | [notes] |
-| Matches intent | Pass/Warn/Fail | [notes] |
+## Meta Description
 
-**Title Score**: [X]/10
+Current description, character count, length 150-160 chars, natural keyword, CTA, promise match, recommended description, score.
 
-**Issues Found**:
-- [Issue 1]
-- [Issue 2]
+## Headers
 
-**Recommended Title**:
-"[Optimized title suggestion]"
+Current H1/H2/H3 hierarchy, single H1, H1 keyword coverage, logical nesting, subtopic coverage, score.
 
-**Why**: [Explanation of improvements]
-```
+## Content Quality
 
----
+Word count, read time, depth vs competitors, unique proof, freshness, readability, E-E-A-T signals, intro answer, chunking, examples/stats, FAQ/conclusion/CTA, score.
 
-## Step 3: Audit Meta Description
+## Keyword Usage
 
-```markdown
-## Meta Description Analysis
+Primary keyword, density, title/meta/H1/first 100 words/H2-H3/URL/image alt status, related terms, missing terms, overuse risk, score.
 
-**Current Description**: [description]
-**Character Count**: [X] characters
+## Internal Links
 
-| Criterion | Status | Notes |
-|-----------|--------|-------|
-| Length (150-160 chars) | Pass/Warn/Fail | [notes] |
-| Keyword included | Pass/Warn/Fail | [notes] |
-| Call-to-action present | Pass/Warn/Fail | [notes] |
-| Unique across site | Pass/Warn/Fail | [notes] |
-| Accurately describes page | Pass/Warn/Fail | [notes] |
-| Compelling copy | Pass/Warn/Fail | [notes] |
+Total internal links, descriptive anchors, topical depth, broken/misdirected links, recommended additions, score.
 
-**Description Score**: [X]/10
+## Images
 
-**Issues Found**:
-- [Issue 1]
+| Image | Alt Text | File Name | Size/Format | Lazy Load | Status | Fix |
+|-------|----------|-----------|-------------|-----------|--------|-----|
+| [image] | [alt or missing] | [filename] | [KB/WebP/JPG] | [yes/no] | ✅/⚠️/❌ | [fix] |
 
-**Recommended Description**:
-"[Optimized description suggestion]" ([X] chars)
-```
+| Image check | Status | Notes | Fix |
+|-------------|--------|-------|-----|
+| File names are descriptive | ✅/⚠️/❌ | [notes] | [fix] |
+| Lazy loading enabled where appropriate | ✅/⚠️/❌ | [notes] | [fix] |
 
----
+Score: [X]/10.
 
-## Step 4: Audit Header Structure
+## Technical On-Page
 
-```markdown
-## Header Structure Analysis
+URL/slug, canonical, mobile, page speed, HTTPS, schema markup, score.
 
-### Current Header Hierarchy
-
-```
-H1: [H1 text]
-  H2: [H2 text]
-    H3: [H3 text]
-    H3: [H3 text]
-  H2: [H2 text]
-    H3: [H3 text]
-  H2: [H2 text]
-```
-
-| Criterion | Status | Notes |
-|-----------|--------|-------|
-| Single H1 | Pass/Warn/Fail | Found: [X] H1s |
-| H1 includes keyword | Pass/Warn/Fail | [notes] |
-| Logical hierarchy | Pass/Warn/Fail | [notes] |
-| H2s include keywords | Pass/Warn/Fail | [X]/[Y] contain keywords |
-| No skipped levels | Pass/Warn/Fail | [notes] |
-| Descriptive headers | Pass/Warn/Fail | [notes] |
-
-**Header Score**: [X]/10
-
-**Issues Found**:
-- [Issue 1]
-- [Issue 2]
-
-**Recommended Changes**:
-- H1: [suggestion]
-- H2s: [suggestions]
-```
-
----
-
-## Step 5: Audit Content Quality
-
-```markdown
-## Content Quality Analysis
-
-**Word Count**: [X] words
-**Reading Level**: [Grade level]
-**Estimated Read Time**: [X] minutes
-
-| Criterion | Status | Notes |
-|-----------|--------|-------|
-| Sufficient length | ✅/⚠️/❌ | [comparison to ranking content] |
-| Comprehensive coverage | ✅/⚠️/❌ | [notes] |
-| Unique value/insights | ✅/⚠️/❌ | [notes] |
-| Up-to-date information | ✅/⚠️/❌ | [notes] |
-| Proper formatting | ✅/⚠️/❌ | [notes] |
-| Readability | ✅/⚠️/❌ | [notes] |
-| E-E-A-T signals | ✅/⚠️/❌ | [notes] |
-
-**Content Elements Present**:
-- [ ] Introduction with keyword
-- [ ] Clear sections/structure
-- [ ] Bullet points/lists
-- [ ] Tables where appropriate
-- [ ] Images/visuals
-- [ ] Examples/case studies
-- [ ] Statistics with sources
-- [ ] Expert quotes
-- [ ] FAQ section
-- [ ] Conclusion with CTA
-
-**Content Score**: [X]/10
-
-**Gaps Identified**:
-- [Missing topic/section 1]
-- [Missing topic/section 2]
-
-**Recommendations**:
-1. [Specific improvement]
-2. [Specific improvement]
-```
-
----
-
-## Step 6: Audit Keyword Usage
-
-```markdown
-## Keyword Optimization Analysis
-
-**Primary Keyword**: "[keyword]"
-**Keyword Density**: [X]%
-
-### Keyword Placement
-
-| Location | Present | Notes |
-|----------|---------|-------|
-| Title tag | ✅/❌ | Position: [X] |
-| Meta description | ✅/❌ | [notes] |
-| H1 | ✅/❌ | [notes] |
-| First 100 words | ✅/❌ | Word position: [X] |
-| H2 headings | ✅/❌ | In [X]/[Y] H2s |
-| Body content | ✅/❌ | [X] occurrences |
-| URL slug | ✅/❌ | [notes] |
-| Image alt text | ✅/❌ | In [X]/[Y] images |
-| Conclusion | ✅/❌ | [notes] |
-
-### Secondary Keywords
-
-| Keyword | Occurrences | Status |
-|---------|-------------|--------|
-| [keyword 1] | [X] | ✅/⚠️/❌ |
-| [keyword 2] | [X] | ✅/⚠️/❌ |
-
-### LSI/Related Terms
-
-**Present**: [list of related terms found]
-**Missing**: [important related terms not found]
-
-**Keyword Score**: [X]/10
-
-**Issues**:
-- [Issue 1]
-
-**Recommendations**:
-- [Suggestion 1]
-```
-
----
-
-## Step 7: Audit Internal Links
-
-```markdown
-## Internal Linking Analysis
-
-**Total Internal Links**: [X]
-**Unique Internal Links**: [X]
-
-| Criterion | Status | Notes |
-|-----------|--------|-------|
-| Number of internal links | ✅/⚠️/❌ | [X] (recommend 3-5+) |
-| Relevant anchor text | ✅/⚠️/❌ | [notes] |
-| Links to related content | ✅/⚠️/❌ | [notes] |
-| Links to important pages | ✅/⚠️/❌ | [notes] |
-| No broken links | ✅/⚠️/❌ | [X] broken found |
-| Natural placement | ✅/⚠️/❌ | [notes] |
-
-**Current Internal Links**:
-1. "[Anchor text]" → [URL]
-2. "[Anchor text]" → [URL]
-3. "[Anchor text]" → [URL]
-
-**Internal Linking Score**: [X]/10
-
-**Recommended Additional Links**:
-1. Add link to "[Related page]" with anchor "[suggested anchor]"
-2. Add link to "[Related page]" with anchor "[suggested anchor]"
-
-**Anchor Text Improvements**:
-- Change "[current anchor]" to "[improved anchor]"
-```
-
----
-
-## Step 8: Audit Images
-
-```markdown
-## Image Optimization Analysis
-
-**Total Images**: [X]
-
-### Image Audit Table
-
-| Image | Alt Text | File Name | Size | Status |
-|-------|----------|-----------|------|--------|
-| [img1] | [alt or "missing"] | [filename] | [KB] | ✅/⚠️/❌ |
-| [img2] | [alt or "missing"] | [filename] | [KB] | ✅/⚠️/❌ |
-
-| Criterion | Status | Notes |
-|-----------|--------|-------|
-| All images have alt text | ✅/⚠️/❌ | [X]/[Y] have alt |
-| Alt text includes keywords | ✅/⚠️/❌ | [notes] |
-| Descriptive file names | ✅/⚠️/❌ | [notes] |
-| Appropriate file sizes | ✅/⚠️/❌ | [notes] |
-| Modern formats (WebP) | ✅/⚠️/❌ | [notes] |
-| Lazy loading enabled | ✅/⚠️/❌ | [notes] |
-
-**Image Score**: [X]/10
-
-**Recommendations**:
-1. Add alt text to image [X]: "[suggested alt text]"
-2. Compress image [Y]: Currently [X]KB, should be under [Y]KB
-3. Rename [filename] to [better-filename]
-```
-
----
-
-## Step 9: Audit Technical On-Page Elements
-
-```markdown
-## Technical On-Page Analysis
-
-| Element | Current Value | Status | Recommendation |
-|---------|---------------|--------|----------------|
-| URL | [URL] | ✅/⚠️/❌ | [notes] |
-| URL length | [X] chars | ✅/⚠️/❌ | [notes] |
-| URL keywords | [present/absent] | ✅/⚠️/❌ | [notes] |
-| Canonical tag | [URL or "missing"] | ✅/⚠️/❌ | [notes] |
-| Mobile-friendly | [yes/no] | ✅/⚠️/❌ | [notes] |
-| Page speed | [X]s | ✅/⚠️/❌ | [notes] |
-| HTTPS | [yes/no] | ✅/⚠️/❌ | [notes] |
-| Schema markup | [types or "none"] | ✅/⚠️/❌ | [notes] |
-
-**Technical Score**: [X]/10
-```
-
----
-
-## Step 10: CORE-EEAT Content Quality Quick Scan
-
-Run a quick scan of on-page-relevant CORE-EEAT items. Reference: [CORE-EEAT Benchmark](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/core-eeat-benchmark.md)
-
-```markdown
 ## CORE-EEAT Quick Scan
 
-Content-relevant items from the 80-item benchmark:
+| ID | Check | Status | Notes |
+|----|-------|--------|-------|
+| C01 | Intent alignment | ✅/⚠️/❌ | [notes] |
+| C02 | Direct answer early | ✅/⚠️/❌ | [notes] |
+| C09 | FAQ coverage | ✅/⚠️/❌ | [notes] |
+| C10 | Semantic closure | ✅/⚠️/❌ | [notes] |
+| O01 | Heading hierarchy | ✅/⚠️/❌ | [notes] |
+| O02 | Summary/takeaways | ✅/⚠️/❌ | [notes] |
+| O03 | Tables where needed | ✅/⚠️/❌ | [notes] |
+| O05 | Schema markup | ✅/⚠️/❌ | [notes] |
+| O06 | Section chunking | ✅/⚠️/❌ | [notes] |
+| R01 | Data precision | ✅/⚠️/❌ | [notes] |
+| R02 | Citation density | ✅/⚠️/❌ | [notes] |
+| R06 | Timestamp freshness | ✅/⚠️/❌ | [notes] |
+| R08 | Internal link graph | ✅/⚠️/❌ | [notes] |
+| R10 | Content consistency | ✅/⚠️/❌ | [notes] |
+| Exp01 | First-person experience | ✅/⚠️/❌ | [notes] |
+| Ept01 | Author identity | ✅/⚠️/❌ | [notes] |
+| T04 | Disclosure statements | ✅/⚠️/❌ | [notes] |
 
-| ID | Check Item | Status | Notes |
-|----|-----------|--------|-------|
-| C01 | Intent Alignment | ✅/⚠️/❌ | Title promise = content delivery |
-| C02 | Direct Answer | ✅/⚠️/❌ | Core answer in first 150 words |
-| C09 | FAQ Coverage | ✅/⚠️/❌ | Structured FAQ present |
-| C10 | Semantic Closure | ✅/⚠️/❌ | Conclusion answers opening |
-| O01 | Heading Hierarchy | ✅/⚠️/❌ | H1→H2→H3, no skipping |
-| O02 | Summary Box | ✅/⚠️/❌ | TL;DR or Key Takeaways |
-| O03 | Data Tables | ✅/⚠️/❌ | Comparisons in tables |
-| O05 | Schema Markup | ✅/⚠️/❌ | Appropriate JSON-LD |
-| O06 | Section Chunking | ✅/⚠️/❌ | Single topic per section |
-| R01 | Data Precision | ✅/⚠️/❌ | ≥5 precise numbers |
-| R02 | Citation Density | ✅/⚠️/❌ | ≥1 per 500 words |
-| R06 | Timestamp | ✅/⚠️/❌ | Updated <1 year |
-| R08 | Internal Link Graph | ✅/⚠️/❌ | Descriptive anchors |
-| R10 | Content Consistency | ✅/⚠️/❌ | No contradictions |
-| Exp01 | First-Person Narrative | ✅/⚠️/❌ | "I tested" or "We found" |
-| Ept01 | Author Identity | ✅/⚠️/❌ | Byline + bio present |
-| T04 | Disclosure Statements | ✅/⚠️/❌ | Affiliate links disclosed |
-
-**CORE-EEAT Quick Score**: [X]/17 items passing
-
-> For a complete 80-item audit with weighted scoring, use `content-quality-auditor`.
-```
-
----
+**Quick Score**: [X]/17 passing
 
 ## Step 11: Generate Audit Summary
 
-```markdown
-# On-Page SEO Audit Report
+| Area | Score | Top Issue | First Fix |
+|------|:-----:|-----------|-----------|
+| Title | [X]/10 | [issue] | [fix] |
+| Meta | [X]/10 | [issue] | [fix] |
+| Headers | [X]/10 | [issue] | [fix] |
+| Content | [X]/10 | [issue] | [fix] |
+| Keywords | [X]/10 | [issue] | [fix] |
+| Links | [X]/10 | [issue] | [fix] |
+| Images | [X]/10 | [issue] | [fix] |
+| Technical | [X]/10 | [issue] | [fix] |
+| CORE-EEAT quick scan (scaled) | [scaled score]/20 | [issue] | [fix] |
 
-**Page**: [URL]
-**Target Keyword**: [keyword]
-**Audit Date**: [date]
-
-## Overall Score: [X]/100
-
-```
-Score Breakdown:
-████████░░ Title Tag: 8/10
-██████░░░░ Meta Description: 6/10
-█████████░ Headers: 9/10
-███████░░░ Content: 7/10
-██████░░░░ Keywords: 6/10
-█████░░░░░ Internal Links: 5/10
-████░░░░░░ Images: 4/10
-████████░░ Technical: 8/10
-```
-
-## Priority Issues
-
-### 🔴 Critical (Fix Immediately)
-1. [Critical issue 1]
-2. [Critical issue 2]
-
-### 🟡 Important (Fix Soon)
-1. [Important issue 1]
-2. [Important issue 2]
-
-### 🟢 Minor (Nice to Have)
-1. [Minor issue 1]
-2. [Minor issue 2]
-
-## Quick Wins
-
-These changes will have immediate impact:
-
-1. **[Change 1]**: [Why and how]
-2. **[Change 2]**: [Why and how]
-3. **[Change 3]**: [Why and how]
-
-## Detailed Recommendations
-
-### Title Tag
-- **Current**: [current title]
-- **Recommended**: [new title]
-- **Impact**: [expected improvement]
-
-### Meta Description
-- **Current**: [current description]
-- **Recommended**: [new description]
-- **Impact**: [expected improvement]
-
-### Content Improvements
-1. [Specific content change with location]
-2. [Specific content change with location]
-
-### Internal Linking
-1. Add link: "[anchor]" → [destination]
-2. Add link: "[anchor]" → [destination]
-
-### Image Optimization
-1. [Image 1]: [change needed]
-2. [Image 2]: [change needed]
-
-## Competitor Comparison
-
-| Element | Your Page | Top Competitor | Gap |
-|---------|-----------|----------------|-----|
-| Word count | [X] | [Y] | [+/-Z] |
-| Internal links | [X] | [Y] | [+/-Z] |
-| Images | [X] | [Y] | [+/-Z] |
-| H2 headings | [X] | [Y] | [+/-Z] |
-
-## Action Checklist
-
-- [ ] Update title tag
-- [ ] Rewrite meta description
-- [ ] Add keyword to H1
-- [ ] Add [X] more internal links
-- [ ] Add alt text to [X] images
-- [ ] Add [X] more content sections
-- [ ] Implement FAQ schema
-- [ ] [Additional action items]
-
-## Expected Results
-
-After implementing these changes:
-- Estimated ranking improvement: [X] positions
-- Estimated CTR improvement: [X]%
-- Estimated traffic increase: [X]%
-```
+Scaling rule: `scaled score = round(passed_checks / 17 * 20)`. Finish with P0/P1/P2 issues, quick wins, competitor gap snapshot, and action checklist.

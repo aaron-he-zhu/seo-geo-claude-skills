@@ -29,7 +29,7 @@ The panel rejected several v1 assumptions:
 4. **60/40 cap numbers are eyeballed.** The plan offered 70/50 and 65/45 as alternatives, revealing no principled basis.
 5. **Failure Modes Catalog is likely to become a tombstone.** Manual curation with no named owner, no cadence, predictable drift by month 3.
 
-Round 1 produced v2. v2 kept Critical Fail Cap, Guardrail Negatives, and the inline strategy; deferred Gap Typology and Failure Modes to P2 observation; killed Blind Pass and Evidence Layering entirely.
+Round 1 produced v2. v2 kept Critical Fail Cap, Guardrail Negatives, and the inline strategy; deferred Gap Typology and Failure Modes to observation; killed Blind Pass and Evidence Layering entirely.
 
 ### Round 2 review (5 agents: Continuity / Red Team / DevEx / Migration / Doc Quality)
 
@@ -51,11 +51,11 @@ Ship v7.1.0 as the auditor-runbook inline strategy with the following elements:
 
 1. **Amend `CLAUDE.md:63`** to formally exempt protocol-layer auditors from the 350-line rule, with a ceiling of approximately 670 lines for affected skills.
 2. **Create `references/auditor-runbook.md`** as the single source of truth for auditor handoff schema, cap arithmetic (decision table + 3 worked examples), guardrail rules, Artifact Gate checklist, User-Facing Translation layer, and Lint Coverage Manifest.
-3. **Inline §1-5 of the Runbook** (the execution-critical sections) into both `content-quality-auditor/SKILL.md` and `domain-authority-auditor/SKILL.md`, between `<!-- runbook-sync start: sha256=... -->` markers. The sha256 enables machine-verifiable drift detection in v7.2.0 via `/seo:contract-lint`. §6 Lint Coverage Manifest stays only in the source file because it is consumed by the lint tool, not by the auditor at execution time.
+3. **Inline §1-5 of the Runbook** (the execution-critical sections) into both `content-quality-auditor/SKILL.md` and `domain-authority-auditor/SKILL.md`, between `<!-- runbook-sync start: sha256=... -->` markers. The sha256 enables machine-verifiable drift detection via `/aaron:guard --contracts`. §6 Lint Coverage Manifest stays only in the source file because it is consumed by the lint tool, not by the auditor at execution time.
 4. **Ship only the 60-point cap.** The 2+ veto case returns `status: BLOCKED` rather than applying an unvalidated 40-point cap. Numeric calibration deferred to v7.3, gated on 30+ real multi-veto audits.
 5. **Declare handoff extension fields optional during a v7.1.0 → v7.2.0 deprecation window** to prevent breakage when pre-upgrade audits are consumed by post-upgrade skills.
 6. **Ship v7.1.0 as a single PR with two sequential commits**: infrastructure first (reference files, ADR, AUDITOR-AUTHORS, CLAUDE.md amendment) then behavior (both auditor SKILL.md inlines as an atomic pair, plus tracking files). Enables clean partial rollback and a reviewable diff.
-7. **Commit P0 and P1-1 (`/seo:contract-lint`) in the same sprint.** The biggest rot risk in the P0-to-P1 gap is inline copy drift, and contract-lint is the only detection mechanism.
+7. **Commit P0 and P1-1 (`/aaron:guard --contracts`) in the same sprint.** The biggest rot risk in the P0-to-P1 gap is inline copy drift, and contract checks are the only detection mechanism.
 
 ## Consequences
 
@@ -63,7 +63,7 @@ Ship v7.1.0 as the auditor-runbook inline strategy with the following elements:
 
 - Rules execute at approximately 95% compliance instead of approximately 25%.
 - Single source of truth per concern (item definitions, cap numbers, arithmetic, general handoff format).
-- Drift detectable via sha256 and `/seo:contract-lint` (v7.2.0).
+- Drift detectable via sha256 and `/aaron:guard --contracts`.
 - User trust preserved by the Translation Layer (plain language instead of raw T04 failures).
 - Decision provenance captured in this ADR and survives in git history.
 - Backward compatibility defined explicitly with a dated sunset.
@@ -87,9 +87,9 @@ Ship v7.1.0 as the auditor-runbook inline strategy with the following elements:
 
 ## Review triggers
 
-- **2026-07-10**: `/seo:p2-review` command evaluates P2 observation items. Items with unmet triggers auto-close; items with met triggers are proposed for v7.3.
-- **First `/seo:contract-lint` drift report**: audit the inlined copies, update the sync procedure if drift was preventable.
-- **Any edit to `references/auditor-runbook.md`**: re-run the sync procedure, recompute sha256 in both inlined copies, and verify `commands/contract-lint.md` still matches §6 Lint Coverage Manifest.
+- **Auditor calibration trigger**: `/aaron:guard --evals` plus maintainer review evaluates deferred observation items when real audit evidence exists. Items with unmet triggers stay closed; items with met triggers are proposed for a future release.
+- **First `/aaron:guard --contracts` drift report**: audit the inlined copies, update the sync procedure if drift was preventable.
+- **Any edit to `references/auditor-runbook.md`**: re-run the sync procedure, recompute sha256 in both inlined copies, and verify `commands/guard.md` still matches §6 Lint Coverage Manifest.
 - **If the 350-line exception proves abusive**: revisit the inlining strategy and consider whether an alternative (e.g., a build-time preprocessor that assembles SKILL.md at publish time) would preserve execution fidelity without the bloat. As of v7.1.0, no preprocessor infrastructure exists in ClawHub or Claude Code.
 
 ## Related
@@ -98,3 +98,13 @@ Ship v7.1.0 as the auditor-runbook inline strategy with the following elements:
 - [references/AUDITOR-AUTHORS.md](../AUDITOR-AUTHORS.md) — onboarding doc for new auditor-class skill authors
 - [references/skill-contract.md](../skill-contract.md) — the general contract (modified with an Auditor-class Extension clause)
 - [CLAUDE.md](../../CLAUDE.md) — 350-line rule amended in this release
+
+## Status Update — 2026-05
+
+Status review at v10.0.x. Decisions 1, 2, 3, 5, 6, 7 shipped as planned. Decision 4 partial: 60-point cap and BLOCKED path ship; numeric calibration for the 2+ veto case remains deferred — the 30+ multi-veto evidence trigger has not fired (single-user corpus has not reached threshold; no audit-archival mechanism is built into the repo).
+
+The three deferred items (cap calibration, Failure Modes Catalog, Gap Typology as a required auditor handoff field) all gate on the same evidence trigger and remain pending. Re-evaluate when 30+ multi-veto auditor outputs have been observed in practice.
+
+Note on `gap_type`: appears in [entity-geo-handoff-schema.md](../entity-geo-handoff-schema.md) as a structured handoff field for the entity-geo subdomain — unrelated to the original ADR-001 deferral, which scoped Gap Typology as a generalized auditor-handoff field.
+
+The 350-line exception is sourced only by the two existing auditors; both still under the ~750 ceiling (716 / 707 lines as of v10.0.x post-severity-routing).

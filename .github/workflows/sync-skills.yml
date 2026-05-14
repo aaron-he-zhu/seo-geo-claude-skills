@@ -9,6 +9,20 @@ on:
       - "optimize/**/SKILL.md"
       - "monitor/**/SKILL.md"
       - "cross-cutting/**/SKILL.md"
+  pull_request:
+    branches: [main]
+    paths:
+      - "research/**/SKILL.md"
+      - "build/**/SKILL.md"
+      - "optimize/**/SKILL.md"
+      - "monitor/**/SKILL.md"
+      - "cross-cutting/**/SKILL.md"
+      - ".github/scripts/sync-skills.js"
+      - ".github/workflows/sync-skills.yml"
+      - "marketplace.json"
+      - ".claude-plugin/marketplace.json"
+      - ".claude-plugin/plugin.json"
+      - ".codebuddy-plugin/marketplace.json"
 
 jobs:
   sync:
@@ -23,11 +37,17 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Check skills manifest
+        if: github.event_name == 'pull_request'
+        run: node .github/scripts/sync-skills.js --check
+
       - name: Sync skills manifest
+        if: github.event_name == 'push'
         run: node .github/scripts/sync-skills.js
 
       - name: Commit changes
+        if: github.event_name == 'push'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: sync skills manifest"
-          file_pattern: "marketplace.json .claude-plugin/plugin.json"
+          file_pattern: "marketplace.json .claude-plugin/marketplace.json .claude-plugin/plugin.json .codebuddy-plugin/marketplace.json"

@@ -8,7 +8,7 @@ body:
     attributes:
       label: Affected Skill or Command
       description: Which skill or command has the issue?
-      placeholder: "e.g., keyword-research, /seo:audit-page"
+      placeholder: "e.g., keyword-research, /aaron:audit"
     validations:
       required: true
   - type: textarea

@@ -18,8 +18,6 @@ Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills
 
 ### Stage 1 — Freeze current state (baseline snapshot)
 
-Goal: capture the **current** SEO signals so you can diff after migration.
-
 Capture in `memory/audits/pre-migration-YYYY-MM-DD.md`:
 
 1. **URL inventory**
@@ -48,8 +46,6 @@ Capture in `memory/audits/pre-migration-YYYY-MM-DD.md`:
 
 ### Stage 2 — Risk map
 
-For each proposed migration change, score risk:
-
 | Change | Risk | Impact if mishandled |
 |--------|------|---------------------|
 | URL structure change | HIGH | traffic loss 20-40% for 2-12 weeks |
@@ -63,8 +59,6 @@ For each proposed migration change, score risk:
 Produce a **GO / NOGO** recommendation per change.
 
 ### Stage 3 — Redirect map
-
-Before any URL changes, build a one-to-one redirect map:
 
 ```csv
 old_url,new_url,reason,priority
@@ -83,8 +77,6 @@ Save to `memory/audits/redirect-map-YYYY-MM-DD.csv`.
 
 ### Stage 4 — Staging QA
 
-Before production cutover, QA the staging environment:
-
 1. **Robots / indexing**: is `noindex` set on staging? Will it flip to `index` on launch? Any accidental `Disallow: /` in the production robots.txt draft?
 2. **Template parity**: do new templates produce equivalent `<title>`, `<meta description>`, `<h1>`, canonical, schema for each page type?
 3. **Internal linking**: run a crawl of staging; verify topic clusters intact; check for orphan pages introduced by the new template.
@@ -94,8 +86,6 @@ Before production cutover, QA the staging environment:
 
 ### Stage 5 — Cutover day checklist
 
-At launch:
-
 1. Deploy redirects BEFORE touching DNS / robots (if possible)
 2. Update `robots.txt` to production
 3. Submit new `sitemap.xml` to Search Console and Bing Webmaster
@@ -104,8 +94,6 @@ At launch:
 6. First-day rollback trigger: if 404 rate on old URLs exceeds 5% of old-URL traffic, immediately audit redirect map
 
 ### Stage 6 — Post-migration diff (T+1, T+7, T+30)
-
-Run the same inventory as Stage 1 and diff:
 
 - **T+1**: full crawl. Flag any URL that returns non-2xx when it should redirect.
 - **T+7**: compare traffic per URL vs baseline. Flag URLs with >30% drop.

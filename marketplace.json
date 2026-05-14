@@ -5,17 +5,19 @@
     "url": "https://github.com/aaron-he-zhu"
   },
   "metadata": {
-    "description": "SEO & GEO skill operating system with a shared contract, protocol-layer gates, and reusable state handoffs",
-    "version": "9.0.0",
+    "description": "SEO & GEO capability pack. Breaking v10 command rename: /seo:* -> /aaron:*; recover old commands with /aaron:auto.",
+    "version": "9.9.9",
     "repository": "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
   },
   "plugins": [
     {
       "name": "aaron-seo-geo",
       "source": "./",
-      "description": "20 SEO and GEO skills plus 15 commands on one shared operating contract. Includes protocol-layer gates for content quality, domain trust, entity truth, and campaign memory alongside keyword research, content creation, audits, monitoring, schema markup, and AI citation optimization. v9.0.0 adds legal/compliance hardening (FTC, GDPR, EU AI Act, WCAG), 10 new playbooks, SKILL.md size compliance (≤350 lines), native install for Gemini CLI / Qwen / Amp / Kimi / CodeBuddy, and the experimental /seo:geo-drift-check command.",
-      "version": "9.0.0",
+      "description": "20 SEO/GEO skills and 20 commands on one shared contract for keyword research, content creation, technical audits, schema markup, monitoring, quality gates, entity truth, and campaign memory.",
+      "version": "9.9.9",
       "category": "marketing",
+      "commands": "./commands/",
+      "commandNamespace": "aaron",
       "tags": [
         "seo",
         "geo",

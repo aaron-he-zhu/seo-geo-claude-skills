@@ -1,373 +1,142 @@
 # Content Refresh Templates
 
-Detailed output templates for content-refresher steps 2-9. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/SKILL.md).
+Templates for content-refresher steps 2-9. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/SKILL.md).
 
----
-
-## Step 2: Identify Content Refresh Candidates
+## Steps 2-3: Find And Diagnose Refresh Candidates
 
 ```markdown
 ## Content Refresh Analysis
 
-### Refresh Candidate Identification
+| Content | Published | Last Updated | Traffic Trend | Ranking Trend | Priority | Decision |
+|---------|-----------|--------------|---------------|---------------|----------|----------|
+| [Title] | [date] | [date/Never] | [down/up X%] | [lost/gained X positions] | H/M/L | [refresh/merge/redirect/retire] |
 
-**Criteria for Content Refresh**:
-- Published more than 6 months ago
-- Contains dated information (years, statistics)
-- Declining traffic trend
-- Lost keyword rankings
-- Outdated references or broken links
-- Missing topics competitors now cover
-- No GEO optimization
+| Traffic Potential | Decline Severity | Decision |
+|-------------------|------------------|----------|
+| High | High | Refresh immediately |
+| High | Low | Schedule refresh |
+| Low | High | Evaluate refresh, merge, redirect, or retire |
+| Low | Low | Low priority |
 
-### Content Audit Results
+## Individual Page Diagnosis: [Title]
+**URL**: [URL] | **Published**: [date] | **Last Updated**: [date] | **Word Count**: [X]
 
-| Content | Published | Last Updated | Traffic Trend | Priority |
-|---------|-----------|--------------|---------------|----------|
-| [Title 1] | [date] | [date] | ↓ -45% | 🔴 High |
-| [Title 2] | [date] | Never | ↓ -30% | 🔴 High |
-| [Title 3] | [date] | [date] | ↓ -20% | 🟡 Medium |
-| [Title 4] | [date] | [date] | → 0% | 🟡 Medium |
+| Metric | 6 Mo Ago | Current | Change | Source |
+|--------|----------|---------|--------|--------|
+| Organic traffic / impressions / CTR / avg position | [values] | [values] | [+/-] | [analytics/GSC/rank tracker] |
 
-### Refresh Prioritization Matrix
-
-```
-High Traffic + High Decline = 🔴 Refresh Immediately
-High Traffic + Low Decline = 🟡 Schedule Refresh
-Low Traffic + High Decline = 🟡 Evaluate & Decide
-Low Traffic + Low Decline = 🟢 Low Priority
-```
+| Keyword | Old Position | Current Position | SERP / Intent Change | Refresh Angle |
+|---------|--------------|------------------|----------------------|---------------|
+| [kw] | [X] | [X] | [AI Overview/PAA/new intent] | [angle] |
 ```
 
----
-
-## Step 3: Analyze Individual Content for Refresh
-
-```markdown
-## Content Refresh Analysis: [Title]
-
-**URL**: [URL]
-**Published**: [date]
-**Last Updated**: [date]
-**Word Count**: [X]
-
-### Performance Metrics
-
-| Metric | 6 Mo Ago | Current | Change |
-|--------|----------|---------|--------|
-| Organic Traffic | [X]/mo | [X]/mo | [+/-X]% |
-| Avg Position | [X] | [X] | [+/-X] |
-| Impressions | [X] | [X] | [+/-X]% |
-| CTR | [X]% | [X]% | [+/-X]% |
-
-### Keywords Analysis
-
-| Keyword | Old Position | Current Position | Change |
-|---------|--------------|------------------|--------|
-| [kw 1] | [X] | [X] | ↓ [X] |
-| [kw 2] | [X] | [X] | ↓ [X] |
-| [kw 3] | [X] | [X] | ↓ [X] |
-
-### Why This Content Needs Refresh
-
-1. **Outdated information**: [specific examples]
-2. **Competitive gap**: [what competitors added]
-3. **Missing topics**: [new subtopics to cover]
-4. **SEO issues**: [current optimization problems]
-5. **GEO potential**: [AI citation opportunities]
-```
-
----
-
-## Step 4: Identify Specific Updates Needed
+## Steps 4-5: Define Updates And Plan The Rewrite
 
 ```markdown
 ## Refresh Requirements
 
-### Outdated Elements
+| Area | Evidence | Update Needed | Priority |
+|------|----------|---------------|----------|
+| Year references | "[old year]" | Update only if substance changes | M |
+| Statistics | "[old stat]" | Replace with current sourced stat | H |
+| Tools/products | "[old tool]" | Add/remove current options | H |
+| Broken links | [X broken] | Fix, replace, or remove | H |
+| Missing topics | [competitor/PAA evidence] | Add source-backed section | H |
+| Images | [old/missing alt/large file] | Replace, compress, add useful alt | M |
 
-| Element | Current | Update Needed |
-|---------|---------|---------------|
-| Year references | "[old year]" | Update to [current year] |
-| Statistics | "[old stat]" | Find current data |
-| Tool mentions | "[old tool]" | Add newer tools |
-| Links | [X] broken | Fix or replace |
-| Screenshots | Outdated UI | Recapture |
+### Required SEO/GEO Updates
+- [ ] Refresh title/meta only if intent changed
+- [ ] Add or update H2s for missing topics
+- [ ] Update internal links to newer relevant pages
+- [ ] Add FAQ only when questions match real demand
+- [ ] Add 40-60 word definition near the start when useful
+- [ ] Include quotable statistics with source and publication date
+- [ ] Use recent sources, normally from the last 2 years unless canonical
 
-### Missing Information
+## Refresh Plan
+**Current title**: [title]
+**Refreshed title**: [title with updated hook if justified]
+**New word count target**: [X] words (+/-[Y])
 
-**Topics competitors now cover that you don't**:
-
-| Topic | Competitor Coverage | Words Needed | Priority |
-|-------|---------------------|--------------|----------|
-| [Topic 1] | 3/5 competitors | ~300 words | High |
-| [Topic 2] | 2/5 competitors | ~200 words | Medium |
-| [Topic 3] | 4/5 competitors | ~400 words | High |
-
-### SEO Updates Needed
-
-- [ ] Update title tag with current year
-- [ ] Refresh meta description
-- [ ] Add new H2 sections for [topics]
-- [ ] Update internal links to newer content
-- [ ] Add FAQ section for featured snippets
-- [ ] Refresh images and add new alt text
-
-### GEO Updates Needed
-
-- [ ] Add clear definition at start
-- [ ] Include quotable statistics with sources
-- [ ] Add Q&A formatted sections
-- [ ] Update sources with current citations
-- [ ] Create standalone factual statements
+| Section / Asset | Keep / Update / Add / Remove | Current | After Refresh | Source / Reason |
+|-----------------|------------------------------|---------|---------------|-----------------|
+| Introduction | Update | [issue] | [target] | [reason] |
+| [Section] | Keep | [still valid] | [unchanged] | [reason] |
+| [New Section] | Add | 0 | [X words] | [competitor/PAA gap] |
+| Statistic / Link / Image | Update | [old] | [new] | [source/date or alt/format reason] |
 ```
 
----
-
-## Step 5: Create Refresh Plan
-
-```markdown
-## Content Refresh Plan
-
-### Title/URL
-**Current**: [current title]
-**Refreshed**: [updated title with year/hook]
-
-### Structural Changes
-
-**Keep As-Is**:
-- [Section 1] - Still relevant and accurate
-- [Section 2] - Still relevant and accurate
-
-**Update/Expand**:
-- [Section 3] - Update statistics, add [X] words
-- [Section 4] - Add new examples from [current year]
-
-**Add New Sections**:
-- [New Section 1] - [description, ~X words]
-- [New Section 2] - [description, ~X words]
-- FAQ Section - [X questions for featured snippets]
-
-**Remove/Consolidate**:
-- [Section 5] - Outdated, remove or redirect topic
-
-### Content Additions
-
-**New Word Count Target**: [X] words (+[Y] from current)
-
-| Section | Current | After Refresh | Notes |
-|---------|---------|---------------|-------|
-| Introduction | [X] | [X] | Add hook, update context |
-| [Section 1] | [X] | [X] | Keep |
-| [Section 2] | [X] | [X] | Update stats |
-| [New Section] | 0 | [X] | Add entirely |
-| FAQ | 0 | [X] | Add for GEO |
-| Conclusion | [X] | [X] | Update CTA |
-
-### Specific Updates
-
-**Statistics to Update**:
-
-| Old Statistic | New Statistic | Source |
-|---------------|---------------|--------|
-| "[old stat]" | "[find current]" | [source] |
-| "[old stat]" | "[find current]" | [source] |
-
-**Links to Update**:
-
-| Anchor Text | Old URL | New URL | Reason |
-|-------------|---------|---------|--------|
-| "[anchor]" | [old] | [new] | Broken |
-| "[anchor]" | [old] | [new] | Better resource |
-
-**Images to Update**:
-
-| Image | Action | New Alt Text |
-|-------|--------|--------------|
-| [img 1] | Replace | "[keyword-rich alt]" |
-| [img 2] | Keep | Update alt text |
-```
-
----
-
-## Step 6: Write Refresh Content
+## Steps 6-7: Write And GEO-Optimize
 
 ```markdown
 ## Refreshed Content Sections
 
 ### Updated Introduction
-
-[Write new introduction with:]
-- Updated hook for current year
-- Fresh statistics
-- Clear value proposition
-- Primary keyword in first 100 words
+[Updated hook, primary keyword in first 100 words, fresh source-backed context.]
 
 ### New Section: [Title]
+[Cover competitor/PAA gap with direct answer, examples, and source-backed facts.]
 
-[Write new section covering:]
-- [Topic competitors now cover]
-- Current information and examples
-- GEO-optimized with quotable statements
+### Updated Statistics
+**Replace**: "[old claim]"
+**With**: "[current claim] ([Source], [publication year/date])"
 
-### Updated Statistics Section
+### FAQ
+#### [Question matching PAA/common query]?
+[Direct 40-60 word answer optimized for snippets and AI citations.]
 
-**Replace**:
-> "[Old statement with outdated stat]"
-
-**With**:
-> "[New statement with current stat] (Source, [current year])"
-
-### New FAQ Section
-
-## Frequently Asked Questions
-
-### [Question matching PAA/common query]?
-
-[Direct answer in 40-60 words, optimized for featured snippets]
-
-### [Question 2]?
-
-[Direct answer]
-
-### [Question 3]?
-
-[Direct answer]
+## GEO Enhancement Checklist
+| Element | Requirement |
+|---------|-------------|
+| Definition | 40-60 words, clear, quotable |
+| Quotable statistic | Source + date + standalone wording |
+| Q&A | Direct answer first, context second |
+| Citations | Recent, authoritative, dated |
+| Factual statements | Understandable out of context |
 ```
 
----
-
-## Step 7: Optimize for GEO During Refresh
-
-```markdown
-## GEO Enhancement Opportunities
-
-### Add Clear Definitions
-
-**Add at start of article**:
-> **[Topic]** is [clear, quotable definition in 40-60 words that
-> AI systems can cite directly].
-
-### Add Quotable Statements
-
-**Transform**:
-> "Email marketing is effective for businesses."
-
-**Into**:
-> "Email marketing delivers an average ROI of $42 for every $1
-> invested, making it the highest-ROI digital marketing channel
-> according to the Data & Marketing Association ([current year])."
-
-### Add Q&A Sections
-
-Structure content with questions AI might answer:
-- What is [topic]?
-- How does [topic] work?
-- Why is [topic] important?
-- What are the benefits of [topic]?
-
-### Update Citations
-
-- Add sources for all statistics
-- Link to authoritative references
-- Include publication dates
-- Use recent sources (last 2 years)
-```
-
----
-
-## Step 8: Generate Republishing Strategy
+## Step 8: Republishing Strategy
 
 ```markdown
 ## Republishing Strategy
 
-### Date Strategy
+| Refresh Level | New Content Share | Date Treatment | Notes |
+|---------------|-------------------|----------------|-------|
+| Major overhaul | 50%+ | Update published date | Use only when structure/substance materially changed |
+| Moderate update | 20-50% | Add or update "Last Updated" date | Most refreshes fit here |
+| Minor update | <20% | Keep original date | Fixes or light factual updates only |
 
-**Options**:
-
-1. **Update Published Date**
-   - Use when: Major overhaul (50%+ new content)
-   - Pros: Signals freshness to Google
-   - Cons: Loses "original" authority
-
-2. **Add "Last Updated" Date**
-   - Use when: Moderate updates (20-50% new)
-   - Pros: Shows both original and fresh
-   - Cons: Original date visible
-
-3. **Keep Original Date**
-   - Use when: Minor updates (<20% new)
-   - Pros: Maintains authority
-   - Cons: Doesn't signal update
-
-**Recommendation**: [Option X] because [reason]
+**Recommendation**: [Option] because [evidence].
 
 ### Technical Implementation
-
 - [ ] Update `dateModified` in schema
-- [ ] Update sitemap lastmod
+- [ ] Update sitemap `lastmod`
 - [ ] Clear cache after publishing
-- [ ] Resubmit to ~~search console
+- [ ] Resubmit in Search Console when material changes shipped
+- [ ] Monitor rankings, traffic, and CTR for 4-6 weeks
 
-### Promotion Strategy
-
-**Immediately after refresh**:
-- [ ] Share on social media as "updated for [current year]"
-- [ ] Send to email list if significant update
-- [ ] Update internal links with fresh anchors
-- [ ] Reach out for new backlinks
-
-**Track Results**:
-- [ ] Monitor rankings for 4-6 weeks
-- [ ] Track traffic changes
-- [ ] Watch for featured snippet capture
-- [ ] Check AI citation improvements
+### Promotion
+- [ ] Share as "updated for [current year]" only for substantial updates
+- [ ] Notify email/social audiences when the update changes user value
+- [ ] Add fresh internal links from related pages
 ```
 
----
-
-## Step 9: Create Refresh Report
+## Step 9: Refresh Report
 
 ```markdown
 # Content Refresh Report
+**Content**: [Title] | **Refresh Date**: [Date] | **Refresh Level**: Major / Moderate / Minor
 
-## Summary
-
-**Content**: [Title]
-**Refresh Date**: [Date]
-**Refresh Level**: [Major/Moderate/Minor]
-
-## Changes Made
-
-| Element | Before | After |
-|---------|--------|-------|
-| Word count | [X] | [Y] (+[Z]%) |
-| Sections | [X] | [Y] |
-| Statistics | [X] outdated | [Y] current |
-| Internal links | [X] | [Y] |
-| Images | [X] | [Y] |
-| FAQ questions | 0 | [X] |
-
-## Updates Completed
-
-- [x] Updated title with current year
-- [x] Refreshed meta description
-- [x] Added [X] new sections
-- [x] Updated [X] statistics with sources
-- [x] Fixed [X] broken links
-- [x] Added FAQ section for GEO
-- [x] Implemented FAQ schema
-- [x] Updated images and alt text
-
-## Expected Outcomes
+| Element | Before | After | Evidence |
+|---------|--------|-------|----------|
+| Word count / sections | [values] | [values] | [delta] |
+| Statistics / sources | [outdated] | [current] | [sources + dates] |
+| Internal links / FAQ / images | [values] | [values] | [source or rationale] |
 
 | Metric | Current | 30-Day Target | 90-Day Target |
 |--------|---------|---------------|---------------|
-| Avg Position | [X] | [Y] | [Z] |
-| Organic Traffic | [X]/mo | [Y]/mo | [Z]/mo |
-| Featured Snippets | 0 | 1+ | 2+ |
+| Avg position | [X] | [Y] | [Z] |
+| Organic traffic | [X]/mo | [Y]/mo | [Z]/mo |
 
-## Next Review
-
-Schedule next refresh review: [Date - 6 months from now]
+**Next review**: [Date - 6 months from now]
 ```
