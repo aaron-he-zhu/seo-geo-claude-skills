@@ -1,5 +1,7 @@
 # SEO & GEO Skills Library
 
+> **📦 Also bundled in [aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills)** — the unified library that combines these SEO/GEO skills with influencer-marketing skills (CORE-EEAT · CITE · C³). This repo is the standalone SEO/GEO edition.
+
 **20 skills. 5 commands. Plan, audit, and monitor SEO/GEO work.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
