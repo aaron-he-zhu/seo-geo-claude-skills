@@ -62,8 +62,10 @@ on identical inputs therefore produce the same integer.
 ### Legacy compatibility for archived outputs
 
 New auditor-class outputs MUST include the cap-related fields. The Artifact Gate treats missing
-`cap_applied`, `raw_overall_score`, or `final_overall_score` (unless `status: BLOCKED`) as a
-validation failure. Consumers reading pre-v7.2 archived outputs may apply these read-time defaults:
+`cap_applied` or `raw_overall_score` as a validation failure, and missing `final_overall_score`
+as a validation failure **unless `status: BLOCKED`** — a blocked run still emits `cap_applied: false`
+and a retained `raw_overall_score` (see the §2 scenario table and the §4 checklist); only the final
+capped score is omitted. Consumers reading pre-v7.2 archived outputs may apply these read-time defaults:
 `cap_applied: false`; `raw_overall_score: <use final_overall_score>`; `final_overall_score: <use
 the audit's overall score, whatever field name>`. This does not permit new artifacts to omit the
 required fields.
