@@ -2,34 +2,49 @@
 
 Current versions for the plugin and all 20 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/seo-geo-claude-skills/main/VERSIONS.md` once per session.
 
-**Current release**: `9.9.10` (2026-06-05). Skill `version`, `metadata.version`, plugin manifests, marketplace files, and badges are aligned to the same public version.
+**Current release**: `9.9.11` (2026-06-28). Skill `version`, `metadata.version`, plugin manifests, marketplace files, and badges are aligned to the same public version.
 
 ## Skills
 
 | Skill | Category | Version | Last Updated |
 |-------|----------|---------|--------------|
-| keyword-research | research | 9.9.10 | 2026-06-05 |
-| competitor-analysis | research | 9.9.10 | 2026-06-05 |
-| serp-analysis | research | 9.9.10 | 2026-06-05 |
-| content-gap-analysis | research | 9.9.10 | 2026-06-05 |
-| seo-content-writer | build | 9.9.10 | 2026-06-05 |
-| geo-content-optimizer | build | 9.9.10 | 2026-06-05 |
-| meta-tags-optimizer | build | 9.9.10 | 2026-06-05 |
-| schema-markup-generator | build | 9.9.10 | 2026-06-05 |
-| on-page-seo-auditor | optimize | 9.9.10 | 2026-06-05 |
-| technical-seo-checker | optimize | 9.9.10 | 2026-06-05 |
-| internal-linking-optimizer | optimize | 9.9.10 | 2026-06-05 |
-| content-refresher | optimize | 9.9.10 | 2026-06-05 |
-| rank-tracker | monitor | 9.9.10 | 2026-06-05 |
-| backlink-analyzer | monitor | 9.9.10 | 2026-06-05 |
-| performance-reporter | monitor | 9.9.10 | 2026-06-05 |
-| alert-manager | monitor | 9.9.10 | 2026-06-05 |
-| content-quality-auditor | cross-cutting | 9.9.10 | 2026-06-05 |
-| domain-authority-auditor | cross-cutting | 9.9.10 | 2026-06-05 |
-| entity-optimizer | cross-cutting | 9.9.10 | 2026-06-05 |
-| memory-management | cross-cutting | 9.9.10 | 2026-06-05 |
+| keyword-research | research | 9.9.11 | 2026-06-28 |
+| competitor-analysis | research | 9.9.11 | 2026-06-28 |
+| serp-analysis | research | 9.9.11 | 2026-06-28 |
+| content-gap-analysis | research | 9.9.11 | 2026-06-28 |
+| seo-content-writer | build | 9.9.11 | 2026-06-28 |
+| geo-content-optimizer | build | 9.9.11 | 2026-06-28 |
+| meta-tags-optimizer | build | 9.9.11 | 2026-06-28 |
+| schema-markup-generator | build | 9.9.11 | 2026-06-28 |
+| on-page-seo-auditor | optimize | 9.9.11 | 2026-06-28 |
+| technical-seo-checker | optimize | 9.9.11 | 2026-06-28 |
+| internal-linking-optimizer | optimize | 9.9.11 | 2026-06-28 |
+| content-refresher | optimize | 9.9.11 | 2026-06-28 |
+| rank-tracker | monitor | 9.9.11 | 2026-06-28 |
+| backlink-analyzer | monitor | 9.9.11 | 2026-06-28 |
+| performance-reporter | monitor | 9.9.11 | 2026-06-28 |
+| alert-manager | monitor | 9.9.11 | 2026-06-28 |
+| content-quality-auditor | cross-cutting | 9.9.11 | 2026-06-28 |
+| domain-authority-auditor | cross-cutting | 9.9.11 | 2026-06-28 |
+| entity-optimizer | cross-cutting | 9.9.11 | 2026-06-28 |
+| memory-management | cross-cutting | 9.9.11 | 2026-06-28 |
 
 ## Changelog
+
+### v9.9.11 — URL-stable overhaul + open-seo connector borrows (2026-06-28)
+
+Ships the `refactor/url-stable-overhaul` line as a single release. The 20 skill directories, `name`, and `description` stay frozen (existing GitHub URLs unchanged); everything inside the skill bodies and the supporting layers was reworked.
+
+**URL-stable overhaul**:
+- All intra-repo links in `SKILL.md`/`references/` are plugin-relative paths; `validate-skill.sh` now fails on any `blob/main` GitHub URL. Connector invocations use `${CLAUDE_PLUGIN_ROOT}/scripts/connectors/...`.
+- `references/auditor-runbook.md` is the framework-agnostic SSOT both auditors `Read` at activation; each inlines only its framework-specific CORE-EEAT (8-dim weighted) vs CITE (`C×.35+I×.20+T×.25+E×.20`) examples and veto rows. `raw_overall_score` = weighted total (floor-rounded, pre-cap).
+- MCP stays opt-in (`plugin.json` carries no `mcpServers` key; `.mcp.json` is a copy-paste catalog). New `_http.get` scheme allowlist (`http`/`https`) guards sitemap-harvested URLs (LFI/SSRF); `crawl.py` uses `robots.py` for correct Allow/wildcard/UA handling.
+- Honesty-bound memory model: explicit-pin + `last_updated` only, no frequency-based promotion; SessionStart surfaces an open-loops pointer.
+- New `scripts/connectors/ledger.py` (local JSONL time-series) and `scripts/golden-auditor-math.py` (CI-wired weight-table guard); ledger wired into rank-tracker / performance-reporter / technical-seo-checker. `evals/product-api-scenarios.md` → `references/auto-routing-scenarios.md`.
+
+**Connector borrows** (adapted from [every-app/open-seo](https://github.com/every-app/open-seo)):
+- `keyword-research` gains a Search Console **striking-distance** shortcut — mine own GSC queries ranking ~5–20 before broad discovery (API sorts by clicks, no position filter → high `rowLimit` + client-side window), treated as Measured.
+- `CONNECTORS.md` adds a subscription-vs-pay-as-you-go **cost model** column and **OpenSEO** as an opt-in, self-hosted, free pay-as-you-go MCP (servers `14 → 15` in `.mcp.json`, still nothing auto-registered).
 
 ### v9.9.10 — focus on skills: scaffolding cleanup, 5 commands, quality pass, bundled connectors (2026-06-05)
 

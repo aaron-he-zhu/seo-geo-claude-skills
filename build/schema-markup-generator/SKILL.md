@@ -1,7 +1,7 @@
 ---
 name: schema-markup-generator
 description: 'Use when the user asks to "generate schema"; creates JSON-LD for FAQ, HowTo, Article, Product, and LocalBusiness rich-result candidates. Not for title/meta-description tags — use meta-tags-optimizer; not for crawl/index technical issues — use technical-seo-checker. Schema标记/结构化数据'
-version: "9.9.10"
+version: "9.9.11"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -10,7 +10,7 @@ argument-hint: "<page URL or content type>"
 allowed-tools: WebFetch
 metadata:
   author: aaron-he-zhu
-  version: "9.9.10"
+  version: "9.9.11"
   geo-relevance: "medium"
 ---
 
