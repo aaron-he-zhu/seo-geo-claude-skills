@@ -1,6 +1,6 @@
 # CORE-EEAT Content Benchmark — Skills Reference
 
-> Based on [CORE-EEAT Content Benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) **v3.0**
+> Adapted from the [CORE-EEAT Content Benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (see that repo for the upstream version and changelog)
 >
 > This file is a reference adaptation for the SEO & GEO Skills Library. For the full benchmark with detailed examples, see the source repository.
 >
@@ -179,7 +179,7 @@
 
 ### Veto Items
 
-Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §2](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Do not restate cap numbers here or elsewhere — this file owns the item definitions only.
+Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §2](auditor-runbook.md). Do not restate cap numbers here or elsewhere — this file owns the item definitions only.
 
 | Veto ID | Dimension | Check |
 |---------|-----------|-------|
@@ -187,9 +187,9 @@ Failing any veto item activates the Critical Fail Cap. The cap arithmetic and th
 | **C01** | Contextual Clarity | Clickbait — title promises something the page doesn't deliver |
 | **R10** | Referenceability | Data on the page contradicts itself |
 
-**Single veto fail**: cap applies per [Runbook §2 decision table](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md).
+**Single veto fail**: cap applies per [Runbook §2 decision table](auditor-runbook.md).
 
-**2+ veto fails**: audit returns `status: BLOCKED` per [Runbook §2 Worked Example 3](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
+**2+ veto fails**: audit returns `status: BLOCKED` per [Runbook §2 Worked Example 3](auditor-runbook.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
 
 Rationale: prevents "79 items pass + 1 veto fails" from producing a misleadingly high overall score.
 
@@ -226,12 +226,20 @@ Rationale: prevents "79 items pass + 1 veto fails" from producing a misleadingly
 | Blog (guides) | Article, Breadcrumb | FAQ, HowTo |
 | Blog (tools) | Article, Breadcrumb | FAQ, Review |
 | Blog (insights) | Article, Breadcrumb | FAQ |
-| Alternative | Comparison*, Breadcrumb, FAQ | AggregateRating |
-| Best-of | ItemList, Breadcrumb, FAQ | AggregateRating per tool |
+| Alternative | WebPage (or ItemList), Breadcrumb, FAQ | — |
+| Best-of | ItemList, Breadcrumb, FAQ | Review/AggregateRating per tool *(only with genuine first-party reviews — see note)* |
 | Use-case | WebPage, Breadcrumb, FAQ | — |
 | FAQ | FAQPage, Breadcrumb | — |
 | Landing | SoftwareApplication, Breadcrumb, FAQ | WebPage |
 | Testimonial | Review, Breadcrumb | FAQ, Person |
+
+> **Schema.org has no "Comparison" type.** A comparison/"X alternative" page is marked up as
+> `WebPage` (or `ItemList` when it's a ranked set), plus `Breadcrumb` and `FAQPage`.
+>
+> **`Review` / `AggregateRating` only with real, first-party review content.** Adding self-serving
+> `aggregateRating` to a page that has no genuine on-page reviews — or marking up ratings the
+> publisher assigned to its own product — is structured-data spam under Google's review-snippet
+> policy and can trigger a manual action. Never fabricate ratings to win a rich result.
 
 ---
 
@@ -650,7 +658,7 @@ Affiliate-link disclosure is enforceable only when ALL of the following sub-crit
 
 **Partial**: Page contains no affiliate links (N/A — score as Partial, not Pass, because the control cannot be verified in the positive sense).
 
-**Fail**: Any affiliate link exists on the page and any one of (a)–(e) is missing → **VETO** per [§Veto Items](#veto-items). Cap rule applies per [auditor-runbook.md §2](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Also surface in the handoff `key_findings` with severity `veto` and cite the specific sub-item that failed (e.g., "T04(a): disclosure placed in footer only, below first affiliate link").
+**Fail**: Any affiliate link exists on the page and any one of (a)–(e) is missing → **VETO** per [§Veto Items](#veto-items). Cap rule applies per [auditor-runbook.md §2](auditor-runbook.md). Also surface in the handoff `key_findings` with severity `veto` and cite the specific sub-item that failed (e.g., "T04(a): disclosure placed in footer only, below first affiliate link").
 
 **T05: Editorial Policy** | SEO 🔍
 - **Pass**: Content standards and review process published.
@@ -740,7 +748,7 @@ Calibration examples for the most subjective CORE items. Use these to anchor sco
 
 **E04 (Contrarian View)** — Does the content challenge consensus with evidence?
 
-- **Pass**: "The common advice to always compress images to WebP ignores the 12% of global browsers that still lack full WebP support (Can I Use, January 2025). In our test of 50 site migrations to WebP-only, 8 sites saw increased bounce rates from Safari users on older iOS versions. A dual-format approach with `<picture>` fallbacks outperformed WebP-only by 3.2% in our conversion tests."
+- **Pass**: "Contrary to the 'always convert everything to WebP' advice, AVIF now beats WebP on compression for photographic content, and a WebP-only pipeline drops the `<picture>` fallback path. Back a contrarian claim like this with *your own, real* evidence — e.g. a sampled WebP-vs-AVIF file-size comparison on your actual images, and your CDN logs for the browsers that regressed — and cite real sources. The Pass bar is specific, first-party, verifiable evidence; do not invent statistics or citations to fill it." *(The bracketed figures any model writes here MUST be measured, never fabricated.)*
 - **Partial**: "Some people disagree with always using WebP, and there may be compatibility issues to consider." Acknowledges a different viewpoint exists but provides no evidence, data, or specific scenarios.
 - **Fail**: No alternative viewpoints are presented. The article treats WebP adoption as universally beneficial without acknowledging any tradeoffs, edge cases, or dissenting perspectives.
 

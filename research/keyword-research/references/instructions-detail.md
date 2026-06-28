@@ -115,7 +115,7 @@ Report sections:
 | "This keyword has good potential" | "Opportunity 8.4: vol 4,800, KD 28, transactional intent — top 5 content is stale" |
 | "Consider creating content around this topic" | "Write '[Tool A] vs [Tool B] for small teams' — 1,200/mo searches, current #1 is from 2022" |
 
-> **Reference**: See [references/example-report.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/example-report.md) for the full report template and example.
+> **Reference**: See [references/example-report.md](example-report.md) for the full report template and example.
 
 ## Advanced Usage
 

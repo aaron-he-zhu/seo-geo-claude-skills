@@ -11,31 +11,6 @@ metadata:
   author: aaron-he-zhu
   version: "9.9.10"
   geo-relevance: "medium"
-  tags:
-    - seo
-    - geo
-    - keyword-research
-    - search-volume
-    - keyword-difficulty
-    - topic-clusters
-    - search-intent
-    - long-tail-keywords
-    - 关键词研究
-    - SEO关键词
-    - キーワード調査
-    - 키워드분석
-    - palabras-clave
-  triggers:
-    - "keyword research"
-    - "search volume analysis"
-    - "what should I write about"
-    - "give me keyword ideas"
-    - "how competitive is this keyword"
-    - "Ahrefs keyword explorer alternative"
-    - "Google Keyword Planner alternative"
-    - "关键词分析"
-    - "长尾关键词"
-    - "帮我挖词"
 ---
 
 # Keyword Research
@@ -60,17 +35,17 @@ What keywords is [competitor URL] ranking for that I should target?
 - **Writes**: a user-facing research deliverable and reusable summary.
 - **Promotes**: durable keyword priorities, competitor facts, and pending strategy decisions to `memory/hot-cache.md`, `memory/open-loops.md`, and `memory/research/`.
 - **Done when**: every shortlisted keyword carries volume + difficulty + intent (or a labeled N/A); keywords are grouped into pillar + cluster hubs; and the deliverable names at least 3 prioritized Quick Win / Growth / GEO opportunities.
-- **Primary next skill**: [competitor-analysis](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/competitor-analysis/SKILL.md) when the keyword set is ready for market comparison.
+- **Primary next skill**: [competitor-analysis](../competitor-analysis/SKILL.md) when the keyword set is ready for market comparison.
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ## Data Sources
 
-Optional integrations: ~~SEO tool, ~~search console. Without tools, ask for seed keywords, audience, goals, and any known metrics. See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md).
+Optional integrations: ~~SEO tool, ~~search console. Without tools, ask for seed keywords, audience, goals, and any known metrics. See [CONNECTORS.md](../../CONNECTORS.md).
 
-**Zero-dependency local helper** (no tool needed): `python3 scripts/connectors/suggest.py "<seed>" --expand` harvests free keyword ideas from Google Autocomplete (⚠️ unofficial endpoint). Search *volume / difficulty* still needs `~~SEO tool` or own Search Console data. See [scripts/connectors/README.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/scripts/connectors/README.md).
+**Zero-dependency local helper** (no tool needed): `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/suggest.py" "<seed>" --expand` harvests free keyword ideas from Google Autocomplete (⚠️ unofficial endpoint). Search *volume / difficulty* still needs `~~SEO tool` or own Search Console data. See [scripts/connectors/README.md](../../scripts/connectors/README.md).
 
 ## Instructions
 
@@ -89,32 +64,24 @@ Label every metric **Measured** (tool/export), **User-provided**, or **Estimated
 
 **Quality bar**: every recommendation includes at least one specific number. Rewrite generic advice into a concrete keyword + volume + difficulty + reason.
 
-> **Reference**: See [references/instructions-detail.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/instructions-detail.md) for the full 8-phase templates, expansion patterns, intent table, difficulty tiers, opportunity matrix, GEO indicators, cluster template, actionable-vs-generic examples, and advanced usage.
+> **Reference**: See [references/instructions-detail.md](references/instructions-detail.md) for the full 8-phase templates, expansion patterns, intent table, difficulty tiers, opportunity matrix, GEO indicators, cluster template, actionable-vs-generic examples, and advanced usage.
 
 ## Example
 
-Example outcome: 150+ keywords analyzed, 23 high-priority opportunities, ~45K/month traffic potential across 3 focus areas. See the full sample in [references/example-report.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/example-report.md).
+See [references/example-report.md](references/example-report.md) for a full worked sample.
 
-### Advanced Usage
+## Save Results
 
-Intent mapping, seasonal analysis, competitor gaps, and local keyword workflows live in [references/instructions-detail.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/instructions-detail.md#advanced-usage).
-
-## Tips for Success
-
-Start with seeds, respect intent, cluster tightly, prioritize quick wins, and review quarterly. Full notes live in [references/instructions-detail.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/instructions-detail.md#tips-for-success).
-
-### Save Results
-
-Write path: `memory/research/keyword-research/YYYY-MM-DD-<topic>.md`; promote durable keyword priorities to `memory/hot-cache.md`. See [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) §Save Results Template.
+Write path: `memory/research/keyword-research/YYYY-MM-DD-<topic>.md`; promote durable keyword priorities to `memory/hot-cache.md`. See [Skill Contract](../../references/skill-contract.md) §Save Results Template.
 
 ## Reference Materials
 
-- [Instructions Detail](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/instructions-detail.md) — Workflow, scoring, cluster template, advanced usage
-- [Keyword Intent Taxonomy](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/keyword-intent-taxonomy.md) — Intent signals and content mapping
-- [Topic Cluster Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/topic-cluster-templates.md) — Pillar and cluster patterns
-- [Keyword Prioritization Framework](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/keyword-prioritization-framework.md) — Scoring and prioritization rules
-- [Example Report](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/example-report.md) — Worked sample
+- [Instructions Detail](references/instructions-detail.md) — Workflow, scoring, cluster template, advanced usage
+- [Keyword Intent Taxonomy](references/keyword-intent-taxonomy.md) — Intent signals and content mapping
+- [Topic Cluster Templates](references/topic-cluster-templates.md) — Pillar and cluster patterns
+- [Keyword Prioritization Framework](references/keyword-prioritization-framework.md) — Scoring and prioritization rules
+- [Example Report](references/example-report.md) — Worked sample
 
 ## Next Best Skill
 
-Primary: [competitor-analysis](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/competitor-analysis/SKILL.md). Also: [content-gap-analysis](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/content-gap-analysis/SKILL.md) and [serp-analysis](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/serp-analysis/SKILL.md).
+Primary: [competitor-analysis](../competitor-analysis/SKILL.md). Also: [content-gap-analysis](../content-gap-analysis/SKILL.md) and [serp-analysis](../serp-analysis/SKILL.md).

@@ -1,6 +1,6 @@
 # Technical SEO — Site-Wide / Bulk Audit Playbook
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/SKILL.md). Use this when the user has >5 URLs to audit (e.g., all 50 Shopify product pages are not indexed).
+Referenced from [SKILL.md](../SKILL.md). Use this when the user has >5 URLs to audit (e.g., all 50 Shopify product pages are not indexed).
 
 ---
 

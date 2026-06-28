@@ -11,30 +11,6 @@ metadata:
   author: aaron-he-zhu
   version: "9.9.10"
   geo-relevance: "low"
-  tags:
-    - seo
-    - geo
-    - seo-alerts
-    - ranking-alerts
-    - traffic-monitoring
-    - competitor-alerts
-    - automated-monitoring
-    - anomaly-detection
-    - SEO预警
-    - SEOアラート
-    - SEO알림
-    - alertas-seo
-  triggers:
-    - "set up SEO alerts"
-    - "traffic alerts"
-    - "competitor alerts"
-    - "alert me if rankings drop"
-    - "notify me of traffic changes"
-    - "watch my keywords for changes"
-    - "anomaly detection"
-    - "流量异常"
-    - "有变化通知我"
-    - "竞品变动提醒"
 ---
 
 # Alert Manager
@@ -59,15 +35,15 @@ Create ranking drop alerts for my top 20 keywords
 - **Writes**: a user-facing monitoring deliverable and reusable summary.
 - **Promotes**: significant anomalies, durable thresholds, follow-up actions, and pending decisions to `memory/open-loops.md`.
 - **Done when**: each chosen alert category has a named trigger condition, threshold, and priority; a Critical/High/Medium/Low response plan and delivery routing are defined; and thresholds are tuned to the metric's stated normal volatility.
-- **Primary next skill**: [performance-reporter](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/performance-reporter/SKILL.md) when alert output needs a reporting cadence.
+- **Primary next skill**: [performance-reporter](../performance-reporter/SKILL.md) when alert output needs a reporting cadence.
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ## Data Sources
 
-All integrations optional (see [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md)). With tools, monitor real-time feeds from ~~SEO tool, ~~search console, and ~~web crawler. Without tools, ask for baselines, critical keywords, preferences, and historical data.
+All integrations optional (see [CONNECTORS.md](../../CONNECTORS.md)). With tools, monitor real-time feeds from ~~SEO tool, ~~search console, and ~~web crawler. Without tools, ask for baselines, critical keywords, preferences, and historical data.
 
 ## Decision Gates
 
@@ -90,15 +66,11 @@ When a user requests alert setup:
 
 Label every metric **Measured** (tool/export), **User-provided**, or **Estimated** (model inference); never present an estimate as measured; if a required metric is unavailable, mark it N/A — do not invent it.
 
-> **Reference**: See [Alert Configuration Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/references/alert-configuration-templates.md) for the full category tables, thresholds, and response-plan templates.
+> **Reference**: See [Alert Configuration Templates](references/alert-configuration-templates.md) for the full category tables, thresholds, and response-plan templates.
 
 ## Example
 
 Sample outcome: a keyword alert matrix with Critical vs High thresholds, a response plan for drops, and notification routing to email + Slack.
-
-## Tips for Success
-
-Start simple, tune thresholds to normal volatility, avoid alert fatigue, and review the system regularly.
 
 ## Alert Threshold Quick Reference
 
@@ -113,16 +85,16 @@ Start simple, tune thresholds to normal volatility, avoid alert fatigue, and rev
 | AI citation loss | Any key query | >20% queries | Weekly |
 | Security issues | Any detected | Any detected | Daily |
 
-> **Reference**: See [Alert Threshold Guide](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/references/alert-threshold-guide.md) for threshold setting, fatigue prevention, escalation paths, and response playbooks.
+> **Reference**: See [Alert Threshold Guide](references/alert-threshold-guide.md) for threshold setting, fatigue prevention, escalation paths, and response playbooks.
 
 ### Save Results
 
-Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) §Save Results Template.
+Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](../../references/skill-contract.md) §Save Results Template.
 
 ## Reference Materials
 
-- [Alert Threshold Guide](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/references/alert-threshold-guide.md) — Thresholds, fatigue prevention, and escalation templates
+- [Alert Threshold Guide](references/alert-threshold-guide.md) — Thresholds, fatigue prevention, and escalation templates
 
 ## Next Best Skill
 
-Reporting cadence requested → [performance-reporter](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/performance-reporter/SKILL.md). Standalone setup → Terminal. Visited-set rule applies per [skill-contract.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+Reporting cadence requested → [performance-reporter](../performance-reporter/SKILL.md). Standalone setup → Terminal. Visited-set rule applies per [skill-contract.md](../../references/skill-contract.md).

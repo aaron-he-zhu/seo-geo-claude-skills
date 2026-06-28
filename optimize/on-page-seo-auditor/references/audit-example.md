@@ -1,6 +1,6 @@
 # On-Page SEO Auditor — Worked Example & Page Type Checklists
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/on-page-seo-auditor/SKILL.md).
+Referenced from [SKILL.md](../SKILL.md).
 
 ---
 

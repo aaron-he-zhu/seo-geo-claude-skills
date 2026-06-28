@@ -56,7 +56,7 @@ Generate:
 - Robots / viewport
 - Author and article tags where relevant
 
-> **Reference**: See [references/meta-tag-code-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/meta-tag-code-templates.md) for HTML templates and the complete combined block.
+> **Reference**: See [references/meta-tag-code-templates.md](meta-tag-code-templates.md) for HTML templates and the complete combined block.
 
 ## Step 5: CORE-EEAT Alignment Check
 

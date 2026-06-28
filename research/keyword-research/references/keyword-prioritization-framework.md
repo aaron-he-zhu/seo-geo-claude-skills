@@ -12,7 +12,7 @@ Score each keyword 1-5, then calculate weighted total:
 
 | Factor | Weight | Score 1 (Low) | Score 5 (High) |
 |--------|--------|---------------|----------------|
-| Search Volume | 20% | <100/mo | >9.9.9/mo |
+| Search Volume | 20% | <100/mo | >10,000/mo |
 | Keyword Difficulty | 25% | KD >80 (hard) | KD <20 (easy) |
 | Business Relevance | 30% | Tangential to offering | Core to offering |
 | Search Intent Match | 15% | Informational only | Transactional/commercial |

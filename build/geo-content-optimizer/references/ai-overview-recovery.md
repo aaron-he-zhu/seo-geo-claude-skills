@@ -1,6 +1,6 @@
 # AI Overview Recovery Playbook
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/geo-content-optimizer/SKILL.md). Use when AI Overviews are diverting traffic away from your pages.
+Referenced from [SKILL.md](../SKILL.md). Use when AI Overviews are diverting traffic away from your pages.
 
 ---
 
@@ -72,8 +72,12 @@ Add 2-3 standalone sentences (<=30 words each) containing a specific number/year
 ### 3.3 FAQ appendix
 Append `<h2>FAQ</h2>` with 6-10 PAA-matching questions. Each answer 40-60 words. Mark up with `FAQPage` schema.
 
-### 3.4 Citation-bait structured data
-Add one of: `Dataset` (survey/benchmark data), `HowTo` (step-by-step), `Review` with `aggregateRating`, `Article` with author linked to KG entity.
+### 3.4 Structured data that supports citation
+Add markup that genuinely matches the page: `Dataset` (real survey/benchmark data you publish),
+`HowTo` (actual step-by-step), `Article` with author linked to a KG entity. Only add `Review` /
+`aggregateRating` when the page has real first-party reviews — self-assigned ratings to win a rich
+result are structured-data spam under Google's review policy and risk a manual action. Schema must
+describe what is on the page, never decorate it with claims that aren't.
 
 ## Phase 4 — Monitor recovery (T+7, T+14, T+28)
 
@@ -102,6 +106,6 @@ If no recovery at T+28:
 
 ## See also
 
-- [entity-optimizer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/SKILL.md)
-- [content-refresher](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/SKILL.md)
-- [technical-seo-checker LLM crawler guide](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/references/llm-crawler-handling.md)
+- [entity-optimizer](../../../cross-cutting/entity-optimizer/SKILL.md)
+- [content-refresher](../../../optimize/content-refresher/SKILL.md)
+- [technical-seo-checker LLM crawler guide](../../../optimize/technical-seo-checker/references/llm-crawler-handling.md)

@@ -7,7 +7,7 @@ created: 2026-04-17
 
 # Open Loops
 
-> Unresolved items, blockers, and pending inputs that block progress on this project. SessionStart hook reminds the user if items here are older than 7 days. Skills write here via `promotes:` when they surface a blocker.
+> Unresolved items, blockers, and pending inputs that block progress on this project. When this file has tracked items, the SessionStart hook surfaces a one-line pointer to review them (it does not compute dates — judging which are stale is the agent's job). Skills write here via `promotes:` when they surface a blocker.
 
 ## Active
 

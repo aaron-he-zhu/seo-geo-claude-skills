@@ -8,7 +8,7 @@
 
 **4 dimensions × 10 items = 40 evaluation criteria** for assessing domain authority in the Generative Engine Optimization (GEO) era.
 
-**Sister benchmark**: [CORE-EEAT Content Benchmark](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/core-eeat-benchmark.md) — content-level quality assessment (80 items).
+**Sister benchmark**: [CORE-EEAT Content Benchmark](core-eeat-benchmark.md) — content-level quality assessment (80 items).
 
 ---
 
@@ -92,7 +92,7 @@
 | ID | Check Item | One-Line Standard |
 |----|-----------|-------------------|
 | E01 | Organic Search Visibility | Ranks for >=1,000 keywords in top 100 |
-| E02 | Organic Traffic Estimate | >=9.9.9 estimated monthly organic visits |
+| E02 | Organic Traffic Estimate | >=10,000 estimated monthly organic visits |
 | E03 | SERP Feature Ownership | Appears in >=3 SERP feature types |
 | E04 | Technical Crawlability | AI-crawler-friendly robots.txt; clean rendering; <3s load |
 | E05 | Multi-Platform Footprint | Official presence on >=3 major platforms with recent activity |
@@ -141,7 +141,7 @@
 
 ### Veto Items
 
-Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §2](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Do not restate cap numbers here or elsewhere — this file owns the item definitions only.
+Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §2](auditor-runbook.md). Do not restate cap numbers here or elsewhere — this file owns the item definitions only.
 
 | Veto ID | Dimension | Check |
 |---------|-----------|-------|
@@ -149,9 +149,9 @@ Failing any veto item activates the Critical Fail Cap. The cap arithmetic and th
 | **T05** | Trust | Near-identical backlink profile found on another domain (manipulation network) |
 | **T09** | Trust | Google manual action or deindexing (zero trust) |
 
-**Single veto fail**: cap applies per [Runbook §2 decision table](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Also raises a **Manipulation Alert** in the handoff `open_loops` field.
+**Single veto fail**: cap applies per [Runbook §2 decision table](auditor-runbook.md). Also raises a **Manipulation Alert** in the handoff `open_loops` field.
 
-**2+ veto fails**: audit returns `status: BLOCKED` per [Runbook §2 Worked Example 3](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
+**2+ veto fails**: audit returns `status: BLOCKED` per [Runbook §2 Worked Example 3](auditor-runbook.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
 
 ---
 
@@ -231,7 +231,7 @@ What is the domain's primary function?
 **C03: Link Equity Distribution**
 - **Pass**: Top sources avg <1,000 outbound domains; meaningful equity.
 - **Partial**: Mixed concentrated and diluted sources.
-- **Fail**: Most sources link to >9.9.9 domains (diluted equity).
+- **Fail**: Most sources link to >10,000 domains (diluted equity).
 
 **C04: Link Velocity**
 - **Pass**: Steady growth; no month >3x average monthly acquisition.
@@ -380,7 +380,7 @@ What is the domain's primary function?
 - **Fail**: <100 keywords.
 
 **E02: Organic Traffic Estimate**
-- **Pass**: >=9.9.9 monthly organic visits.
+- **Pass**: >=10,000 monthly organic visits.
 - **Partial**: 1,000-9,999.
 - **Fail**: <1,000.
 
@@ -428,7 +428,7 @@ What is the domain's primary function?
 
 ## 8. Data Source Mapping
 
-> Maps each check item to data sources, tools, and audit methods. Use `~~placeholder` categories from [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md) when integrations are available.
+> Maps each check item to data sources, tools, and audit methods. Use `~~placeholder` categories from [CONNECTORS.md](../CONNECTORS.md) when integrations are available.
 
 | Check Item | Data Source | Tools | Audit Method |
 |-----------|------------|-------|-------------|
@@ -481,7 +481,7 @@ What is the domain's primary function?
 |---|---------|------|-------|-------|
 | 1 | Ignoring AI citations | C05 | Only checking backlinks | Also monitor AI engine citations across major platforms |
 | 2 | Counting total links, not domains | C01 | "We have 50,000 backlinks!" | Count unique referring domains, not total link count |
-| 3 | Link quality conflated with quantity | C02 | 9.9.9 low-authority links = good | 200 high-authority editorial links > 9.9.9 directory links |
+| 3 | Link quality conflated with quantity | C02 | 10,000 low-authority links = good | 200 high-authority editorial links > 10,000 directory links |
 | 4 | Ignoring entity identity | I01 | Focus only on links and traffic | Check knowledge graph presence; it's how AI verifies sources |
 | 5 | Neglecting Schema markup | I04 | "Schema doesn't matter for authority" | Schema helps AI engines understand your domain's scope |
 | 6 | Not checking veto items first | T03 | Full evaluation before checking fundamentals | Always check T03, T05, T09 first — they can invalidate everything |

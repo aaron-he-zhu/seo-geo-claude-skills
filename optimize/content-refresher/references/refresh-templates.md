@@ -1,6 +1,6 @@
 # Content Refresh Templates
 
-Templates for content-refresher steps 2-9. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/SKILL.md).
+Templates for content-refresher steps 2-9. Referenced from [SKILL.md](../SKILL.md).
 
 ## Steps 2-3: Find And Diagnose Refresh Candidates
 

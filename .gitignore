@@ -30,3 +30,12 @@ node_modules/
 # npx skills install artifacts (local-only)
 .agents/
 skills-lock.json
+
+# Python bytecode (connectors import _http)
+__pycache__/
+*.pyc
+
+# macOS Finder duplicate-copy artifacts
+* 2.*
+*\ 2.md
+*\ 2.py

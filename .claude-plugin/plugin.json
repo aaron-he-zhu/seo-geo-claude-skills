@@ -30,7 +30,6 @@
   "commands": [
     "./commands/"
   ],
-  "commandNamespace": "aaron",
   "skills": [
     "./research/competitor-analysis",
     "./research/content-gap-analysis",
@@ -52,6 +51,5 @@
     "./cross-cutting/domain-authority-auditor",
     "./cross-cutting/entity-optimizer",
     "./cross-cutting/memory-management"
-  ],
-  "mcpServers": "./.mcp.json"
+  ]
 }

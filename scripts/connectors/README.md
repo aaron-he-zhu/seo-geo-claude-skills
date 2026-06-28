@@ -31,6 +31,7 @@ All HTTP goes through `_http.py`, which enforces: a descriptive `User-Agent`, gz
 | `openpagerank.py` | Open PageRank domain-authority signal (0–10 + global rank) | `openpagerank.py <domain> --key KEY` | Open PageRank (free key) |
 | `suggest.py` | Google Autocomplete keyword ideas (⚠️ unofficial endpoint) | `suggest.py "seo audit" --expand` | Google Suggest (keyless, unofficial) |
 | `rss_monitor.py` | Brand/mention monitoring from RSS/Atom (e.g. Google Alerts) | `rss_monitor.py <feed-url>` | any RSS/Atom feed (public) |
+| `ledger.py` | Local time-series store: `record` connector snapshots → `diff`/`trend` for real before/after deltas | `psi.py <url> \| ledger.py record <url> --source psi` then `ledger.py diff <url> --source psi` | local files (no network) |
 | `_http.py` | Shared polite-HTTP module (imported by the others; not a CLI) | — | — |
 
 ## What stays external (not bundled)

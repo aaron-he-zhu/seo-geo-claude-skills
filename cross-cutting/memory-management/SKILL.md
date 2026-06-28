@@ -11,28 +11,6 @@ metadata:
   author: aaron-he-zhu
   version: "9.9.10"
   geo-relevance: "low"
-  tags:
-    - seo
-    - geo
-    - project-memory
-    - context-management
-    - campaign-tracking
-    - session-context
-    - hot-cache
-    - 项目记忆
-    - プロジェクト記憶
-    - 프로젝트메모리
-    - memoria-proyecto
-  triggers:
-    - "save SEO data"
-    - "remember this for next time"
-    - "what did we decide last time"
-    - "what do we know so far"
-    - "project status"
-    - "archive stale data"
-    - "purge personal data"
-    - "上次说了什么"
-    - "跨会话记忆"
 ---
 
 # Memory Management
@@ -44,7 +22,7 @@ Manages a three-tier memory lifecycle (HOT/WARM/COLD) with automatic promotion, 
 
 ## Quick Start
 
-Start with one of these prompts. Finish with a hot-cache update plan and a handoff summary using the repository format in [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+Start with one of these prompts. Finish with a hot-cache update plan and a handoff summary using the repository format in [Skill Contract](../../references/skill-contract.md).
 
 ### Initialize Memory Structure
 
@@ -104,30 +82,30 @@ What does [internal jargon] mean in this project?
 
 **Expected output**: a memory update plan, hot-cache changes, and a short handoff summary.
 
-- **Reads**: current campaign facts, new findings from other skills, approved decisions, and the shared [State Model](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/state-model.md).
-- **Writes**: updates to `memory/hot-cache.md`, `memory/open-loops.md`, `memory/decisions.md`, and related `memory/` folders. Manages WARM-to-COLD archival in `memory/archive/`. **Auditor handoff archiving** (v7.1.0+): when triggered by a direct user request or an auditor's explicit "Save these results?" yes-response, append a structured block to `memory/audits/YYYY-MM.md`. The Stop hook never initiates memory writes. See [Examples](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/examples.md) for the exact archive block format and rules.
-- **Promotes**: durable strategy, blockers, terminology, entity candidates, and major deltas. Applies temperature lifecycle rules: promote to HOT on high reference frequency, demote on staleness.
+- **Reads**: current campaign facts, new findings from other skills, approved decisions, and the shared [State Model](../../references/state-model.md).
+- **Writes**: updates to `memory/hot-cache.md`, `memory/open-loops.md`, `memory/decisions.md`, and related `memory/` folders. Manages WARM-to-COLD archival in `memory/archive/`. **Auditor handoff archiving** (v7.1.0+): when triggered by a direct user request or an auditor's explicit "Save these results?" yes-response, append a structured block to `memory/audits/YYYY-MM.md`. The Stop hook never initiates memory writes. See [Examples](references/examples.md) for the exact archive block format and rules.
+- **Promotes**: durable strategy, blockers, terminology, entity candidates, and major deltas. Applies the temperature lifecycle by **observable** rules only: promote to HOT on an explicit user/skill request ("promote X" / pin); demote and archive by the file's `last_updated` date. Reference-frequency counters are NOT tracked by any hook, so the lifecycle never depends on them — see [State Model](../../references/state-model.md).
 - **Done when**: the requested lifecycle action (capture/promote/demote/archive/query/purge) is applied, `memory/hot-cache.md` is within the 80-line / 25KB limit, and the affected memory paths are reported back to the user.
 - **Primary next skill**: use the `Next Best Skill` below when the project memory baseline is ready for active work.
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ### Temperature Lifecycle Rules
 
-> See [Promotion & Demotion Rules](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/promotion-demotion-rules.md) for the full promotion/demotion table and action procedures.
+> See [Promotion & Demotion Rules](references/promotion-demotion-rules.md) for the full promotion/demotion table and action procedures.
 
 ### Hook Integration
 
-This skill's behavior is reinforced by the library's prompt-based hooks:
-- **SessionStart**: loads `memory/hot-cache.md`, reminds of stale open loops; provides light-user guidance based on Quick Status when `next_action` items are available
-- **PostToolUse**: warns when `memory/hot-cache.md` exceeds the 80-line / 25KB limit; enforces the auditor artifact-gate on `memory/audits/` writes; offers an optional quality check after user-facing content edits
-- **Stop**: guarded allow-only completion check; returns `{"ok": true}`, honors `stop_hook_active`, never asks the user to save optional findings, and never initiates memory writes
+This skill's behavior is reinforced by the library's `claude-hook.sh` hooks. What the hook **actually does** (do not document behavior it lacks):
+- **SessionStart** (fires on startup, resume, clear, compact): injects a sanitized excerpt of `memory/hot-cache.md`, and when `memory/open-loops.md` has tracked items, appends a one-line pointer to review them for staleness. It does not compute dates or a "Quick Status" — surfacing which open loops are stale is the agent's job once pointed at the file.
+- **PostToolUse**: warns when `memory/hot-cache.md` exceeds 80 lines / 25KB; enforces the auditor artifact-gate on `memory/audits/*.md` writes; offers an optional quality check after user-facing content edits.
+- **Stop**: a no-op (exits without output). CLAUDE.md's "allow-only Stop check" is just this no-op; the hook never initiates memory writes.
 
 ## Data Sources
 
-With tools: auto-populate from ~~SEO tool, ~~analytics, ~~search console. Without tools: ask user for keywords, competitors, metrics, campaigns, and terminology. See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md).
+With tools: auto-populate from ~~SEO tool, ~~analytics, ~~search console. Without tools: ask user for keywords, competitors, metrics, campaigns, and terminology. See [CONNECTORS.md](../../CONNECTORS.md).
 
 ## Decision Gates
 
@@ -147,9 +125,9 @@ When a user requests SEO memory management:
 
 ### 1. Initialize Memory Structure
 
-For new projects, create the directory structure defined in the [State Model](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/state-model.md). Key directories: `memory/` (decisions, open-loops, glossary, entities, research, content, audits, monitoring).
+For new projects, create the directory structure defined in the [State Model](../../references/state-model.md). Key directories: `memory/` (decisions, open-loops, glossary, entities, research, content, audits, monitoring).
 
-> **Templates**: [Hot Cache Template](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/hot-cache-template.md) · [Glossary Template](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/glossary-template.md)
+> **Templates**: [Hot Cache Template](references/hot-cache-template.md) · [Glossary Template](references/glossary-template.md)
 
 ### 2. Context Lookup Flow
 
@@ -173,17 +151,17 @@ When a user references something unclear, follow this lookup sequence:
 - If not found in any layer, ask for clarification
 - Log the new term in glossary if it's project-specific
 
-- **Decision provenance (v8.0.1+)**: when loading `memory/decisions.md`, verify each entry has `approved_by: user`. Entries with `approved_by: skill_inferred` or missing field are treated as **ADVISORY** — surface to user before using as authoritative. Auditor-class skills (content-quality-auditor, domain-authority-auditor) MUST ignore non-user-approved decisions when determining verdict. See [skill-contract.md §Promotion Rules](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+- **Decision provenance (v8.0.1+)**: when loading `memory/decisions.md`, verify each entry has `approved_by: user`. Entries with `approved_by: skill_inferred` or missing field are treated as **ADVISORY** — surface to user before using as authoritative. Auditor-class skills (content-quality-auditor, domain-authority-auditor) MUST ignore non-user-approved decisions when determining verdict. See [skill-contract.md §Promotion Rules](../../references/skill-contract.md).
 
 Example lookup: User asks "Update rankings for our hero KWs" → Step 1 finds "Hero Keywords (Priority 1)" in hot-cache → extract the keyword list → run the ranking check → update `memory/hot-cache.md` and `memory/monitoring/rank-history/YYYY-MM-DD-ranks.csv`.
 
 ### 3. Promotion & Demotion Logic
 
-> **Reference**: See [Promotion & Demotion Rules](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/promotion-demotion-rules.md) for detailed promotion/demotion triggers (keywords, competitors, metrics, campaigns) and the action procedures for each.
+> **Reference**: See [Promotion & Demotion Rules](references/promotion-demotion-rules.md) for detailed promotion/demotion triggers (keywords, competitors, metrics, campaigns) and the action procedures for each.
 
 ### 4. Update Triggers, Archive Management & Cross-Skill Integration
 
-> **Reference**: See [Update Triggers & Integration](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/update-triggers-integration.md) for the complete update procedures after ranking checks, competitor analyses, audits, and reports; monthly/quarterly archive routines; and integration points with all 8 connected skills (keyword-research, rank-tracker, competitor-analysis, content-gap-analysis, seo-content-writer, content-quality-auditor, domain-authority-auditor).
+> **Reference**: See [Update Triggers & Integration](references/update-triggers-integration.md) for the complete update procedures after ranking checks, competitor analyses, audits, and reports; monthly/quarterly archive routines; and integration points with all 8 connected skills (keyword-research, rank-tracker, competitor-analysis, content-gap-analysis, seo-content-writer, content-quality-auditor, domain-authority-auditor).
 
 ### 5. Memory Hygiene Checks
 
@@ -191,16 +169,12 @@ When invoked for review or cleanup:
 
 1. **Line count check**: Count lines in `memory/hot-cache.md`. If >80, list oldest entries for archival.
 2. **Byte check**: If hot-cache exceeds 25KB, warn and recommend trimming long entries.
-3. **Staleness scan**: List memory files older than 30 days that have not been referenced. Recommend archival for files >90 days.
+3. **Staleness scan**: List memory files whose frontmatter `last_updated` date (or file mtime) is older than 30 days; recommend archival for files older than 90 days. Age is computable from disk — reference-frequency is not tracked, so never gate on "unreferenced".
 4. **Frontmatter audit**: Check that all memory files (except hot-cache.md) have `name`, `description`, and `type` in their frontmatter. Report any missing fields.
 
 ### 6. Save Results
 
 Ask "Save these results for future sessions?" — if yes, write `YYYY-MM-DD-<topic>.md` to `memory/`. Add veto issues to `memory/hot-cache.md` only from auditor handoff or explicit user approval.
-
-## Examples, Advanced Features & Practical Limitations
-
-> **Reference**: See [Examples](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/examples.md) for three complete examples (hero keyword rankings, glossary lookup, e-commerce project init), advanced features (smart context loading, memory health check, bulk promotion/demotion, memory snapshot, cross-project memory), and practical limitations (concurrent access, cold storage retrieval, data freshness).
 
 ## GDPR / Privacy Compliance
 
@@ -215,26 +189,23 @@ Ask "Save these results for future sessions?" — if yes, write `YYYY-MM-DD-<top
 Invoke: `memory-management purge <entity-name-or-slug>`
 
 This skill then:
-1. Greps all files under `memory/` (including `memory/archive/`) for the entity name, slug, or domain
-2. Presents matches to user for confirmation
-3. Deletes or anonymizes confirmed matches across all surfaces:
-   - **Canonical**: `memory/hot-cache.md`, WARM notes, COLD/archive files, `memory/entities/<slug>.md`, `memory/entities/candidates.md`, audit aggregates, open loops
-   - **Archive body scan**: run `grep -F "<entity-name>" memory/archive/*.md` to catch the entity name regardless of frontmatter integrity (legacy or manually-moved files may lack clean frontmatter). If a malformed archive is touched by the purge, log it explicitly to `memory/audits/gdpr-purges.md` so a compliance audit can verify scope.
-4. Writes a tombstone to `memory/privacy/tombstones.md` with redacted label, salted non-reversible fingerprint, date, scope, and `reingest_blocked: true`; never store the raw subject
-5. Logs the purge to `memory/audits/gdpr-purges.md` per the canonical schema in [GDPR Purge Log Template](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/gdpr-purge-log-template.md) (v9.9.9+) — required fields: `purge_id`, `date`, `redacted_label`, `fingerprint`, `scope.{canonical,archive}`, `action`, `action_detail`, `legal_basis`, `proof.{grep_count_before,grep_count_after}`, `reingest_blocked: true`, `audit_signature`. Auditor-verifiable structure: never raw subject; mechanical grep-count proof; cross-referenced to tombstone fingerprint.
-6. For auditor archives, redact subject identifiers while preserving score/status/proof metadata required for audit integrity
+1. Greps all files under `memory/` (including `memory/archive/`) for the entity name, slug, or domain — `grep -rF "<entity-name>" memory/` — and presents matches for confirmation.
+2. On confirmation, deletes or anonymizes the matched lines/files across the working tree: `memory/hot-cache.md`, WARM notes, COLD/archive files, `memory/entities/<slug>.md`, `memory/entities/candidates.md`, audit aggregates, and open loops.
+3. Appends a dated, subject-free entry to `memory/audits/gdpr-purges.md` per the [GDPR Purge Log Template](references/gdpr-purge-log-template.md) — required fields `date`, `redacted_label`, `legal_basis`, `action`, `scope`, `working_tree_only: true` — so there is a human-readable record of the request.
+
+> **Honest limitation — this edits the working tree only.** If `memory/` is under version control (it usually is, in the user's project repo), the subject **still exists in git history**. Verify with `git log -S"<entity-name>" -- memory/`; true erasure from history requires `git filter-repo` / `git filter-branch` and is the user's responsibility — it is out of this skill's scope. Do not represent a working-tree redaction as a complete, audit-grade erasure. There is no salted-fingerprint or reingest-blocking mechanism: nothing in the hooks consults a tombstone before writing, so any such claim would be false.
 
 ### Lawful basis reminder
 Before writing a third-party person to `memory/entities/`, the user must have one lawful basis per GDPR Art 6 (where GDPR applies — see scope note above): `consent`, `legitimate_interest`, `contract`, or equivalent. Advisory — this skill does not enforce, and does not substitute for legal review.
 
 ## Reference Materials
 
-- [Examples](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/examples.md) — Worked examples, advanced features, practical limitations, and the auditor handoff archive block format & rules
-- [Promotion & Demotion Rules](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/promotion-demotion-rules.md) — Full promotion/demotion table and action procedures
-- [Update Triggers & Integration](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/update-triggers-integration.md) — Update procedures, archive routines, and cross-skill integration points
-- [CORE-EEAT Content Benchmark](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/core-eeat-benchmark.md) — Content quality scoring stored in memory
-- [CITE Domain Rating](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/cite-domain-rating.md) — Domain authority scoring stored in memory
+- [Examples](references/examples.md) — Worked examples, advanced features, practical limitations, and the auditor handoff archive block format & rules
+- [Promotion & Demotion Rules](references/promotion-demotion-rules.md) — Full promotion/demotion table and action procedures
+- [Update Triggers & Integration](references/update-triggers-integration.md) — Update procedures, archive routines, and cross-skill integration points
+- [CORE-EEAT Content Benchmark](../../references/core-eeat-benchmark.md) — Content quality scoring stored in memory
+- [CITE Domain Rating](../../references/cite-domain-rating.md) — Domain authority scoring stored in memory
 
 ## Next Best Skill
 
-Primary: [keyword-research](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/SKILL.md) — seed or refresh campaign strategy with current demand signals.
+Primary: [keyword-research](../../research/keyword-research/SKILL.md) — seed or refresh campaign strategy with current demand signals.

@@ -10,7 +10,7 @@ Score each link across six factors, multiply by weight, then sum the weighted va
 |--------|--------|---------|---------|---------|-----------|
 | Domain Authority | 25% | DR/DA 70+, established authority | DR/DA 30-49, credible niche site | DR/DA <15 or thin/abandoned | DR/DA is a proxy; relevance can beat raw authority. Check for inflated authority from bought links/PBNs. |
 | Topical Relevance | 25% | Same niche and subtopic | Same broad field | Unrelated topic | Read the page, site focus, surrounding copy, and outbound-link pattern before scoring. |
-| Linking Page Traffic | 15% | 9.9.9+ visits/mo | 100-999 visits/mo | <10 visits/mo | Real traffic suggests editorial value and referral upside. |
+| Linking Page Traffic | 15% | 10,000+ visits/mo | 100-999 visits/mo | <10 visits/mo | Real traffic suggests editorial value and referral upside. |
 | Link Position | 15% | In-content editorial citation | Author bio/about section | Footer, sitewide, hidden, or template link | Editorial body links carry the most value. |
 | Anchor Text | 10% | Descriptive, natural | Brand name | Generic | A single natural descriptive anchor can score high; a profile overloaded with exact-match anchors is risky. |
 | Follow Status | 10% | Dofollow editorial | Sponsored/UGC disclosed | Nofollow | Nofollow is a hint, not zero value; high-authority nofollow links can still help brand/referral visibility. |
@@ -136,7 +136,7 @@ Authority expectations vary by vertical:
 | Health / Medical | 50-85 | 3,000-30,000+ | Very High |
 | Technology / SaaS | 40-80 | 1,000-20,000+ | High |
 | E-commerce | 35-75 | 500-15,000+ | High |
-| Legal | 40-70 | 1,000-9.9.9+ | High |
+| Legal | 40-70 | 1,000-10,000+ | High |
 | Education | 50-90 | 2,000-25,000+ | Medium-High |
 | Local services | 15-45 | 50-500 | Medium |
 | B2B niche | 25-60 | 200-5,000+ | Medium |

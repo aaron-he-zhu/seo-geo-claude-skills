@@ -9,8 +9,10 @@ Use robots.txt and server policy to decide which AI crawlers can access content.
 | OAI-SearchBot | OpenAI search/citation discovery | Allow when ChatGPT search visibility is desired |
 | GPTBot | OpenAI training/crawling | Allow if AI visibility/data use is acceptable; block for TDM restriction |
 | ChatGPT-User | OpenAI user-requested browsing/actions | Usually allow for user-triggered access; robots.txt may not apply |
-| ClaudeBot / anthropic-ai | Anthropic crawling | Same policy decision as GPTBot |
-| Google-Extended | Google AI training opt-out | Block to restrict training while Googlebot can still index |
+| ClaudeBot / anthropic-ai | Anthropic crawling/training | Same policy decision as GPTBot |
+| Claude-SearchBot | Anthropic search/citation discovery for Claude | Allow when Claude search-citation visibility is desired (the retrieval analog of OAI-SearchBot) |
+| Claude-User | Anthropic user-triggered browsing/actions | Usually allow for user-triggered access; robots.txt may not apply |
+| Google-Extended | Google AI training opt-out | Block to restrict training while Googlebot can still index. Does not affect AI Overviews / AI Mode, which use the Google index — opting out of those is not available via robots.txt |
 | Googlebot | Search indexing | Usually allow |
 | Bingbot | Search indexing / Copilot ecosystem | Usually allow |
 | PerplexityBot | AI answer retrieval | Allow when citation visibility is desired |
@@ -23,7 +25,7 @@ Use robots.txt and server policy to decide which AI crawlers can access content.
 |------|----------|----------------|
 | default-open | AI visibility and citation discovery are goals | Allow search, retrieval, and selected AI bots; block only sensitive paths |
 | default-closed | Licensed, paid, private, or TDM-reserved content | Block broad AI crawlers by default; allow only approved search/retrieval bots |
-| split | Search indexing yes, AI training no | Allow Googlebot/Bingbot/OAI-SearchBot/selected retrieval bots; block GPTBot, ClaudeBot, CCBot, Google-Extended |
+| split | Search indexing yes, AI training no | Allow Googlebot/Bingbot/OAI-SearchBot/Claude-SearchBot/selected retrieval bots; block GPTBot, ClaudeBot, CCBot, Google-Extended |
 
 ## Search-Only Starter
 
@@ -45,12 +47,20 @@ User-agent: PerplexityBot
 User-agent: Perplexity-User
 Disallow:
 
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Disallow:
+
 User-agent: Googlebot
 User-agent: Bingbot
 Disallow:
 
 Sitemap: https://example.com/sitemap.xml
 ```
+
+> **Note**: this "search-only" pattern blocks `ClaudeBot` (training) but explicitly allows
+> `Claude-SearchBot`/`Claude-User` — otherwise you silently lose Claude's search citations while
+> only meaning to opt out of training. Mirror the same allow/block split for every assistant.
 
 ## Technical Checks
 
@@ -59,7 +69,7 @@ Sitemap: https://example.com/sitemap.xml
 | robots.txt returns 200 and parses | Crawler policy must be readable |
 | Search bots still allowed | Avoid accidental SEO loss |
 | Sitemap references current canonical URLs | Supports discovery |
-| Retrieval bots include OAI-SearchBot, ChatGPT-User, PerplexityBot, and Perplexity-User where desired | Prevents accidental citation loss |
+| Retrieval bots include OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Claude-SearchBot, and Claude-User where desired | Prevents accidental citation loss |
 | Published IP ranges match provider JSON when edge rules are used | Avoids spoofing and stale allowlists |
 | Private/gated paths use auth or noindex, not only robots.txt | robots.txt is not access control |
 | Logs confirm bot behavior | Validate crawl policy after launch |

@@ -12,27 +12,6 @@ metadata:
   author: aaron-he-zhu
   version: "9.9.10"
   geo-relevance: "medium"
-  tags:
-    - seo
-    - geo
-    - rank-tracking
-    - keyword-rankings
-    - serp-positions
-    - ranking-changes
-    - position-tracking
-    - 排名追踪
-    - ランキング追跡
-    - 순위추적
-    - seguimiento-rankings
-  triggers:
-    - "check keyword positions"
-    - "did my rankings change"
-    - "where do I rank now"
-    - "compare ranking snapshots"
-    - "SERP position delta"
-    - "how am I ranking"
-    - "我排第几"
-    - "排名变了吗"
 ---
 
 # Rank Tracker
@@ -57,15 +36,17 @@ Analyze ranking changes for [domain] over the past [time period]
 - **Writes**: a user-facing monitoring deliverable and reusable summary.
 - **Promotes**: significant changes, confirmed anomalies, follow-up actions, and pending decisions to `memory/open-loops.md`.
 - **Done when**: every tracked keyword shows current position vs baseline with a labeled delta (or N/A); each position cites its source (tool export / user-provided / estimated); and biggest movers and likely causes are named.
-- **Primary next skill**: [alert-manager](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/SKILL.md) when recurring monitoring should become automated.
+- **Primary next skill**: [alert-manager](../alert-manager/SKILL.md) when recurring monitoring should become automated.
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ## Data Sources
 
-All integrations optional (see [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md)). With tools, pull rankings from ~~SEO tool, impressions from ~~search console, traffic from ~~analytics, and AI citations from ~~AI monitor. Without tools, ask for positions, volumes, competitor data, and SERP feature status.
+All integrations optional (see [CONNECTORS.md](../../CONNECTORS.md)). With tools, pull rankings from ~~SEO tool, impressions from ~~search console, traffic from ~~analytics, and AI citations from ~~AI monitor. Without tools, ask for positions, volumes, competitor data, and SERP feature status.
+
+**Zero-dependency measurement loop** (no paid tool needed): never narrate a ranking movement you did not measure — record each check as a snapshot and let the ledger compute the delta. `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/ledger.py" record <domain> --source rank --data '{"<keyword>": <position>, ...}'`, then `ledger.py diff <domain> --source rank` for the change since the last check and `ledger.py trend <domain> --source rank --field "<keyword>"` for the series. Record real Search Console positions when connected, or the positions the user provides at Tier 1. A ranking delta is a **week-scale, confounded outcome** — attribute it against a control (a holdout keyword/competitor), not against zero; see [references/measurement-protocol.md](../../references/measurement-protocol.md). See [scripts/connectors/README.md](../../scripts/connectors/README.md).
 
 ## Decision Gates
 
@@ -90,15 +71,11 @@ When a user requests rank tracking or analysis:
 
 Label every metric **Measured** (tool/export), **User-provided**, or **Estimated** (model inference); never present an estimate as measured; if a required metric is unavailable, mark it N/A — do not invent it.
 
-> **Reference**: See [Ranking Analysis Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/rank-tracker/references/ranking-analysis-templates.md) for the complete output templates for all seven steps.
+> **Reference**: See [Ranking Analysis Templates](references/ranking-analysis-templates.md) for the complete output templates for all seven steps.
 
 ## Example
 
-Sample outcome: average position improves from 15.3 to 12.8, top-10 keywords rise from 12 to 17, and the report highlights the biggest winners, biggest drops, and next actions.
-
-## Tips for Success
-
-Track consistently, segment by intent, watch competitors, and include SERP feature plus GEO signals.
+A ranking report names the biggest winners, biggest drops, and next actions, with each position carrying its source tag and labeled delta against baseline.
 
 ## Rank Change Quick Reference
 
@@ -112,16 +89,16 @@ Track consistently, segment by intent, watch competitors, and include SERP featu
 | Drop off page 1 | Emergency response | Comprehensive audit + recovery plan |
 | Position gained | Document and learn | Identify what worked and replicate |
 
-> **Reference**: See [Tracking Setup Guide](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/rank-tracker/references/tracking-setup-guide.md) for tracking setup, root-cause taxonomy, CTR benchmarks, SERP feature impact, and algorithm-update assessment.
+> **Reference**: See [Tracking Setup Guide](references/tracking-setup-guide.md) for tracking setup, root-cause taxonomy, CTR benchmarks, SERP feature impact, and algorithm-update assessment.
 
 ### Save Results
 
-Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) §Save Results Template.
+Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](../../references/skill-contract.md) §Save Results Template.
 
 ## Reference Materials
 
-- [Tracking Setup Guide](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/rank-tracker/references/tracking-setup-guide.md) — Setup rules, feature tracking, and interpretation guidance
+- [Tracking Setup Guide](references/tracking-setup-guide.md) — Setup rules, feature tracking, and interpretation guidance
 
 ## Next Best Skill
 
-Initial setup (no baseline) → [alert-manager](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/SKILL.md). Subsequent runs (baseline exists) → Terminal. Visited-set rule applies per [skill-contract.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+Initial setup (no baseline) → [alert-manager](../alert-manager/SKILL.md). Subsequent runs (baseline exists) → Terminal. Visited-set rule applies per [skill-contract.md](../../references/skill-contract.md).

@@ -1,93 +1,46 @@
 ---
 name: gdpr-purge-log-template
-description: Canonical schema for memory/audits/gdpr-purges.md entries. Required for compliance auditability per memory-management SKILL.md GDPR section.
+description: Honest, minimal schema for memory/audits/gdpr-purges.md entries — a human-readable record of erasure requests, not an audit-grade erasure proof.
 type: reference
 ---
 
-# GDPR / CCPA Purge Log Schema (v9.9.9+)
+# Purge Log — `memory/audits/gdpr-purges.md`
 
-`memory/audits/gdpr-purges.md` is an append-only log of every Art 17 / CCPA §1798.105 erasure executed by `memory-management`. The structured schema enables a compliance audit to verify scope, action, and reingest-blocking — without requiring access to the raw subject data (which has been redacted).
+An append-only, human-readable record of every Art 17 / CCPA §1798.105 erasure request
+handled by `memory-management`. It documents **what was requested and what the working tree
+edit did** — it is NOT a cryptographic or audit-grade proof of complete erasure.
 
-## Why a template
-
-Pre-v9.9.9: SKILL.md described the log surface but didn't enforce a structure. Sufficiently sloppy LLM sessions could write inconsistent entries (missing fingerprint, missing scope, missing action taken). Surfaced by the fintech persona testing of v9.9.9: "memory/audits/gdpr-purges.md schema is described but not formalized — counsel will want one."
-
-This template is the canonical structure. Every purge entry MUST conform.
+> **Read this first — scope honesty.** A purge edits the **working tree** only. If `memory/` is
+> under version control, the subject still exists in git history; verify with
+> `git log -S"<name>" -- memory/` and use `git filter-repo` for true history erasure (the user's
+> responsibility, out of scope here). This log does not, and cannot, prove that the subject is gone
+> everywhere. Do not present it as such to a data subject or auditor. There is no salted-fingerprint
+> or reingest-blocking mechanism in the hooks; do not record fields that imply one exists.
 
 ## Entry schema
 
-Append-only YAML list. One entry per purge invocation. Newest entries at the bottom.
+Append-only YAML list, newest at the bottom. One entry per purge. **Never store the raw subject** —
+use a stable redacted label.
 
 ```yaml
-- purge_id: 2026-05-06-001                   # YYYY-MM-DD-NNN, unique within day
-  date: 2026-05-06                            # UTC date of the purge
-  redacted_label: "Subject-A1B2"              # NEVER store raw subject. Use a salted, non-reversible label.
-  fingerprint: "sha256:8f9c...3e21"           # Salted SHA-256 of (subject_name + project_salt). Truncated 8-byte prefix OK.
-  scope:                                       # Where the purge ran
-    - canonical:
-        - memory/hot-cache.md
-        - memory/research/competitors/acme-2024.md
-        - memory/audits/domain/acme-cite.md
-        - memory/entities/acme-corp.md
-    - archive:
-        - memory/archive/2026-05-01-acme-2024.md  # if archived pre-purge, body scrubbed
-  action: anonymize                            # delete | anonymize | structural-preserve
-  action_detail: |
-    Replaced "Jane Doe" string with "[REDACTED]" in 14 lines across 9 files.
-  legal_basis: art_17_request                  # art_17_request | ccpa_1798.105 | proactive_data_minimization
-  malformed_archives_processed: 0              # count of archives lacking clean frontmatter that were body-grepped
-  override_used: false                         # true if user invoked any override (e.g., partial-skip for audit integrity)
-  reingest_blocked: true                       # mirrors memory/privacy/tombstones.md entry — must always be true post-purge
-  proof:
-    grep_count_before: 14
-    grep_count_after: 0
-    files_modified: 9
-    log_md_lines_appended: 1
-  audit_signature: "automated"                 # automated | human-reviewed | dual-signed
-  reviewer: null                                # human reviewer id if dual-signed; null otherwise
+- date: 2026-06-10                 # date the purge was run
+  redacted_label: "Subject-A1B2"   # stable non-identifying label; NEVER the raw name
+  legal_basis: art_17_request      # art_17_request | ccpa_1798.105 | proactive_minimization
+  action: anonymize                # delete | anonymize
+  scope:                           # working-tree files edited
+    - memory/hot-cache.md
+    - memory/entities/acme-corp.md
+  files_modified: 9                # how many files were changed
+  working_tree_only: true          # always true — git history is NOT touched by this flow
+  note: "Replaced subject string with [REDACTED] across 14 lines. Advised user to run git filter-repo for history."
 ```
 
-## Field reference
+## Required fields
 
-| Field | Required | Type | Notes |
-|-------|----------|------|-------|
-| `purge_id` | ✅ | `YYYY-MM-DD-NNN` | Unique within a day. Sequential. |
-| `date` | ✅ | UTC date | Matches `purge_id` prefix. |
-| `redacted_label` | ✅ | string | Stable label for cross-referencing the tombstone (`memory/privacy/tombstones.md`). NEVER raw name. |
-| `fingerprint` | ✅ | `sha256:<hex>` | Salted with project-level secret. Non-reversible. Allows re-detection of reingest attempts. |
-| `scope.canonical[]` | ✅ | path[] | Files in HOT/WARM/COLD tiers touched. Empty list if none. |
-| `scope.archive[]` | ✅ | path[] | `memory/archive/*.md` files touched. |
-| `action` | ✅ | enum | `delete` (file removed entirely) / `anonymize` (subject replaced with `[REDACTED]`) / `structural-preserve` (an entry kept for audit integrity, value scrubbed). |
-| `action_detail` | ✅ | string | Human-readable summary of what was done. NEVER include the raw subject name here. |
-| `legal_basis` | ✅ | enum | Drives auditor verification. |
-| `malformed_archives_processed` | ✅ | int | Tracks archives without clean frontmatter that were body-grepped. |
-| `override_used` | ✅ | bool | `true` if user picked a partial-skip option (e.g., refused to delete an audit-integrity entry). |
-| `reingest_blocked` | ✅ | bool | MUST be `true` after purge. Cross-references the tombstone fingerprint. |
-| `proof` | ✅ | object | grep counts before/after, file modification count, log entries appended. The mechanical proof an auditor can verify. |
-| `audit_signature` | ✅ | enum | `automated` (memory-management only) / `human-reviewed` (user confirmed) / `dual-signed` (memory-management + named human reviewer). |
-| `reviewer` | ⚠️ | string\|null | Required when `audit_signature: dual-signed`. |
-
-## Append procedure
-
-memory-management writes a NEW entry to the bottom of `memory/audits/gdpr-purges.md` after every purge. The entry is generated from in-flight grep counts and action records, NOT inferred post-hoc. The `proof.grep_count_before` value is captured BEFORE the purge runs; `grep_count_after` is captured AFTER.
-
-If the purge spans multiple days (e.g., user paused mid-action), each day's portion gets its own entry sharing the same `redacted_label` and `fingerprint`.
-
-## Auditor verification
-
-A compliance auditor with read access to `memory/audits/gdpr-purges.md` can verify:
-
-1. **Coverage**: scope arrays match the documented surface in SKILL.md GDPR step 3.
-2. **Mechanical proof**: `grep_count_before` > 0 AND `grep_count_after` == 0 in canonical/archive scopes.
-3. **No raw data persistence**: `redacted_label` and `fingerprint` only — confirm no plaintext name appears anywhere in the entry.
-4. **Reingest block**: `reingest_blocked: true` AND tombstone exists at `memory/privacy/tombstones.md` matching the fingerprint.
-5. **Override accountability**: `override_used: true` entries get extra scrutiny; the `action_detail` should explain what was preserved and why (typically audit integrity).
+`date`, `redacted_label` (never raw), `legal_basis`, `action`, `scope`, `working_tree_only: true`.
+Everything else is optional context. Keep `note` free of the raw subject name.
 
 ## Cross-references
 
-- [memory-management SKILL.md GDPR section](../SKILL.md) — purge procedure
+- [memory-management SKILL.md §GDPR / Privacy Compliance](../SKILL.md) — purge procedure and its honest limitation
 - [references/skill-contract.md](../../../references/skill-contract.md) — Write Paths table
-
-## History
-
-- **v9.9.9** (2026-05-06): initial template, addressing the v9.9.9 fintech-persona testing finding that the schema was undocumented.

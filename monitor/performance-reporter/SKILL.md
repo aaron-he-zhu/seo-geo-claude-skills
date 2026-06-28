@@ -11,30 +11,6 @@ metadata:
   author: aaron-he-zhu
   version: "9.9.10"
   geo-relevance: "medium"
-  tags:
-    - seo
-    - geo
-    - seo-reporting
-    - performance-report
-    - kpi-dashboard
-    - traffic-report
-    - monthly-report
-    - stakeholder-report
-    - SEO报告
-    - SEOレポート
-    - SEO리포트
-    - informe-seo
-  triggers:
-    - "performance report"
-    - "traffic report"
-    - "SEO dashboard"
-    - "monthly SEO report"
-    - "show me my SEO results"
-    - "report to my boss"
-    - "how is my SEO performing"
-    - "汇报给老板"
-    - "出月报"
-    - "周报"
 ---
 
 # Performance Reporter
@@ -62,11 +38,13 @@ Generate a content performance report
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ## Data Sources
 
-All integrations optional (see [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md)). With tools connected, aggregates traffic from ~~analytics, search data from ~~search console, rankings/backlinks from ~~SEO tool, and AI visibility from ~~AI monitor. Without tools, ask user for analytics exports, Search Console data, ranking data, and KPIs.
+All integrations optional (see [CONNECTORS.md](../../CONNECTORS.md)). With tools connected, aggregates traffic from ~~analytics, search data from ~~search console, rankings/backlinks from ~~SEO tool, and AI visibility from ~~AI monitor. Without tools, ask user for analytics exports, Search Console data, ranking data, and KPIs.
+
+**Zero-dependency measurement loop**: every reported change should come from a computed delta, not an eyeballed estimate. Store each reporting period's KPIs and let the ledger compute period-over-period movement: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/ledger.py" record <domain> --source report --data '{"sessions": ..., "clicks": ..., ...}'`, then `ledger.py diff <domain> --source report` for the period delta and `ledger.py trend <domain> --source report --field <kpi>` for the trend line. Label every figure Measured / User-provided / Estimated accordingly, and attribute outcome movements against a control rather than to the latest change by default — see [references/measurement-protocol.md](../../references/measurement-protocol.md). See [scripts/connectors/README.md](../../scripts/connectors/README.md).
 
 ## Decision Gates
 
@@ -79,7 +57,7 @@ All integrations optional (see [CONNECTORS.md](https://github.com/aaron-he-zhu/s
 
 ## Instructions
 
-When a user requests a performance report, use [Report Output Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/performance-reporter/references/report-output-templates.md) and cover:
+When a user requests a performance report, use [Report Output Templates](references/report-output-templates.md) and cover:
 
 1. **Define Report Parameters** — Domain, period, comparison period, report type, audience, focus areas, and data freshness.
 2. **Create Executive Summary** — Overall rating, wins, watch areas, required actions, metrics at a glance (traffic, rankings, conversions, DA/authority, AI citations), and SEO ROI; tag each metric Measured / User-provided / Estimated.
@@ -99,20 +77,16 @@ Label every metric **Measured** (tool/export), **User-provided**, or **Estimated
 
 Sample output: an executive summary with overall status, metrics-at-a-glance for traffic/rankings/conversions/authority/AI citations, SEO ROI, and immediate/month/quarter actions with owners and dates.
 
-## Tips for Success
+## Save Results
 
-Lead with insights, compare periods, state data freshness, include owner/deadline/impact for actions, tailor depth to audience, and track GEO/AI citation metrics when in scope.
-
-### Save Results
-
-Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) §Save Results Template.
+Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](../../references/skill-contract.md) §Save Results Template.
 
 ## Reference Materials
 
-- [Report Output Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/performance-reporter/references/report-output-templates.md) — Compact starter blocks for all 11 report sections
-- [KPI Definitions](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/performance-reporter/references/kpi-definitions.md) — SEO/GEO metric definitions with benchmarks, thresholds, trend analysis, and attribution guidance
-- [Report Templates by Audience](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/performance-reporter/references/report-templates.md) — Copy-ready templates for executive, marketing, technical, and client audiences
+- [Report Output Templates](references/report-output-templates.md) — Compact starter blocks for all 11 report sections
+- [KPI Definitions](references/kpi-definitions.md) — SEO/GEO metric definitions with benchmarks, thresholds, trend analysis, and attribution guidance
+- [Report Templates by Audience](references/report-templates.md) — Copy-ready templates for executive, marketing, technical, and client audiences
 
 ## Next Best Skill
 
-Recurring monitoring needed → [alert-manager](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/SKILL.md) — turn reporting insights into ongoing monitoring rules. One-off report → Terminal. Visited-set rule applies per [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+Recurring monitoring needed → [alert-manager](../alert-manager/SKILL.md) — turn reporting insights into ongoing monitoring rules. One-off report → Terminal. Visited-set rule applies per [Skill Contract](../../references/skill-contract.md).

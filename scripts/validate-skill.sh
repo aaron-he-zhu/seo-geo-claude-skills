@@ -68,11 +68,24 @@ if [ "$1" = "--status" ]; then
     done < <(find "$REPO_ROOT" -name "SKILL.md" -not -path "$REPO_ROOT/docs/*" -not -path "$REPO_ROOT/.claude/*" | sort)
 
     echo ""
+    # Regression guard: the bundle version string must never appear glued to a numeric
+    # threshold unit (a past release-bump sed replaced the literal "10,000" with the
+    # version string across rubric thresholds). Legitimate version mentions never look like
+    # "9.9.10/mo" or "9.9.10px". (A bare trailing "+" — e.g. a "requires 9.9.10+" compat
+    # note — is intentionally NOT flagged; only unit-glued forms are.)
+    CORRUPT=$(grep -rnE "${lib_plugin//./\\.}[0-9]*[[:space:]]*(/mo|px|visits|domains|estimated)" "$REPO_ROOT" --include='*.md' 2>/dev/null | grep -vE '/\.git/' | head -5)
+    if [ -n "$CORRUPT" ]; then
+        echo -e "${RED}CORRUPTION${NC}: bundle version string glued to a numeric threshold (release-bump likely clobbered a real number):"
+        echo "$CORRUPT"
+        SPLIT=1
+    fi
+
+    echo ""
     if [ "$SPLIT" -gt 0 ]; then
-        echo -e "${RED}SPLIT detected — version: and metadata.version: disagree in one or more skills${NC}"
+        echo -e "${RED}SPLIT/CORRUPTION detected — fix before release${NC}"
         exit 1
     else
-        echo -e "${GREEN}All skill versions internally consistent${NC}"
+        echo -e "${GREEN}All skill versions internally consistent; no threshold corruption${NC}"
         exit 0
     fi
 fi
@@ -200,7 +213,7 @@ BODY_LINES=$(awk 'BEGIN{n=0} /^---/{n++; next} n>=2{print}' "$SKILL_FILE" | wc -
 IS_AUDITOR=$(echo "$FRONTMATTER" | grep -qE '^class: *auditor' && echo "yes" || echo "no")
 
 if [ "$IS_AUDITOR" = "yes" ]; then
-    pass "Auditor skill keeps protocol runbook inline by design ($BODY_LINES lines)"
+    pass "Auditor skill reads the shared runbook + keeps framework-specific examples inline ($BODY_LINES lines)"
 elif [ "$BODY_LINES" -gt 250 ] && [ ! -d "$SKILL_DIR/references" ]; then
     warn "Skill body is $BODY_LINES lines but no references/ directory found. Consider extracting detailed tables/rubrics."
 else
@@ -227,8 +240,8 @@ done
 
 if grep -Fxq "### Handoff Summary" "$SKILL_FILE"; then
     pass "shared contract handoff heading present: ### Handoff Summary"
-elif [ "$IS_AUDITOR" = "yes" ] && grep -Fxq "## §1 · Handoff Schema (authoritative)" "$SKILL_FILE"; then
-    pass "auditor handoff schema section satisfies Handoff Summary contract"
+elif [ "$IS_AUDITOR" = "yes" ] && grep -q "auditor-runbook.md" "$SKILL_FILE"; then
+    pass "auditor references the runbook handoff schema (auditor-runbook.md)"
 else
     fail "Missing shared contract handoff section: ### Handoff Summary"
 fi
@@ -256,6 +269,16 @@ elif grep -q "Global default termination rule applies to every Next Best Skill b
     pass "Next Best Skill block inherits global visited-set/max-depth termination contract"
 else
     fail "Next Best Skill block lacks termination language and no global default contract was found"
+fi
+
+# --- Regression guard: runtime files must use relative links, not blob/main URLs ---
+# (A skill that WebFetches GitHub HTML instead of Reading the installed file breaks
+#  version pinning and offline use. Human-facing docs may still use absolute URLs.)
+if grep -q 'blob/main/' "$SKILL_FILE"; then
+    BLOB_HITS=$(grep -c 'blob/main/' "$SKILL_FILE")
+    fail "SKILL.md contains ${BLOB_HITS} blob/main GitHub URL(s) — use plugin-relative paths so the agent Reads the installed file (offline-safe, version-pinned)"
+else
+    pass "no blob/main GitHub URLs (references load via relative paths)"
 fi
 
 # --- File type check (text only, no binaries) ---

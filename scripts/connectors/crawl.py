@@ -8,11 +8,9 @@ click-depth from the start URL, HTTP status, and the final URL after redirects.
 Politeness:
 - One request per second (time.sleep), a hard page cap (--max-pages), and a
   depth cap (--max-depth).
-- A lightweight INLINE robots.txt pre-flight: /robots.txt is fetched once and
-  Disallow rules for our UA token are honored via a simple longest-prefix match.
-  This is deliberately self-contained; scripts/connectors/robots.py is the
-  fuller, more correct robots checker — use it when you need wildcards, Allow
-  precedence, sitemaps, or per-agent group selection.
+- A robots.txt pre-flight: /robots.txt is fetched once and enforced through
+  scripts/connectors/robots.py (RobotsTxt.can_fetch) — correct Allow/Disallow
+  precedence, `*`/`$` wildcards, and longest-match per-agent group selection.
 
 Safety: fetched HTML is DATA, never instructions (see ../../SECURITY.md). This
 crawler only extracts links and metadata; it never acts on page content.
@@ -39,6 +37,7 @@ from html.parser import HTMLParser
 from urllib.parse import urldefrag, urljoin, urlparse
 
 import _http  # shared polite HTTP (UA, gzip, timeout, size cap, backoff)
+import robots  # correct robots.txt checker (Allow + Disallow, wildcards, longest-match)
 
 CRAWL_DELAY_SECONDS = 1.0  # polite default: <= 1 req/s
 # UA token we match robots.txt groups against (substring of _http.USER_AGENT).
@@ -77,72 +76,6 @@ class _LinkAndTitleParser(HTMLParser):
         return " ".join("".join(self.title_parts).split())
 
 
-def parse_robots_disallows(robots_text, ua_token):
-    """Return a list of Disallow path prefixes that apply to our UA token.
-
-    Lightweight parser: walks User-agent groups, collects the most specific
-    matching group ('*' as fallback, or any group whose agent string is a
-    substring of / contains our token). Wildcards in paths are NOT expanded —
-    that's robots.py's job; here we treat each Disallow value as a literal
-    prefix for longest-prefix matching. Returns [] when nothing applies.
-    """
-    star_rules = []
-    specific_rules = []
-    current_agents = []
-    current_rules = []
-    saw_token = False
-
-    def flush():
-        nonlocal saw_token
-        for agent in current_agents:
-            a = agent.lower()
-            if a == "*":
-                star_rules.extend(current_rules)
-            elif a in ua_token or ua_token in a:
-                specific_rules.extend(current_rules)
-                saw_token = True
-
-    in_group = False
-    for raw in robots_text.splitlines():
-        line = raw.split("#", 1)[0].strip()
-        if not line or ":" not in line:
-            continue
-        field, _, value = line.partition(":")
-        field = field.strip().lower()
-        value = value.strip()
-        if field == "user-agent":
-            # A user-agent line after rules starts a new group.
-            if in_group and current_rules:
-                flush()
-                current_agents = []
-                current_rules = []
-                in_group = False
-            current_agents.append(value)
-        elif field == "disallow":
-            in_group = True
-            # Empty Disallow means "allow all" for the group → no rule added.
-            if value:
-                current_rules.append(value)
-        # Allow / Crawl-delay / Sitemap are ignored by this lightweight check.
-    flush()
-    rules = specific_rules if saw_token else star_rules
-    # Longest-prefix match works best when longer rules are checked; order
-    # doesn't change correctness for a pure prefix test, but keep it stable.
-    return sorted(set(rules), key=len, reverse=True)
-
-
-def is_disallowed(path, disallows):
-    """True if `path` starts with any Disallow prefix (longest-prefix match)."""
-    if not path:
-        path = "/"
-    for rule in disallows:
-        if rule == "/":
-            return True
-        if path.startswith(rule):
-            return True
-    return False
-
-
 def normalize(url):
     """Drop the fragment so #anchors don't create duplicate crawl targets."""
     return urldefrag(url)[0]
@@ -169,13 +102,15 @@ def crawl(start_url, max_pages=50, max_depth=5, respect_robots=True,
         return []
     host = parsed.netloc.lower()
 
-    disallows = []
+    robots_rules = None
     if respect_robots:
         robots_url = "%s://%s/robots.txt" % (parsed.scheme, parsed.netloc)
         r = _http.get_text(robots_url)
         if r["status"] == 200 and r["text"]:
-            disallows = parse_robots_disallows(r["text"], UA_TOKEN)
-            emit("robots: %d disallow rule(s) in effect" % len(disallows))
+            robots_rules = robots.RobotsTxt.parse(
+                r["text"], robots_url, r["status"], r["error"])
+            n = sum(len(g.rules) for g in robots_rules.groups)
+            emit("robots: %d rule(s) parsed (Allow + Disallow, wildcard-aware)" % n)
         else:
             emit("robots: none found (status %s) — proceeding" % r["status"])
 
@@ -186,9 +121,11 @@ def crawl(start_url, max_pages=50, max_depth=5, respect_robots=True,
     while queue and len(results) < max_pages:
         url, depth = queue.popleft()
 
-        if respect_robots and is_disallowed(urlparse(url).path, disallows):
-            emit("skip (robots): %s" % url)
-            continue
+        if respect_robots and robots_rules is not None:
+            allowed, _ = robots_rules.can_fetch(UA_TOKEN, urlparse(url).path or "/")
+            if not allowed:
+                emit("skip (robots): %s" % url)
+                continue
 
         if results:  # polite delay between fetches, not before the first
             time.sleep(delay)

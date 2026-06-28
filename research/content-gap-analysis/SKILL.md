@@ -11,30 +11,6 @@ metadata:
   author: aaron-he-zhu
   version: "9.9.10"
   geo-relevance: "medium"
-  tags:
-    - seo
-    - geo
-    - content-gaps
-    - topic-analysis
-    - content-strategy
-    - editorial-calendar
-    - competitive-gap
-    - content-opportunities
-    - 内容缺口
-    - コンテンツギャップ
-    - 콘텐츠갭
-    - brechas-contenido
-  triggers:
-    - "content opportunities"
-    - "editorial calendar"
-    - "what do competitors write about"
-    - "what should I cover next"
-    - "they cover this but I don't"
-    - "what topics am I missing"
-    - "内容缺口分析"
-    - "竞品话题"
-    - "缺什么内容"
-    - "コンテンツギャップ"
 ---
 
 # Content Gap Analysis
@@ -59,21 +35,21 @@ What content am I missing compared to my top 3 competitors?
 - **Writes**: a user-facing analysis and reusable summary.
 - **Promotes**: durable keyword priorities, competitor facts, and pending strategy decisions to `memory/hot-cache.md`, `memory/open-loops.md`, and `memory/research/`.
 - **Done when**: each prioritized gap names the competitor(s) that cover it and you don't; gaps are bucketed into Quick Wins / Strategic Builds / Long-term; and the deliverable includes a dated content calendar entry per Quick Win.
-- **Primary next skill**: [seo-content-writer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/seo-content-writer/SKILL.md) when the prioritized gap list is approved.
+- **Primary next skill**: [seo-content-writer](../../build/seo-content-writer/SKILL.md) when the prioritized gap list is approved.
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ## Data Sources
 
-Optional integrations: ~~SEO tool, ~~search console, ~~analytics, ~~AI monitor. Without tools, ask for site URL, content inventory, competitor URLs, and business goals. See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md).
+Optional integrations: ~~SEO tool, ~~search console, ~~analytics, ~~AI monitor. Without tools, ask for site URL, content inventory, competitor URLs, and business goals. See [CONNECTORS.md](../../CONNECTORS.md).
 
 ## Decision Gates
 
 **Stop and ask** — gap analysis is competitor-relative and cannot run on demand alone:
 
-1. No competitor domains given and none inferable from `CLAUDE.md` or prior research → ask the user to name 1-3 competitors, OR offer to switch to [keyword-research](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/SKILL.md) for demand-side discovery instead.
+1. No competitor domains given and none inferable from `CLAUDE.md` or prior research → ask the user to name 1-3 competitors, OR offer to switch to [keyword-research](../keyword-research/SKILL.md) for demand-side discovery instead.
 2. Your own domain/content inventory is unavailable and cannot be fetched → ask for the site URL or a content list, since "gap" requires knowing current coverage.
 
 **Continue silently** — do not stop for: which 3-5 named competitors to deep-dive (pick the closest); missing optional tool data (mark Estimated/N/A and proceed); ambiguous topic scope (analyze the full overlap and flag the broadest clusters).
@@ -96,11 +72,11 @@ Label every metric **Measured** (tool/export), **User-provided**, or **Estimated
 
 **Quality bar**: every gap names the competitor that covers it, its volume or traffic estimate, and why it is worth closing — never list a bare topic without that evidence.
 
-> **Reference**: See [Analysis Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/content-gap-analysis/references/analysis-templates.md) for the compact templates used in each step.
+> **Reference**: See [Analysis Templates](references/analysis-templates.md) for the compact templates used in each step.
 
 ## Example
 
-See [references/example-report.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/content-gap-analysis/references/example-report.md) for a full SaaS marketing sample.
+See [references/example-report.md](references/example-report.md) for a full SaaS marketing sample.
 
 ## Advanced Analysis
 
@@ -122,20 +98,16 @@ What content have competitors published in the last 6 months that we haven't cov
 Find gaps in our [commercial/informational] intent content
 ```
 
-## Tips for Success
+## Save Results
 
-Focus on actionable gaps, respect execution constraints, and include GEO opportunities instead of only traditional search gaps.
-
-### Save Results
-
-Write path: `memory/research/content-gap-analysis/YYYY-MM-DD-<topic>.md`; promote durable gap priorities and competitor facts to `memory/hot-cache.md`. See [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) §Save Results Template.
+Write path: `memory/research/content-gap-analysis/YYYY-MM-DD-<topic>.md`; promote durable gap priorities and competitor facts to `memory/hot-cache.md`. See [Skill Contract](../../references/skill-contract.md) §Save Results Template.
 
 ## Reference Materials
 
-- [Analysis Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/content-gap-analysis/references/analysis-templates.md) — Gap-analysis templates
-- [Gap Analysis Frameworks](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/content-gap-analysis/references/gap-analysis-frameworks.md) — Audit and prioritization frameworks
-- [Example Report](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/content-gap-analysis/references/example-report.md) — Worked sample
+- [Analysis Templates](references/analysis-templates.md) — Gap-analysis templates
+- [Gap Analysis Frameworks](references/gap-analysis-frameworks.md) — Audit and prioritization frameworks
+- [Example Report](references/example-report.md) — Worked sample
 
 ## Next Best Skill
 
-Primary: [seo-content-writer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/seo-content-writer/SKILL.md).
+Primary: [seo-content-writer](../../build/seo-content-writer/SKILL.md).

@@ -1,6 +1,6 @@
 # Technical SEO Checker Worked Example and Checklist
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/SKILL.md). Use as a compact output model, not as fixed data.
+Referenced from [SKILL.md](../SKILL.md). Use as a compact output model, not as fixed data.
 
 ## Worked Example Shape
 

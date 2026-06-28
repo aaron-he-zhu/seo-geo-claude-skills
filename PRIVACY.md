@@ -20,16 +20,22 @@ By default, this library:
 - Fetched page content re-enters your Claude session as context
 - Caveat: fetched content is treated as **untrusted data** (see each skill's Security boundary note), not instructions
 
-**2. MCP connectors** (listed in `.mcp.json`):
-- Each active connector sends data to its vendor per the vendor's privacy policy
+**2. Bundled stdlib connectors** (`scripts/connectors/*.py`, run only when a skill or the user invokes them):
+- Make outbound HTTP(S) requests to public endpoints — Google Autocomplete (`suggest.py`), PageSpeed Insights (`psi.py`), Wikidata (`kg.py`), the Wayback CDX API (`wayback.py`), Open PageRank (`openpagerank.py`), and any site URL you point `crawl.py`/`onpage.py`/`sitemap.py`/`schema_lint.py` at
+- Your IP and a project-identifying User-Agent reach those endpoints; only `http(s)` URLs are ever fetched (scheme-guarded)
+- Optional API keys (Open PageRank, PageSpeed) are read from your environment at call time and never stored
+
+**3. MCP connectors** (catalogued in `.mcp.json`, **opt-in — not auto-registered**):
+- Installing the plugin does NOT register these; you enable a connector by copying its entry into your own MCP config
+- Each enabled connector sends data to its vendor per the vendor's privacy policy
 - Connectors: Ahrefs, Semrush, SE Ranking, SISTRIX, SimilarWeb, Cloudflare, Vercel, HubSpot, Amplitude, Notion, Webflow, Sanity, Contentful, Slack (14 total, all HTTPS)
 - **No connector is enabled without explicit OAuth / API key setup**
 
-**3. Memory files contain third-party data**:
+**4. Memory files contain third-party data**:
 - `memory/audits/` may contain competitor URLs, target keywords, audit findings
 - `memory/entities/` may contain third-party brand/person names
 - Session hooks may read `memory/hot-cache.md` into model context; users should be aware when committing repo to public Git, sharing with AI agents, using cloud-hosted model sessions, or syncing across devices
-- See [memory-management SKILL.md §GDPR / Privacy Compliance](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md) for retention + deletion guidance
+- See [memory-management SKILL.md §GDPR / Privacy Compliance](cross-cutting/memory-management/SKILL.md) for retention + deletion guidance
 
 ### In scope for security review
 - Memory poisoning across sessions (malicious content written to `memory/` affecting future sessions)
@@ -53,4 +59,4 @@ For privacy-related questions: **hello@zhuhe.io**
 
 This privacy policy may be updated as the project evolves. Changes will be documented in commit history.
 
-*Last updated: 2026-05-01*
+*Last updated: 2026-06-10*

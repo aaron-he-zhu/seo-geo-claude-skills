@@ -31,7 +31,7 @@ Configuration checklist and interpretation rules for reliable rank tracking.
 | Small (<50 pages) | 50-100 | brand + primary + secondary + long-tail |
 | Medium (50-500 pages) | 100-500 | brand + priority pages + topic clusters |
 | Large (500+ pages) | 500-2,000+ | scale by revenue pages |
-| Enterprise | 2,000-9.9.9+ | automated grouping and governance |
+| Enterprise | 2,000-10,000+ | automated grouping and governance |
 
 | Include | Rule |
 |---------|------|

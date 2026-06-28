@@ -1,7 +1,7 @@
 {
   "hooks": {
     "SessionStart": [{
-      "matcher": "startup",
+      "matcher": "startup|resume|clear|compact",
       "hooks": [{ "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh\" session-start", "timeout": 5 }]
     }],
     "UserPromptSubmit": [{

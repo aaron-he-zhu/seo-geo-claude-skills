@@ -1,11 +1,11 @@
 {
-  "name": "aaron-seo-geo",
+  "name": "aaron",
   "owner": {
     "name": "Aaron He Zhu",
     "url": "https://github.com/aaron-he-zhu"
   },
   "metadata": {
-    "description": "SEO & GEO capability pack. Breaking v10 command rename: /seo:* -> /aaron:*; recover old commands with /aaron:auto.",
+    "description": "SEO & GEO capability pack: 20 skills + 5 /aaron: commands for keyword research, content, audits, schema, and monitoring. Old /seo:* and /aaron:max commands still recover via /aaron:auto.",
     "version": "9.9.10",
     "repository": "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
   },
@@ -17,7 +17,6 @@
       "version": "9.9.10",
       "category": "marketing",
       "commands": "./commands/",
-      "commandNamespace": "aaron",
       "tags": [
         "seo",
         "geo",

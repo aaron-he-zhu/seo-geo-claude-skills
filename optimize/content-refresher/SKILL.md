@@ -11,29 +11,6 @@ metadata:
   author: aaron-he-zhu
   version: "9.9.10"
   geo-relevance: "medium"
-  tags:
-    - seo
-    - geo
-    - content-refresh
-    - content-update
-    - content-decay
-    - ranking-recovery
-    - evergreen-content
-    - content-lifecycle
-    - 内容更新
-    - コンテンツ更新
-    - 콘텐츠갱신
-    - actualizar-contenido
-  triggers:
-    - "refresh content"
-    - "content refresh strategy"
-    - "this post is outdated"
-    - "my old content needs updating"
-    - "which posts have lost the most traffic"
-    - "how often should I update content"
-    - "Clearscope content refresh"
-    - "文章过时了"
-    - "内容刷新"
 ---
 
 # Content Refresher
@@ -62,11 +39,11 @@ Create a content refresh strategy for [domain/topic]
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ## Data Sources
 
-Use ~~analytics, ~~search console, and ~~SEO tool when connected; otherwise ask for traffic data, ranking history, publish dates, candidate URLs, and competitor examples. See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md).
+Use ~~analytics, ~~search console, and ~~SEO tool when connected; otherwise ask for traffic data, ranking history, publish dates, candidate URLs, and competitor examples. See [CONNECTORS.md](../../CONNECTORS.md).
 
 ## Instructions
 
@@ -74,7 +51,7 @@ Label every metric **Measured** (tool/export), **User-provided**, or **Estimated
 
 When a user requests content refresh help:
 
-1. **CORE-EEAT Quick Score** — Estimate all 8 dimensions, prioritize red/yellow areas, and hand off to [content-quality-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/content-quality-auditor/SKILL.md) for full scoring when needed.
+1. **CORE-EEAT Quick Score** — Estimate all 8 dimensions, prioritize red/yellow areas, and hand off to [content-quality-auditor](../../cross-cutting/content-quality-auditor/SKILL.md) for full scoring when needed.
 2. **Identify Refresh Candidates** — Use age, dated claims, declining traffic, lost rankings, broken links, SERP shifts, and missing topics.
 3. **Analyze Page-Level Decay** — Compare 6-month-old vs current performance, keyword deltas, SERP intent, competitor updates, and the why-refresh rationale.
 4. **Define Updates Needed** — Capture outdated elements, competitor/PAA gaps, SEO updates, GEO updates, links, images, sources, and dates.
@@ -84,16 +61,16 @@ When a user requests content refresh help:
 8. **Set Republishing Strategy** — Use published-date update for 50%+ new content, last-updated date for 20-50%, original date for <20%; update schema, sitemap `lastmod`, cache, Search Console, and 4-6 week monitoring.
 9. **Create Refresh Report** — Summarize completed changes, expected outcomes, owners, next review date, and open loops.
 
-> **Reference**: [references/refresh-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-templates.md) has compact templates for steps 2-9.
+> **Reference**: [references/refresh-templates.md](references/refresh-templates.md) has compact templates for steps 2-9.
 
 ## Decision Gates
 
 **Stop and ask the user when:**
-- A page is decayed enough that a rewrite may beat a refresh (e.g., outdated premise, intent shift, or >50% of content stale) — state the finding and ask: (1) refresh in place, or (2) rewrite as new content via [seo-content-writer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/seo-content-writer/SKILL.md).
+- A page is decayed enough that a rewrite may beat a refresh (e.g., outdated premise, intent shift, or >50% of content stale) — state the finding and ask: (1) refresh in place, or (2) rewrite as new content via [seo-content-writer](../../build/seo-content-writer/SKILL.md).
 
 **Continue silently (never stop for):**
 - Missing analytics/ranking history — score decay from on-page signals (dated claims, broken links, stale stats), label findings Estimated, and proceed.
-- A request to "refresh" content that is actually net-new (no existing URL) — note the mismatch once and route to [seo-content-writer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/seo-content-writer/SKILL.md) rather than fabricating a prior version.
+- A request to "refresh" content that is actually net-new (no existing URL) — note the mismatch once and route to [seo-content-writer](../../build/seo-content-writer/SKILL.md) rather than fabricating a prior version.
 - Which republish-date treatment to apply — follow the Step 8 thresholds without asking.
 
 ## Example
@@ -102,13 +79,11 @@ When a user requests content refresh help:
 
 **Output**: CORE-EEAT quick score flags weak Referenceability, Experience, and Trust; recommends pricing refresh, broken-link fixes, author credential additions, affiliate disclosure, and a Changes Made block ready for republish.
 
-> **Reference**: See [references/refresh-example.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-example.md) for the full worked example and checklist.
+> **Reference**: See [references/refresh-example.md](references/refresh-example.md) for the full worked example and checklist.
 
 ## Tips for Success
 
 Prioritize by ROI/search demand, make substantive improvements instead of date-only edits, add stronger evidence than competitors, track post-publish rankings/traffic, and treat every refresh as a GEO citation opportunity.
-
-> **Reference data**: [references/content-decay-signals.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/content-decay-signals.md) covers decay signals, lifecycle stages, refresh-vs-rewrite decisions, and content-type strategy.
 
 ### Save Results
 
@@ -118,10 +93,10 @@ Ask to save results; if yes, write a dated summary to `memory/audits/content-ref
 
 ## Reference Materials
 
-- [Content Decay Signals](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/content-decay-signals.md) — Decay indicators, lifecycle stages, and refresh triggers by content type
-- [Refresh Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-templates.md) — Compact templates for steps 2-9
-- [Refresh Example & Checklist](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-example.md) — Full worked example and pre/post-refresh checklist
+- [Content Decay Signals](references/content-decay-signals.md) — Decay indicators, lifecycle stages, and refresh triggers by content type
+- [Refresh Templates](references/refresh-templates.md) — Compact templates for steps 2-9
+- [Refresh Example & Checklist](references/refresh-example.md) — Full worked example and pre/post-refresh checklist
 
 ## Next Best Skill
 
-Primary: [content-quality-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/content-quality-auditor/SKILL.md) — re-score refreshed content before shipping.
+Primary: [content-quality-auditor](../../cross-cutting/content-quality-auditor/SKILL.md) — re-score refreshed content before shipping.

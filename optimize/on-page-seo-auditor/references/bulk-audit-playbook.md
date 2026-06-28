@@ -1,6 +1,6 @@
 # On-Page SEO — Site-Wide / Bulk Audit Playbook
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/on-page-seo-auditor/SKILL.md). Use when the user wants on-page audits across >5 pages at once.
+Referenced from [SKILL.md](../SKILL.md). Use when the user wants on-page audits across >5 pages at once.
 
 ---
 

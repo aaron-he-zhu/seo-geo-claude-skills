@@ -1,6 +1,6 @@
 # CITE Domain Authority Report — Example
 
-Full example audit output for reference. See the [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/domain-authority-auditor/SKILL.md) for the complete workflow.
+Full example audit output for reference. See the [SKILL.md](../SKILL.md) for the complete workflow.
 
 ## Example
 
@@ -89,11 +89,11 @@ Sorted by: weight × points lost (highest impact first)
 | CITE (Domain) | 69.9/100 | Medium |
 | CORE-EEAT (Content) | Run content-quality-auditor on sample pages | — |
 
-**Diagnosis**: Low CITE + unknown CORE-EEAT → Run `/aaron:audit` on top 5 landing pages to determine whether to prioritize content quality or domain authority first.
+**Diagnosis**: Low CITE + unknown CORE-EEAT → Run `/aaron-seo-geo:audit` on top 5 landing pages to determine whether to prioritize content quality or domain authority first.
 
 ### Recommended Next Steps
 
 - For entity building: run `entity-optimizer` to strengthen I-dimension signals
 - For content audit: use `content-quality-auditor` on key pages
-- For tracking progress: run `/aaron:track --report` with CITE score trends quarterly
+- For tracking progress: run `/aaron-seo-geo:track --report` with CITE score trends quarterly
 ```

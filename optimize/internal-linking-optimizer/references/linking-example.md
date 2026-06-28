@@ -1,6 +1,6 @@
 # Internal Linking Optimizer — Worked Example
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/SKILL.md).
+Referenced from [SKILL.md](../SKILL.md).
 
 ---
 
