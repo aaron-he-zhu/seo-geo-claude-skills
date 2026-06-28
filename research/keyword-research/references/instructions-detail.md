@@ -10,7 +10,9 @@ Confirm the topic, audience, business goal, domain strength, geography, and lang
 
 ## Phase 2/8: Discover
 
-Start from:
+**Start from Search Console when available (striking-distance first).** If `~~search console` is connected, your first opportunity set is queries already earning impressions at positions ~5–20 — proven demand a small push can convert. The Search Analytics API sorts by clicks and offers no position filter, so request a high `rowLimit` and filter the 5–20 window client-side, then carry that shortlist straight into Phase 5 scoring (label its metrics **Measured**). Only after working the striking-distance set, expand with the seeds below.
+
+Then seed from:
 - Core product and service terms
 - Problem-focused keywords
 - Solution-focused keywords

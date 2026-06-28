@@ -47,6 +47,8 @@ Optional integrations: ~~SEO tool, ~~search console. Without tools, ask for seed
 
 **Zero-dependency local helper** (no tool needed): `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/suggest.py" "<seed>" --expand` harvests free keyword ideas from Google Autocomplete (⚠️ unofficial endpoint). Search *volume / difficulty* still needs `~~SEO tool` or own Search Console data. See [scripts/connectors/README.md](../../scripts/connectors/README.md).
 
+**Striking-distance shortcut** (when `~~search console` is connected): before broad discovery, mine your own GSC query data for terms already ranking in positions ~5–20 — page-one tail and page two. These are proven demand a small push can convert, so they are the fastest opportunity set. The Search Analytics API sorts by clicks and has **no position filter**, so request a high `rowLimit` and filter the 5–20 window client-side, then attach volume / difficulty / intent to that shortlist. Work this set first; treat its metrics as **Measured**.
+
 ## Instructions
 
 When a user requests keyword research, run eight phases and announce each as `[Phase X/8: Name]`:
