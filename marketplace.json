@@ -5,7 +5,7 @@
     "url": "https://github.com/aaron-he-zhu"
   },
   "metadata": {
-    "description": "SEO & GEO capability pack: 20 skills + 5 /aaron: commands for keyword research, content, audits, schema, and monitoring. Old /seo:* and /aaron:max commands still recover via /aaron:auto.",
+    "description": "SEO & GEO capability pack: 20 skills + 5 /aaron-seo-geo: commands for keyword research, content, audits, schema, and monitoring. Old /seo:* and /aaron-seo-geo:max commands still recover via /aaron-seo-geo:auto.",
     "version": "9.9.11",
     "repository": "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
   },
