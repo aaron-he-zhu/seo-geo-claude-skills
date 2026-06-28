@@ -10,7 +10,9 @@ Confirm the topic, audience, business goal, domain strength, geography, and lang
 
 ## Phase 2/8: Discover
 
-Start from:
+**Start from Search Console when available (striking-distance first).** If `~~search console` is connected, your first opportunity set is queries already earning impressions at positions ~5–20 — proven demand a small push can convert. The Search Analytics API sorts by clicks and offers no position filter, so request a high `rowLimit` and filter the 5–20 window client-side, then carry that shortlist straight into Phase 5 scoring (label its metrics **Measured**). Only after working the striking-distance set, expand with the seeds below.
+
+Then seed from:
 - Core product and service terms
 - Problem-focused keywords
 - Solution-focused keywords
@@ -115,7 +117,7 @@ Report sections:
 | "This keyword has good potential" | "Opportunity 8.4: vol 4,800, KD 28, transactional intent — top 5 content is stale" |
 | "Consider creating content around this topic" | "Write '[Tool A] vs [Tool B] for small teams' — 1,200/mo searches, current #1 is from 2022" |
 
-> **Reference**: See [references/example-report.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/keyword-research/references/example-report.md) for the full report template and example.
+> **Reference**: See [references/example-report.md](example-report.md) for the full report template and example.
 
 ## Advanced Usage
 

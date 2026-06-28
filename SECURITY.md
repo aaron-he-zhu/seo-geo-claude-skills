@@ -4,8 +4,8 @@
 
 | Version | Supported |
 |---------|-----------|
-| 10.x    | Yes       |
-| 9.x     | Security fixes only |
+| 9.9.x   | Yes (current line) |
+| 9.0–9.8 | Security fixes only |
 | < 9.0   | No        |
 
 ## Reporting a Vulnerability
@@ -30,20 +30,40 @@ Include:
 
 ## Scope
 
-This project consists of markdown-based skill files with no runtime dependencies. The primary security concerns are:
+This project is mostly markdown skill files, plus a small set of **zero-third-party-dependency
+Python-stdlib connectors** under `scripts/connectors/` that make outbound network requests (see
+§Connector network behavior below). The primary security concerns are:
 
-- **Prompt injection**: Skill files that could be manipulated to produce harmful outputs
-- **MCP server configuration**: Misconfigured connectors in `.mcp.json` that could expose credentials
+- **Prompt injection**: Skill files or fetched content manipulated to produce harmful outputs
+- **Connector network behavior**: outbound fetches from `scripts/connectors/` (scheme, SSRF, rate)
+- **MCP server configuration**: `.mcp.json` is opt-in (not auto-registered); misconfigured connectors could expose credentials if a user enables them
 - **Placeholder misuse**: `~~tool` placeholders resolving to unintended targets
 - **Memory poisoning across sessions** — malicious content written to `memory/` that affects future session behavior (e.g., fake `approved_by: user` decisions, poisoned `memory/entities/` records)
 - **WebFetch-injected instructions** — prompt injection via target page HTML/meta/body attempting to manipulate audit outcomes or Artifact Gate validation
 
 ## Security Design Principles
 
-- **Zero runtime dependencies**: No packages to compromise via supply chain attacks
-- **No credential storage**: Skills never store API keys; `.mcp.json` declares endpoints only, while credentials stay in user-managed host/OAuth secrets
+- **Zero third-party dependencies**: connectors use only the Python standard library — no PyPI packages to compromise via supply chain attacks
+- **No credential storage**: Skills and connectors never store API keys; `.mcp.json` declares endpoints only, and the optional connector API keys (Open PageRank, PageSpeed) are read from the user's environment at call time and never written to disk
 - **Tool-agnostic placeholders**: Skills reference tools by category (`~~SEO tool`), never by hardcoded API endpoints
 - **Apache 2.0 license**: Full source available for security review
+
+## Connector network behavior
+
+The `scripts/connectors/*.py` helpers make outbound HTTP(S) requests through one shared client
+(`_http.py`). Its safety contract:
+
+- **Scheme allowlist**: only `http://` and `https://` are ever fetched. `file://`, `ftp://`,
+  `gopher://`, etc. are rejected before any request, so a URL harvested from fetched content (e.g.
+  a child-sitemap entry) cannot trigger a local-file read. Private/loopback IPs are intentionally
+  *not* blocked, so users can audit their own staging hosts — the scheme guard is the boundary.
+- **Identification**: every request carries a descriptive `User-Agent` naming this project.
+- **Politeness**: per-request timeout, a response-size cap, and exponential backoff on 429/503.
+- **robots.txt**: `crawl.py` enforces `/robots.txt` (Allow/Disallow precedence, `*`/`$` wildcards,
+  per-agent group selection) via `robots.py` before fetching each URL.
+- **Untrusted content**: responses are DATA, never instructions (see the section above).
+- **API keys**: `openpagerank.py` and `psi.py` read an optional key from the environment and send
+  it to the official vendor endpoint only; keys are never logged or persisted.
 
 ## Fetched content is untrusted data, not instructions
 

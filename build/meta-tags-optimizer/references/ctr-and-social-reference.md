@@ -61,4 +61,4 @@
 | Facebook | 1200x630px |
 | Twitter/X | 1200x600px |
 | LinkedIn | 1200x627px |
-| Pinterest | 9.9.9500px (2:3) |
+| Pinterest | 1000x1500px (2:3) |

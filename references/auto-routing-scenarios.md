@@ -1,6 +1,6 @@
-# Product API Scenario Library
+# Auto Routing Scenario Library
 
-Each case is a routing contract for `/aaron-seo-geo:auto` or `/aaron-seo-geo:auto --deep`. Product API scenarios use the same `eval-case` schema as `evals/<skill-name>/cases.md`, plus `scenario_family`, `risk_gates`, `expected_route`, `blocking_inputs`, and `must_not` fields.
+Runtime routing data consulted by `commands/auto.md`. Each case is a routing contract for `/aaron-seo-geo:auto` or `/aaron-seo-geo:auto --deep`, using the same `eval-case` schema as `evals/<skill-name>/cases.md`, plus `scenario_family`, `risk_gates`, `expected_route`, `blocking_inputs`, and `must_not` fields.
 
 ```yaml
 - {id: "auto-finance-landing-publish-001", type: "eval-case", status: "simulated", target_skill: "content-quality-auditor", scenario: "financial_ymyl_publish", input_summary: "Product API scenario for financial_ymyl_publish.", expected_behavior: ["Route /aaron-seo-geo:audit -> /aaron-seo-geo:create --publish -> /aaron-seo-geo:audit --visibility.","Require risk gates: ymyl, publish_readiness, schema_factuality, geo_visibility_claim, data_insufficient.","Ask blocking inputs: APR source/date; eligibility; disclaimers."], failure_modes: ["Must not fabricate APR.","Must not give financial advice.","Must not mark ready without full audit."], scenario_family: "financial_ymyl_publish", risk_gates: ["ymyl","publish_readiness","schema_factuality","geo_visibility_claim","data_insufficient"], expected_route: "/aaron-seo-geo:audit -> /aaron-seo-geo:create --publish -> /aaron-seo-geo:audit --visibility", blocking_inputs: ["APR source/date","eligibility","disclaimers"], must_not: ["fabricate APR","give financial advice","mark ready without full audit"]}

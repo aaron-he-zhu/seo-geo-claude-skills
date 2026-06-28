@@ -1,5 +1,5 @@
-# Aaron Product API Contract
-`/aaron-seo-geo:auto` is the SEO/GEO pack-local Product API entry; its `--deep` flag (`/aaron-seo-geo:auto --deep`) is the maximum-depth mode. `/aaron` is an optional host alias for `/aaron-seo-geo:auto`, not a physical command. Cross-pack capability selection belongs to the future `slash-aaron` product repo; this pack must decline clearly non-SEO/GEO work instead of routing it into a fake SEO/GEO workflow. The five commands (`auto`, `research`, `create`, `audit`, `track`) remain the execution surface; scenario detail belongs in `evals/product-api-scenarios.md`.
+# Auto Routing Contract
+`/aaron-seo-geo:auto` is the SEO/GEO pack's natural-language entry point; its `--deep` flag (`/aaron-seo-geo:auto --deep`) is the maximum-depth mode. `/aaron` is an optional host alias for `/aaron-seo-geo:auto`, not a physical command. This pack declines clearly non-SEO/GEO work instead of routing it into a fake SEO/GEO workflow. The five commands (`auto`, `research`, `create`, `audit`, `track`) are the execution surface; scenario detail lives in `references/auto-routing-scenarios.md`.
 ## `/aaron-seo-geo:auto`
 - Accept natural-language SEO/GEO tasks when invoked directly or by verified host routing, then identify the scenario family and risk gates.
 - Execute the end-to-end command chain (`research`, `create`, `audit`, `track`) implied by the user goal, using the smallest depth that can produce the requested outcome.

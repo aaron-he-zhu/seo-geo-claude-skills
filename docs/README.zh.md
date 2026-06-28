@@ -3,7 +3,7 @@
 **20 个技能。5 个命令。规划、审计、监控 SEO/GEO 工作。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
-[![Version](https://img.shields.io/badge/version-9.9.10-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
+[![Version](https://img.shields.io/badge/version-9.9.11-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 
 [English](../README.md) | **中文**
@@ -20,7 +20,7 @@
 | skills.sh / 通用 Agent Skills 宿主 | `npx skills add aaron-he-zhu/seo-geo-claude-skills` |
 | 任意宿主 | `git clone https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
 
-单技能安装：`npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research`。
+在 Claude Code 中，`marketplace add` 只是注册目录——还需运行 `/plugin install aaron-seo-geo@aaron`（或在 `/plugin` 中选择）才能真正启用技能与命令。通用宿主单技能安装：`npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research`。
 
 自然语言示例（需宿主支持自动路由）：
 
@@ -69,11 +69,15 @@ Slash 命令宿主的稳定入口：
 | [CITE](../references/cite-domain-rating.md) | 40 项域名权威评分 |
 | [Auditor Runbook](../references/auditor-runbook.md) | 审计 handoff、分数封顶、Artifact Gate |
 
+## 免责声明
+
+这些技能用于辅助 SEO/GEO 工作流，但不保证排名、AI 引用、流量、合规或任何业务结果。在用于重大策略或法律决策之前，请与具备资质的专业人士核实建议。
+
 ## 贡献与许可
 
 贡献规则见 [CONTRIBUTING.md](../CONTRIBUTING.md)。版本见 [VERSIONS.md](../VERSIONS.md)。许可证：Apache License 2.0。
 
-*最后同步英文 README：v9.9.10*
+*最后同步英文 README：v9.9.11*
 
 ## Star History
 

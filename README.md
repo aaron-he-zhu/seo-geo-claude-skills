@@ -3,7 +3,7 @@
 **20 skills. 5 commands. Plan, audit, and monitor SEO/GEO work.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
-[![Version](https://img.shields.io/badge/version-9.9.10-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
+[![Version](https://img.shields.io/badge/version-9.9.11-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/aaron-he-zhu/seo-geo-claude-skills)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/commits/main)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-purple)](https://claude.ai/download)
@@ -22,7 +22,7 @@ Install with Claude Code, any Agent Skills-compatible host, or a plain `git clon
 | skills.sh / generic Agent Skills hosts | `npx skills add aaron-he-zhu/seo-geo-claude-skills` |
 | Any host | `git clone https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
 
-Single skill: `npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research`.
+In Claude Code, `marketplace add` only registers the catalog — run `/plugin install aaron-seo-geo@aaron` (or pick it from `/plugin`) to actually enable the skills and commands. Single skill on generic hosts: `npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research`.
 
 If your host supports automatic skill routing, try a natural-language request:
 

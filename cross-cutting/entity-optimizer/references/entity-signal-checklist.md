@@ -1,6 +1,6 @@
 # Entity Signal Checklist
 
-> Part of [entity-optimizer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/SKILL.md). See also: [knowledge-graph-guide.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/knowledge-graph-guide.md)
+> Part of [entity-optimizer](../SKILL.md). See also: [knowledge-graph-guide.md](knowledge-graph-guide.md)
 
 Work through signals by priority tier. Mark each: present/correct, incomplete, or absent.
 

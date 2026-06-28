@@ -117,5 +117,5 @@ Append to monthly file (`memory/audits/YYYY-MM.md`), newest at bottom:
 - `target` is the URL or domain audited.
 - `runbook_version` copied from current runbook header.
 - `false_positive` is the ONLY field that can be flipped after initial write.
-- GDPR/CCPA erasure is the exception: redact subject identifiers and replace them with a non-sensitive fingerprint while preserving scores, status, timestamps, and proof metadata.
+- GDPR/CCPA erasure is the exception: replace subject identifiers with a stable redacted label while preserving scores, status, and timestamps. (Working-tree redaction only — no salted fingerprint or reingest tombstone; see [memory-management SKILL.md §GDPR](../SKILL.md) and [GDPR Purge Log Template](gdpr-purge-log-template.md).)
 - If monthly file doesn't exist, create with `# Audit Archive — YYYY-MM` header.

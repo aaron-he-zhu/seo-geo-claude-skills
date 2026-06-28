@@ -9,16 +9,16 @@ Plan C standardizes where reusable project state belongs. All state follows a th
 - Capacity: 80 lines max
 - Loaded automatically by SessionStart hook every session
 - Content: project goals, hero keywords (max 10), primary competitors (max 5), active veto items, unresolved open loops from `memory/open-loops.md`
-- Promotion trigger: finding referenced by 2 or more skills, or mentioned in 2 or more consecutive sessions
-- Demotion trigger: 30 days unreferenced — move entry out of hot-cache.md, content remains in its WARM file
+- Promotion: **explicit** — the user or a skill pins a finding to HOT ("promote X" / auto-promote of veto items and blockers). No hook counts references, so promotion is never frequency-based.
+- Demotion: when the HOT entry's `last_updated` date is older than 30 days — move it out of hot-cache.md; the content remains in its WARM file
 
 ### WARM — `memory/<category>/<skill>/`
 
 - Capacity: 200 lines per file
 - Loaded on demand when a skill matches the topic
 - Paths follow the Durable State definitions below
-- Promotion trigger: referenced 3 or more times within 7 days — extract core conclusion (max 3 lines) to HOT
-- Demotion trigger: 90 days unreferenced — move file to `memory/archive/` with date prefix `YYYY-MM-DD-`
+- Promotion: when the user/skill decides a conclusion is durable, extract it (max 3 lines) to HOT — an explicit action, not a reference counter
+- Demotion: when the file's `last_updated` date is older than 90 days — move it to `memory/archive/` with date prefix `YYYY-MM-DD-`
 
 ### COLD — `memory/archive/`
 
@@ -27,13 +27,15 @@ Plan C standardizes where reusable project state belongs. All state follows a th
 - Never auto-deleted, only archived
 - Filename format: `YYYY-MM-DD-original-filename.md`
 
-### Lifecycle Rules
+### Lifecycle Rules (observable only)
+
+Nothing in the hooks records read/reference counts, so the lifecycle uses only what an agent can
+check on disk: an **explicit pin** or a **`last_updated` date**.
 
 ```
-2+ skill references within 7 days     → WARM promotes to HOT (extract ≤3 lines)
-3+ references within 7 days            → WARM promotes to HOT
-30 days unreferenced                   → HOT demotes to WARM
-90 days unreferenced                   → WARM demotes to COLD
+explicit "promote X" / pin           → WARM promotes to HOT (extract ≤3 lines)
+HOT entry last_updated > 30 days      → HOT demotes to WARM
+WARM file last_updated > 90 days      → WARM demotes to COLD (archive with YYYY-MM-DD- prefix)
 ```
 
 ### Dual Truncation Rule
@@ -46,7 +48,7 @@ HOT tier is limited to 80 lines AND 25KB (whichever triggers first). Truncation 
 |-----|-----------|
 | ≤7 days | Current — use without caveat |
 | 8–30 days | Point-in-time — verify against current state before asserting as fact |
-| 31–90 days | Stale — flag for review in SessionStart hook |
+| 31–90 days | Stale — surfaced for review when `memory-management` runs its staleness scan (by `last_updated` date) |
 | >90 days | Archive candidate — recommend archival via memory-management |
 
 ## Memory File Frontmatter
@@ -60,12 +62,13 @@ Every file in `memory/` SHOULD include YAML frontmatter. Two shapes are valid:
 name: campaign-q2-seo
 description: Q2 SEO campaign targeting 50 keywords across 3 verticals
 type: project
+last_updated: 2026-06-10
 ---
 ```
 
 Valid `type` values: `project`, `reference`, `decision`, `entity`, `glossary`, `open-loops`, `entity-candidates`
 
-The `description` field enables future semantic search across memory files.
+The `description` field enables future semantic search across memory files. **`last_updated`** (a date) is what the demotion/archival rules and `memory-management`'s staleness scan read — write it whenever you create or modify a WARM file. Absent it, fall back to the file's mtime.
 
 **HOT file** (`memory/hot-cache.md`) — session scope declaration:
 
@@ -203,4 +206,4 @@ When a skill describes state updates, it should:
 - `content-quality-auditor` owns publish-readiness state in `memory/audits/content/`
 - `domain-authority-auditor` owns citation-trust state in `memory/audits/domain/`
 
-See [skill-contract.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the full protocol-layer vs execution-layer behavior matrix.
+See [skill-contract.md](skill-contract.md) for the full protocol-layer vs execution-layer behavior matrix.

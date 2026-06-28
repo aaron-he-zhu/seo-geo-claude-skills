@@ -2,41 +2,56 @@
 
 Current versions for the plugin and all 20 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/seo-geo-claude-skills/main/VERSIONS.md` once per session.
 
-**Current release**: `9.9.10` (2026-06-05). Skill `version`, `metadata.version`, plugin manifests, marketplace files, and badges are aligned to the same public version.
+**Current release**: `9.9.11` (2026-06-28). Skill `version`, `metadata.version`, plugin manifests, marketplace files, and badges are aligned to the same public version.
 
 ## Skills
 
 | Skill | Category | Version | Last Updated |
 |-------|----------|---------|--------------|
-| keyword-research | research | 9.9.10 | 2026-06-05 |
-| competitor-analysis | research | 9.9.10 | 2026-06-05 |
-| serp-analysis | research | 9.9.10 | 2026-06-05 |
-| content-gap-analysis | research | 9.9.10 | 2026-06-05 |
-| seo-content-writer | build | 9.9.10 | 2026-06-05 |
-| geo-content-optimizer | build | 9.9.10 | 2026-06-05 |
-| meta-tags-optimizer | build | 9.9.10 | 2026-06-05 |
-| schema-markup-generator | build | 9.9.10 | 2026-06-05 |
-| on-page-seo-auditor | optimize | 9.9.10 | 2026-06-05 |
-| technical-seo-checker | optimize | 9.9.10 | 2026-06-05 |
-| internal-linking-optimizer | optimize | 9.9.10 | 2026-06-05 |
-| content-refresher | optimize | 9.9.10 | 2026-06-05 |
-| rank-tracker | monitor | 9.9.10 | 2026-06-05 |
-| backlink-analyzer | monitor | 9.9.10 | 2026-06-05 |
-| performance-reporter | monitor | 9.9.10 | 2026-06-05 |
-| alert-manager | monitor | 9.9.10 | 2026-06-05 |
-| content-quality-auditor | cross-cutting | 9.9.10 | 2026-06-05 |
-| domain-authority-auditor | cross-cutting | 9.9.10 | 2026-06-05 |
-| entity-optimizer | cross-cutting | 9.9.10 | 2026-06-05 |
-| memory-management | cross-cutting | 9.9.10 | 2026-06-05 |
+| keyword-research | research | 9.9.11 | 2026-06-28 |
+| competitor-analysis | research | 9.9.11 | 2026-06-28 |
+| serp-analysis | research | 9.9.11 | 2026-06-28 |
+| content-gap-analysis | research | 9.9.11 | 2026-06-28 |
+| seo-content-writer | build | 9.9.11 | 2026-06-28 |
+| geo-content-optimizer | build | 9.9.11 | 2026-06-28 |
+| meta-tags-optimizer | build | 9.9.11 | 2026-06-28 |
+| schema-markup-generator | build | 9.9.11 | 2026-06-28 |
+| on-page-seo-auditor | optimize | 9.9.11 | 2026-06-28 |
+| technical-seo-checker | optimize | 9.9.11 | 2026-06-28 |
+| internal-linking-optimizer | optimize | 9.9.11 | 2026-06-28 |
+| content-refresher | optimize | 9.9.11 | 2026-06-28 |
+| rank-tracker | monitor | 9.9.11 | 2026-06-28 |
+| backlink-analyzer | monitor | 9.9.11 | 2026-06-28 |
+| performance-reporter | monitor | 9.9.11 | 2026-06-28 |
+| alert-manager | monitor | 9.9.11 | 2026-06-28 |
+| content-quality-auditor | cross-cutting | 9.9.11 | 2026-06-28 |
+| domain-authority-auditor | cross-cutting | 9.9.11 | 2026-06-28 |
+| entity-optimizer | cross-cutting | 9.9.11 | 2026-06-28 |
+| memory-management | cross-cutting | 9.9.11 | 2026-06-28 |
 
 ## Changelog
+
+### v9.9.11 — URL-stable overhaul + open-seo connector borrows (2026-06-28)
+
+Ships the `refactor/url-stable-overhaul` line as a single release. The 20 skill directories, `name`, and `description` stay frozen (existing GitHub URLs unchanged); everything inside the skill bodies and the supporting layers was reworked.
+
+**URL-stable overhaul**:
+- All intra-repo links in `SKILL.md`/`references/` are plugin-relative paths; `validate-skill.sh` now fails on any `blob/main` GitHub URL. Connector invocations use `${CLAUDE_PLUGIN_ROOT}/scripts/connectors/...`.
+- `references/auditor-runbook.md` is the framework-agnostic SSOT both auditors `Read` at activation; each inlines only its framework-specific CORE-EEAT (8-dim weighted) vs CITE (`C×.35+I×.20+T×.25+E×.20`) examples and veto rows. `raw_overall_score` = weighted total (floor-rounded, pre-cap).
+- MCP stays opt-in (`plugin.json` carries no `mcpServers` key; `.mcp.json` is a copy-paste catalog). New `_http.get` scheme allowlist (`http`/`https`) guards sitemap-harvested URLs (LFI/SSRF); `crawl.py` uses `robots.py` for correct Allow/wildcard/UA handling.
+- Honesty-bound memory model: explicit-pin + `last_updated` only, no frequency-based promotion; SessionStart surfaces an open-loops pointer.
+- New `scripts/connectors/ledger.py` (local JSONL time-series) and `scripts/golden-auditor-math.py` (CI-wired weight-table guard); ledger wired into rank-tracker / performance-reporter / technical-seo-checker. `evals/product-api-scenarios.md` → `references/auto-routing-scenarios.md`.
+
+**Connector borrows** (adapted from [every-app/open-seo](https://github.com/every-app/open-seo)):
+- `keyword-research` gains a Search Console **striking-distance** shortcut — mine own GSC queries ranking ~5–20 before broad discovery (API sorts by clicks, no position filter → high `rowLimit` + client-side window), treated as Measured.
+- `CONNECTORS.md` adds a subscription-vs-pay-as-you-go **cost model** column and **OpenSEO** as an opt-in, self-hosted, free pay-as-you-go MCP (servers `14 → 15` in `.mcp.json`, still nothing auto-registered).
 
 ### v9.9.10 — focus on skills: scaffolding cleanup, 5 commands, quality pass, bundled connectors (2026-06-05)
 
 Removed non-user-facing maintenance and process scaffolding, and consolidated the command surface, so the library focuses on the skills themselves. **Breaking**: the command set is reduced to **5** (`/aaron-seo-geo:auto`, `/aaron-seo-geo:research`, `/aaron-seo-geo:create`, `/aaron-seo-geo:audit`, `/aaron-seo-geo:track`) — the bundle is now **20 skills + 5 commands**.
 
 **Removed**:
-- Controlled-evolution protocol (`/aaron-seo-geo:evolve`, EvolutionEvent, `evolution-*` references, `memory/evolution/`) and the GEO-drift feedback loop it fed: the `memory/geo-feedback/` records and the `/aaron-seo-geo:watch --geo-drift` mode are removed, so `/aaron-seo-geo:watch` now covers rankings and alerts only.
+- Controlled-evolution protocol (`/aaron-seo-geo:evolve`, EvolutionEvent, `evolution-*` references, `memory/evolution/`) and the GEO-drift feedback loop it fed: the `memory/geo-feedback/` records and the `/aaron-seo-geo:watch --geo-drift` mode are removed; rankings and alerts now live under `/aaron-seo-geo:track` only.
 - Wiki memory-compilation layer (Phase 1–3, 健康度 scoring, wiki-driven WARM→COLD retirement, `wiki-runbook.md`, recovery/rollback scripts). Plain HOT/WARM/COLD memory and `memory/archive/` are unchanged.
 - Maintainer commands `/aaron-seo-geo:guard` and `/aaron-seo-geo:skillify`; line-budget / "slimming" ceremony (350-line ceiling, `validate-slimming-guardrails.sh`, the `references/decisions/` ADRs); and the inline-runbook sha256 sync ceremony (the auditor runbook stays inlined — only the hash-drift check is gone).
 - Per-vendor distribution catering: `gemini-extension.json`, `qwen-extension.json`, `openclaw.plugin.json`, `.codebuddy-plugin/`, `marketplaces/`, the `distribution/` platform registry, and the ClawHub/OpenClaw publishing workflows. Distribution is now generic: one root `marketplace.json` plus its `.claude-plugin/` mirror.
@@ -63,7 +78,7 @@ Final 9.x release consolidating the entire post-v9.0.0 development line into a s
 - **Bulk + force retire flows**: `/aaron-seo-geo:guard --wiki --retire-preview --bulk-confirmed` retires all `safe`-marked candidates in one operation; `force-retire <path>` bypasses C5 (frontmatter-coverage) only. Day-cap (20/UTC-day) still enforced.
 - **Multi-project guardrail**: pre-compile prompt when ≥2 distinct project slugs in hot-cache history.
 - **PII compile guardrail**: heuristic detection of natural-person entities (title-case names / LinkedIn / `entity_type: person`); surfaces GDPR Art 5(1)(c) data-minimization warning before compile.
-- **GDPR purge schema**: canonical template at `cross-cutting/memory-management/references/gdpr-purge-log-template.md` with auditor-verifiable structure (purge_id, fingerprint, scope, action, legal_basis, grep-count proof, audit_signature). Never raw subject data.
+- **GDPR purge schema**: honest, minimal template at `cross-cutting/memory-management/references/gdpr-purge-log-template.md` — a human-readable record of erasure requests (date, redacted_label, legal_basis, action, scope, working_tree_only), never raw subject data. Working-tree redaction only; git history is the user's responsibility (no salted fingerprint / reingest tombstone).
 - **`/aaron-seo-geo:series` command**: plan / write / continue / publish-handoff modes for content series workflows.
 - **Multi-agent compatibility**: Gemini, Qwen, Amp, Kimi, CodeBuddy manifest support.
 - **31 eval cases** under `evals/memory-management/` (was 6 pre-9.5.0) covering retirement, recovery, contradiction reconciliation, GDPR, multi-project, PII, force-retire.

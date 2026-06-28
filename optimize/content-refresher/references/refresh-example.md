@@ -1,6 +1,6 @@
 # Content Refresher — Worked Example & Checklist
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/SKILL.md).
+Referenced from [SKILL.md](../SKILL.md).
 
 ---
 

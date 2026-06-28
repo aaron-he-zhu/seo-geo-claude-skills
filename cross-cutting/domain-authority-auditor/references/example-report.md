@@ -1,6 +1,6 @@
 # CITE Domain Authority Report — Example
 
-Full example audit output for reference. See the [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/domain-authority-auditor/SKILL.md) for the complete workflow.
+Full example audit output for reference. See the [SKILL.md](../SKILL.md) for the complete workflow.
 
 ## Example
 

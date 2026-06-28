@@ -23,7 +23,7 @@ Run the SEO/GEO pack-local Aaron workflow implied by a natural-language goal, at
 
 ## Rules
 
-- Follow the Product API Contract in `references/aaron-product-api-contract.md`; use `evals/product-api-scenarios.md` as the scenario library. Natural-language auto-invocation is host-dependent unless `/aaron-seo-geo:auto` is explicit; clearly non-SEO/GEO work stops with a pack-boundary note.
+- Follow the routing contract in `references/aaron-product-api-contract.md`; use `references/auto-routing-scenarios.md` as the scenario library. Natural-language auto-invocation is host-dependent unless `/aaron-seo-geo:auto` is explicit; clearly non-SEO/GEO work stops with a pack-boundary note.
 - **Memory-management exemption**: memory-management lifecycle operations (query, archive, restore, purge) operate on user-owned project memory regardless of topical scope and are NOT subject to the pack-boundary check; safety is enforced by per-operation user confirmation.
 - Algorithm: parse the goal -> assign the closest scenario family -> attach risk gates -> choose the smallest mode command (research / create / audit / track) or chain that completes the outcome -> ask only for blocking inputs -> continue to the natural stopping point.
 - Ambiguity rule: with an object (URL/domain/topic/draft) but no clear goal, run lightweight triage and pick the safest useful starting chain; with no actionable object and no outcome, ask one concise blocking question.

@@ -1,7 +1,7 @@
 ---
 name: backlink-analyzer
 description: 'Use when the user asks to "analyze backlinks" or "外链分析"; profiles external referring domains, anchor-text distribution, toxic links, and competitor link gaps. Not for internal links — use internal-linking-optimizer. 外链分析/反向链接'
-version: "9.9.10"
+version: "9.9.11"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -10,34 +10,8 @@ argument-hint: "<domain or URL>"
 allowed-tools: WebFetch
 metadata:
   author: aaron-he-zhu
-  version: "9.9.10"
+  version: "9.9.11"
   geo-relevance: "low"
-  tags:
-    - seo
-    - backlinks
-    - link-building
-    - link-profile
-    - toxic-links
-    - off-page-seo
-    - link-audit
-    - referring-domains
-    - disavow
-    - ahrefs-alternative
-    - 外链分析
-    - 被リンク
-    - 백링크
-    - backlinks-seo
-  triggers:
-    - "check link profile"
-    - "find toxic links"
-    - "link building opportunities"
-    - "referring domains"
-    - "who links to me"
-    - "I have spammy links"
-    - "competitor link gap"
-    - "disavow links"
-    - "谁链接到我"
-    - "有垃圾外链"
 ---
 
 # Backlink Analyzer
@@ -62,15 +36,15 @@ Find link building opportunities by analyzing [competitor domains]
 - **Writes**: a user-facing monitoring deliverable and reusable summary.
 - **Promotes**: significant changes, confirmed anomalies, follow-up actions, and pending decisions to `memory/open-loops.md`.
 - **Done when**: referring domains, anchor mix, and toxic-link share are reported with each metric source-tagged (or N/A); toxic ratio is computed; and at least 3 link-building or disavow actions are named.
-- **Primary next skill**: [domain-authority-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/domain-authority-auditor/SKILL.md) when toxicity or authority concerns need formal scoring.
+- **Primary next skill**: [domain-authority-auditor](../../cross-cutting/domain-authority-auditor/SKILL.md) when toxicity or authority concerns need formal scoring.
 
 ### Handoff Summary
 
-> Emit the standard shape from [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
 ## Data Sources
 
-All integrations optional (see [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md)). With tools, pull backlink profiles from ~~link database and competitor data from ~~SEO tool. Without tools, ask for backlink CSVs, referring domains, competitor domains, and link changes. Respect `robots.txt` and TOS per [SECURITY.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/SECURITY.md).
+All integrations optional (see [CONNECTORS.md](../../CONNECTORS.md)). With tools, pull backlink profiles from ~~link database and competitor data from ~~SEO tool. Without tools, ask for backlink CSVs, referring domains, competitor domains, and link changes. Respect `robots.txt` and TOS per [SECURITY.md](../../SECURITY.md).
 
 ## Decision Gates
 
@@ -95,7 +69,7 @@ When a user requests backlink analysis:
 
 Label every metric **Measured** (tool/export), **User-provided**, or **Estimated** (model inference); never present an estimate as measured; if a required metric is unavailable, mark it N/A — do not invent it.
 
-> **Reference**: See [Analysis Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/references/analysis-templates.md) for the compact output templates used in all seven steps.
+> **Reference**: See [Analysis Templates](references/analysis-templates.md) for the compact output templates used in all seven steps.
 
 ### CITE Item Mapping
 
@@ -113,27 +87,23 @@ When running `domain-authority-auditor` after this analysis, the following data 
 
 ## Example
 
-Sample outcome: a link-intersection table, top immediate opportunities, and an estimated impact model. Keep the full structure in [Analysis Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/references/analysis-templates.md).
-
-## Tips for Success
-
-Prioritize quality, monitor regularly, diversify anchors and link types, and disavow cautiously.
+See [Analysis Templates](references/analysis-templates.md) for the full output structure (link-intersection table, opportunities, and impact model).
 
 ## Link Quality and Strategy Reference
 
-> **Reference**: See [Link Quality Rubric](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/references/link-quality-rubric.md) for the scoring matrix, toxic-link criteria, benchmarks, and disavow guidance.
+> **Reference**: See [Link Quality Rubric](references/link-quality-rubric.md) for the scoring matrix, toxic-link criteria, benchmarks, and disavow guidance.
 
-> **Reference**: See [Outreach Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/references/outreach-templates.md) for outreach frameworks, subject lines, response benchmarks, follow-up sequences, and templates.
+> **Reference**: See [Outreach Templates](references/outreach-templates.md) for outreach frameworks, subject lines, response benchmarks, follow-up sequences, and templates.
 
 ### Save Results
 
-Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) §Save Results Template. If toxic ratio exceeds 15%, recommend `domain-authority-auditor`.
+Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill Contract](../../references/skill-contract.md) §Save Results Template. If toxic ratio exceeds 15%, recommend `domain-authority-auditor`.
 
 ## Reference Materials
 
-- [Link Quality Rubric](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/references/link-quality-rubric.md) — Quality and toxicity rubric
-- [Outreach Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/references/outreach-templates.md) — Outreach frameworks and examples
+- [Link Quality Rubric](references/link-quality-rubric.md) — Quality and toxicity rubric
+- [Outreach Templates](references/outreach-templates.md) — Outreach frameworks and examples
 
 ## Next Best Skill
 
-Toxic ratio > 15% → [domain-authority-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/domain-authority-auditor/SKILL.md). Otherwise → Terminal. Visited-set rule applies per [skill-contract.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md).
+Toxic ratio > 15% → [domain-authority-auditor](../../cross-cutting/domain-authority-auditor/SKILL.md). Otherwise → Terminal. Visited-set rule applies per [skill-contract.md](../../references/skill-contract.md).

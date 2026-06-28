@@ -37,7 +37,7 @@ For the chosen schema type:
 - Note which fields affect rich-result eligibility
 - Combine multiple schema types inside one JSON array when needed
 
-> **Reference**: See [references/schema-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/schema-markup-generator/references/schema-templates.md) for copy-start JSON-LD templates.
+> **Reference**: See [references/schema-templates.md](schema-templates.md) for copy-start JSON-LD templates.
 
 ## Step 3: Provide Implementation and Validation
 

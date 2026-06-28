@@ -1,6 +1,6 @@
 # CORE-EEAT Item Reference
 
-Quick reference for all 80 CORE-EEAT audit items. Full scoring criteria in [core-eeat-benchmark.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/core-eeat-benchmark.md).
+Quick reference for all 80 CORE-EEAT audit items. Full scoring criteria in [core-eeat-benchmark.md](../../../references/core-eeat-benchmark.md).
 
 ## Complete Item Reference
 

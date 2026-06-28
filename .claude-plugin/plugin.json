@@ -1,7 +1,7 @@
 {
   "id": "aaron-seo-geo",
   "name": "aaron-seo-geo",
-  "version": "9.9.10",
+  "version": "9.9.11",
   "description": "20 SEO/GEO skills and 5 commands on one shared contract for keyword research, content creation, technical audits, schema markup, monitoring, quality gates, entity truth, and campaign memory.",
   "author": {
     "name": "Aaron He Zhu",
@@ -51,6 +51,5 @@
     "./cross-cutting/domain-authority-auditor",
     "./cross-cutting/entity-optimizer",
     "./cross-cutting/memory-management"
-  ],
-  "mcpServers": "./.mcp.json"
+  ]
 }

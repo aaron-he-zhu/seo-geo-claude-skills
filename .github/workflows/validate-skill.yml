@@ -67,3 +67,24 @@ jobs:
             bash scripts/validate-skill.sh "$(dirname "$file")"
           done
           bash scripts/validate-skill.sh --status
+
+      - name: Lint connector code (py_compile)
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/connectors/*.py scripts/golden-auditor-math.py
+          echo "connectors compile clean"
+
+      - name: Golden auditor-math check
+        run: python3 scripts/golden-auditor-math.py
+
+      - name: Validate JSON / shell manifests
+        run: |
+          set -euo pipefail
+          for f in .claude-plugin/plugin.json marketplace.json .claude-plugin/marketplace.json .mcp.json; do
+            python3 -c "import json,sys; json.load(open('$f')); print('ok: $f')"
+          done
+          # the two marketplace.json files must stay byte-identical mirrors
+          diff -q marketplace.json .claude-plugin/marketplace.json
+          # hook script must parse
+          bash -n hooks/claude-hook.sh && echo "hooks/claude-hook.sh parses"
+          python3 -c "import json; json.load(open('hooks/hooks.json')); print('ok: hooks/hooks.json')"

@@ -12,7 +12,7 @@ root(){ r="${CLAUDE_PROJECT_DIR:-}"; [ -n "$r" ] || r="$(jg '.cwd')"; [ -n "$r" 
 sf(){ rt="$1"; raw="$2"; [ -n "$raw" ] || return 1; case "$raw" in /*) p="$raw";; *) p="$rt/$raw";; esac; d="$(dirname "$p")"; b="$(basename "$p")"; ad="$(cd "$d" 2>/dev/null && pwd -P)" || return 1; a="$ad/$b"; [ ! -L "$a" ] || return 1; case "$a" in "$rt"/*) printf "%s\n" "$a";; *) return 1;; esac; }
 bf(){ base="$1"; rel="$2"; [ ! -L "$base" ]||return 1; p="$base"; IFS=/ read -r -a parts <<< "$rel"; for part in "${parts[@]}"; do [ -n "$part" ]&&[ "$part" != "." ]&&[ "$part" != ".." ]||return 1; p="$p/$part"; [ ! -L "$p" ]||return 1; done; d="$(dirname "$p")"; bd="$(cd "$base" 2>/dev/null&&pwd -P)"||return 1; ad="$(cd "$d" 2>/dev/null&&pwd -P)"||return 1; a="$ad/$(basename "$p")"; case "$a" in "$bd"/*) printf "%s\n" "$a";; *) return 1;; esac; }
 mf(){ rt="$1"; [ ! -L "$rt/memory" ]||return 1; bf "$rt/memory" "$2"; }
-sr(){ LC_ALL=C tr -d '\000-\010\013\014\016-\037' < "$1" 2>/dev/null|awk -v n="$2" 'NR>n{exit}{x=$0;l=tolower(x);if(l~/(system:|developer:|assistant:|instructions:|^#[[:space:]]*instructions|important:|ignore previous|ignore all previous|disregard previous|follow these instructions|treat this as.*system|you are chatgpt|you must|reveal secret|<system|<\/system|<developer|<\/developer|<assistant|<\/assistant|tooluse|tool_use)/)x="[redacted directive-like project record line]";if(l~/^project:[[:space:]]*(\/|\.\.)/)x="project: [redacted invalid project scope]";if(length(x)>500)x=substr(x,1,500)"...";print x}'|head -c "$3"; }
+sr(){ LC_ALL=C tr -d '\000-\010\013\014\016-\037' < "$1" 2>/dev/null|awk -v n="$2" 'NR>n{exit}{x=$0;l=tolower(x);if(l~/(^|[^a-z])(system|developer|assistant):|ignore (previous|all previous)|disregard previous instructions|follow these instructions|treat this as.*system|you are chatgpt|reveal (the |your )?(secret|system prompt)|<\/?system>|<\/?developer>|<\/?assistant>|tooluse|tool_use)/)x="[redacted directive-like project record line]";if(l~/^project:[[:space:]]*(\/|\.\.)/)x="project: [redacted invalid project scope]";if(length(x)>500)x=substr(x,1,500)"...";print x}'|head -c "$3"; }
 fm(){ awk 'NR==1&&$0=="---"{i=1;next}i&&$0=="---"{exit}i&&$0~/^class:[[:space:]]*auditor-output[[:space:]]*$/{f=1}END{exit(f?0:1)}' "$1"; }
 hb(){ awk 'NR==1&&$0=="---"{i=1;next}i&&$0=="---"{a=1;next}a&&NF{p=1;print;next}a&&p&&!NF{exit}' "$1"; }
 field(){ awk -v k="$1" '$0~("^"k":"){if($0!~("^"k":[[:space:]]*$"))ok=1;else w=1;next}w&&$0~/^[[:space:]]+(-|[^[:space:]])/{ok=1;w=0}END{exit(ok?0:1)}'; }
@@ -25,6 +25,10 @@ case "$m" in
 
 Project records excerpt:
 $ex"; added=1; }; fi
+    ol="$(mf "$rt" "open-loops.md" || true)"
+    if [ -n "$ol" ] && [ -f "$ol" ] && [ ! -L "$ol" ]; then olc="$(awk '/<!--/{inc=1} {if(!inc && ($0~/^###/||$0~/^- \[/))c++} /-->/{inc=0} END{print c+0}' "$ol" 2>/dev/null || true)"; olc="${olc:-0}"; [ "$olc" -gt 0 ] && { body="$body
+
+Open loops: memory/open-loops.md tracks ${olc} item(s) — surface any that look stale to the user."; added=1; }; fi
     [ "$added" -eq 1 ] || exit 0; ctx "SessionStart" "$body";;
   user-prompt-submit)
     ctx "UserPromptSubmit" "Runtime note: if project records were loaded, keep priorities, hero keywords, veto items, and project summaries in mind. If the request mentions SEO or analytics tools without a connected MCP server, use Tier 1 manual-data mode unless tool access is explicitly available. For cross-skill memory questions, use loaded project summary context first and render audit health in plain language with page/item, score, health label, and next action.";;

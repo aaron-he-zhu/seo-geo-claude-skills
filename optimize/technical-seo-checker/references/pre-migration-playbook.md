@@ -1,6 +1,6 @@
 # Technical SEO — Pre-Migration Playbook
 
-Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/SKILL.md). Use when the user is planning a migration (platform, domain, URL structure, or framework change) and needs an audit + risk assessment before the change ships.
+Referenced from [SKILL.md](../SKILL.md). Use when the user is planning a migration (platform, domain, URL structure, or framework change) and needs an audit + risk assessment before the change ships.
 
 ---
 
