@@ -1,7 +1,7 @@
 ---
 name: backlink-analyzer
 description: 'Use when the user asks to "analyze backlinks" or "外链分析"; profiles external referring domains, anchor-text distribution, toxic links, and competitor link gaps. Not for internal links — use internal-linking-optimizer. 外链分析/反向链接'
-version: "9.9.11"
+version: "9.9.12"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -10,7 +10,7 @@ argument-hint: "<domain or URL>"
 allowed-tools: WebFetch
 metadata:
   author: aaron-he-zhu
-  version: "9.9.11"
+  version: "9.9.12"
   geo-relevance: "low"
 ---
 

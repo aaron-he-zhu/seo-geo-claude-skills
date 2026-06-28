@@ -1,7 +1,7 @@
 ---
 name: alert-manager
 description: 'Use when the user asks to "set SEO alerts" or "排名掉了提醒我"; configures threshold notifications for FUTURE ranking, traffic, technical, and competitor changes. Not for one-time measurement or reporting — use rank-tracker or performance-reporter. SEO预警/排名监控'
-version: "9.9.11"
+version: "9.9.12"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when setting up monitoring alerts for rankings, traffic, backl
 argument-hint: "<domain> [metric]"
 metadata:
   author: aaron-he-zhu
-  version: "9.9.11"
+  version: "9.9.12"
   geo-relevance: "low"
 ---
 

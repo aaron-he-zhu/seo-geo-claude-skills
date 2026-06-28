@@ -1,7 +1,7 @@
 ---
 name: seo-content-writer
 description: 'Use when the user asks to "write SEO content"; drafts new posts, articles, and landing pages with keywords, headers, snippets, and evidence boundaries. Not for AI-citation/GEO readiness scoring — use geo-content-optimizer; not for updating decaying existing content — use content-refresher. SEO文章写作/内容优化'
-version: "9.9.11"
+version: "9.9.12"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when writing SEO-optimized articles, blog posts, landing pages
 argument-hint: "<topic> <target keyword>"
 metadata:
   author: aaron-he-zhu
-  version: "9.9.11"
+  version: "9.9.12"
   geo-relevance: "medium"
 ---
 

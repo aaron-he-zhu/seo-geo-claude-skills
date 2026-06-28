@@ -2,34 +2,50 @@
 
 Current versions for the plugin and all 20 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/seo-geo-claude-skills/main/VERSIONS.md` once per session.
 
-**Current release**: `9.9.11` (2026-06-28). Skill `version`, `metadata.version`, plugin manifests, marketplace files, and badges are aligned to the same public version.
+**Current release**: `9.9.12` (2026-06-28). Skill `version`, `metadata.version`, plugin manifests, marketplace files, and badges are aligned to the same public version.
 
 ## Skills
 
 | Skill | Category | Version | Last Updated |
 |-------|----------|---------|--------------|
-| keyword-research | research | 9.9.11 | 2026-06-28 |
-| competitor-analysis | research | 9.9.11 | 2026-06-28 |
-| serp-analysis | research | 9.9.11 | 2026-06-28 |
-| content-gap-analysis | research | 9.9.11 | 2026-06-28 |
-| seo-content-writer | build | 9.9.11 | 2026-06-28 |
-| geo-content-optimizer | build | 9.9.11 | 2026-06-28 |
-| meta-tags-optimizer | build | 9.9.11 | 2026-06-28 |
-| schema-markup-generator | build | 9.9.11 | 2026-06-28 |
-| on-page-seo-auditor | optimize | 9.9.11 | 2026-06-28 |
-| technical-seo-checker | optimize | 9.9.11 | 2026-06-28 |
-| internal-linking-optimizer | optimize | 9.9.11 | 2026-06-28 |
-| content-refresher | optimize | 9.9.11 | 2026-06-28 |
-| rank-tracker | monitor | 9.9.11 | 2026-06-28 |
-| backlink-analyzer | monitor | 9.9.11 | 2026-06-28 |
-| performance-reporter | monitor | 9.9.11 | 2026-06-28 |
-| alert-manager | monitor | 9.9.11 | 2026-06-28 |
-| content-quality-auditor | cross-cutting | 9.9.11 | 2026-06-28 |
-| domain-authority-auditor | cross-cutting | 9.9.11 | 2026-06-28 |
-| entity-optimizer | cross-cutting | 9.9.11 | 2026-06-28 |
-| memory-management | cross-cutting | 9.9.11 | 2026-06-28 |
+| keyword-research | research | 9.9.12 | 2026-06-28 |
+| competitor-analysis | research | 9.9.12 | 2026-06-28 |
+| serp-analysis | research | 9.9.12 | 2026-06-28 |
+| content-gap-analysis | research | 9.9.12 | 2026-06-28 |
+| seo-content-writer | build | 9.9.12 | 2026-06-28 |
+| geo-content-optimizer | build | 9.9.12 | 2026-06-28 |
+| meta-tags-optimizer | build | 9.9.12 | 2026-06-28 |
+| schema-markup-generator | build | 9.9.12 | 2026-06-28 |
+| on-page-seo-auditor | optimize | 9.9.12 | 2026-06-28 |
+| technical-seo-checker | optimize | 9.9.12 | 2026-06-28 |
+| internal-linking-optimizer | optimize | 9.9.12 | 2026-06-28 |
+| content-refresher | optimize | 9.9.12 | 2026-06-28 |
+| rank-tracker | monitor | 9.9.12 | 2026-06-28 |
+| backlink-analyzer | monitor | 9.9.12 | 2026-06-28 |
+| performance-reporter | monitor | 9.9.12 | 2026-06-28 |
+| alert-manager | monitor | 9.9.12 | 2026-06-28 |
+| content-quality-auditor | cross-cutting | 9.9.12 | 2026-06-28 |
+| domain-authority-auditor | cross-cutting | 9.9.12 | 2026-06-28 |
+| entity-optimizer | cross-cutting | 9.9.12 | 2026-06-28 |
+| memory-management | cross-cutting | 9.9.12 | 2026-06-28 |
 
 ## Changelog
+
+### v9.9.12 — Artifact Gate fix, connector hardening, hook/connector tests (2026-06-28)
+
+Ports the discipline-agnostic correctness fixes from the marketing umbrella ([aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills) v10.0.1).
+
+**Fixed**
+- Artifact Gate: the PostToolUse hook's `hb()` body parser truncated auditor artifacts at the first blank line, false-blocking every compliant `memory/audits/` output; it now reads the full post-frontmatter body. Reconciled the `auditor-runbook.md` cap-field prose with the authoritative §2/§4 (only `final_overall_score` is BLOCKED-exempt).
+- Connectors: `_http.get` no longer sleeps after the final retry; `crawl.py` re-bases the same-host filter onto the landing host after an apex→www redirect.
+
+**Added**
+- `tests/test_hook_artifact_gate.sh` (8 assertions: gate + SessionStart sanitization/symlink safety) and expanded `tests/test_connectors_local.py` (robots longest-match, psi.grade boundaries, ledger slugify/flatten, openpagerank parse — 3 → 11 tests); both wired into CI.
+
+**Changed**
+- `on-page-seo-auditor` description uses the canonical "Not for … — use …" scope boundary.
+
+**Versions**: all 20 skills, plugin manifests, and marketplace mirrors unified at `9.9.12`.
 
 ### v9.9.11 — URL-stable overhaul + open-seo connector borrows (2026-06-28)
 
