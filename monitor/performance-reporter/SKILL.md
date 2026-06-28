@@ -1,7 +1,7 @@
 ---
 name: performance-reporter
 description: 'Use when the user asks to "generate an SEO report" or "出月报"; builds multi-metric stakeholder reports and dashboards spanning traffic, rankings, authority, and content progress. Not for raw ranking deltas — use rank-tracker. SEO报告/绩效仪表盘'
-version: "9.9.11"
+version: "9.9.12"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when generating multi-metric SEO/GEO performance reports, traf
 argument-hint: "<domain> [date range]"
 metadata:
   author: aaron-he-zhu
-  version: "9.9.11"
+  version: "9.9.12"
   geo-relevance: "medium"
 ---
 

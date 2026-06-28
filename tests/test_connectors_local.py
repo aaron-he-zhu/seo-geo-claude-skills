@@ -9,6 +9,10 @@ sys.path.insert(0, str(ROOT / "scripts" / "connectors"))
 import onpage  # noqa: E402
 import linkgraph  # noqa: E402
 import schema_lint  # noqa: E402
+import robots  # noqa: E402
+import psi  # noqa: E402
+import ledger  # noqa: E402
+import openpagerank  # noqa: E402
 
 
 class OnPageParserTests(unittest.TestCase):
@@ -78,6 +82,71 @@ class SchemaLintTests(unittest.TestCase):
         self.assertEqual(result["summary"]["errors"], 1)
         self.assertEqual(result["objects"][0]["@type"], "Article")
         self.assertEqual(result["objects"][0]["missing_required"], ["headline"])
+
+
+class RobotsTxtTests(unittest.TestCase):
+    def _parse(self, text):
+        return robots.RobotsTxt.parse(text, "https://example.com/robots.txt", 200, None)
+
+    def test_longest_match_wins_and_allow_beats_disallow(self):
+        r = self._parse("User-agent: *\nDisallow: /admin\nAllow: /admin/public\n")
+        # shorter Disallow /admin blocks a path with no longer match
+        self.assertFalse(r.can_fetch("mybot", "/admin/secret")[0])
+        # longer Allow /admin/public wins over the shorter Disallow
+        self.assertTrue(r.can_fetch("mybot", "/admin/public/page")[0])
+        # no rule matches -> default-allow
+        self.assertTrue(r.can_fetch("mybot", "/blog/post")[0])
+
+    def test_wildcard_and_end_anchor(self):
+        r = self._parse("User-agent: *\nDisallow: /*.pdf$\n")
+        self.assertFalse(r.can_fetch("mybot", "/files/report.pdf")[0])
+        # the $ anchor means a query-suffixed path no longer matches -> allowed
+        self.assertTrue(r.can_fetch("mybot", "/files/report.pdf?x=1")[0])
+
+
+class PsiGradeTests(unittest.TestCase):
+    def test_lcp_threshold_boundaries(self):
+        self.assertEqual(psi.grade("LCP_ms", 2500.0), "good")            # <= good_max
+        self.assertEqual(psi.grade("LCP_ms", 2500.1), "needs-improvement")
+        self.assertEqual(psi.grade("LCP_ms", 4000.0), "needs-improvement")  # <= ni_max
+        self.assertEqual(psi.grade("LCP_ms", 4000.1), "poor")
+
+    def test_cls_none_and_unknown_metric(self):
+        self.assertEqual(psi.grade("CLS", 0.1), "good")
+        self.assertEqual(psi.grade("CLS", 0.26), "poor")
+        self.assertIsNone(psi.grade("LCP_ms", None))
+        self.assertIsNone(psi.grade("not_a_metric", 1.0))
+
+
+class LedgerTests(unittest.TestCase):
+    def test_slugify_normalizes_collapses_and_defaults(self):
+        self.assertEqual(ledger.slugify("https://www.Example.com/path/"), "www.example.com-path")
+        self.assertEqual(ledger.slugify("HTTP://a//b"), "a-b")
+        self.assertEqual(ledger.slugify("   "), "unnamed")
+
+    def test_flatten_dotted_keys_and_list_indices(self):
+        flat = ledger.flatten({"a": {"b": 1}, "c": [10, 20]})
+        self.assertEqual(flat["a.b"], 1)
+        self.assertEqual(flat["c[0]"], 10)
+        self.assertEqual(flat["c[1]"], 20)
+
+
+class OpenPageRankTests(unittest.TestCase):
+    def test_normalize_domain(self):
+        self.assertEqual(openpagerank.normalize_domain("https://www.Example.com/path"), "www.example.com")
+        self.assertEqual(openpagerank.normalize_domain("Example.com/foo"), "example.com")
+        self.assertEqual(openpagerank.normalize_domain(""), "")
+
+    def test_parse_response_maps_onto_requested_order(self):
+        payload = {"status_code": 200, "response": [
+            {"domain": "b.com", "page_rank_decimal": 5.1, "page_rank_integer": 5,
+             "rank": "100", "status_code": 200},
+        ]}
+        rows = openpagerank.parse_response(payload, ["a.com", "b.com"])
+        self.assertEqual([r["domain"] for r in rows], ["a.com", "b.com"])
+        self.assertFalse(rows[0]["found"])   # a.com absent from response
+        self.assertTrue(rows[1]["found"])    # b.com present with status 200
+        self.assertEqual(rows[1]["page_rank_decimal"], 5.1)
 
 
 if __name__ == "__main__":

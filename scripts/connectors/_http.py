@@ -87,7 +87,8 @@ def get(url, *, headers=None, timeout=DEFAULT_TIMEOUT, max_bytes=DEFAULT_MAX_BYT
             }
         except (urllib.error.URLError, TimeoutError, OSError) as e:
             last = str(getattr(e, "reason", e))
-            time.sleep(2 ** attempt)
+            if attempt < retries - 1:
+                time.sleep(2 ** attempt)
     return {"status": 0, "url": url, "headers": {}, "body": b"", "error": last or "request failed"}
 
 

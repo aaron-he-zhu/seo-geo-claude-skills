@@ -132,6 +132,12 @@ def crawl(start_url, max_pages=50, max_depth=5, respect_robots=True,
 
         resp = _http.get_text(url)
         final_url = normalize(resp["url"] or url)
+        # If the first fetch redirected cross-host (e.g. apex -> www), re-base the
+        # same-host filter onto the landing host so we don't discard every link.
+        if not results:
+            landed = urlparse(final_url).netloc.lower()
+            if landed:
+                host = landed
         status = resp["status"]
 
         links_out = []

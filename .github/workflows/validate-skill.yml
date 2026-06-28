@@ -74,6 +74,9 @@ jobs:
           python3 -m py_compile scripts/connectors/*.py scripts/golden-auditor-math.py
           echo "connectors compile clean"
 
+      - name: Connector unit tests
+        run: python3 tests/test_connectors_local.py
+
       - name: Golden auditor-math check
         run: python3 scripts/golden-auditor-math.py
 
@@ -88,3 +91,6 @@ jobs:
           # hook script must parse
           bash -n hooks/claude-hook.sh && echo "hooks/claude-hook.sh parses"
           python3 -c "import json; json.load(open('hooks/hooks.json')); print('ok: hooks/hooks.json')"
+
+      - name: Hook behavior tests (Artifact Gate + SessionStart safety)
+        run: bash tests/test_hook_artifact_gate.sh

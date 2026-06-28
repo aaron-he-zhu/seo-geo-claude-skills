@@ -1,7 +1,7 @@
 ---
 name: memory-management
 description: 'Use when the user asks to "remember project context"; manages the SEO/GEO memory lifecycle — hot-cache, active work, archive tiers, and privacy cleanup. Not for content or domain scoring — use the auditors. 项目记忆/跨会话'
-version: "9.9.11"
+version: "9.9.12"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when reviewing, archiving, or cleaning up campaign memory. Als
 argument-hint: "[review|archive|cleanup]"
 metadata:
   author: aaron-he-zhu
-  version: "9.9.11"
+  version: "9.9.12"
   geo-relevance: "low"
 ---
 
