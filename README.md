@@ -2,7 +2,7 @@
 
 > [!IMPORTANT]
 > **This is now a signpost repo — the skills live in [aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills).**
-> The 16 SEO/GEO skills listed below are actively developed there, as one of 4 disciplines in a 69-skill bundle sharing one contract, five benchmark-driven gates, and keyless data connectors. This repo's former standalone 20-skill line is preserved, unchanged, at tag [`v9.9.12`](https://github.com/aaron-he-zhu/seo-geo-claude-skills/tree/v9.9.12) and receives no updates — already-installed copies keep working; new installs come from the bundle.
+> The 16 SEO/GEO skills listed below are actively developed there, as one of 5 disciplines in an 86-skill bundle sharing one contract, six benchmark-driven gates, and keyless data connectors. This repo's former standalone 20-skill line is preserved, unchanged, at tag [`v9.9.12`](https://github.com/aaron-he-zhu/seo-geo-claude-skills/tree/v9.9.12) and receives no updates — already-installed copies keep working; new installs come from the bundle.
 
 16 skills covering **research → build → optimize → monitor**, gated by [CORE-EEAT](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (content quality) and [CITE](https://github.com/aaron-he-zhu/cite-domain-rating) (domain authority). Entrypoint command: `/aaron-marketing:seo-geo`.
 
