@@ -1,6 +1,38 @@
 # SEO & GEO Skills Library
 
-> **📦 Also bundled in [aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills)** — the unified library that combines these SEO/GEO skills with influencer-marketing skills (CORE-EEAT · CITE · C³). This repo is the standalone SEO/GEO edition.
+> [!IMPORTANT]
+> **Frozen at v9.9.12 — active development moved to [aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills).**
+> This repo is the final 20-skill SEO/GEO line. It stays installable for existing users but receives no further updates, including fixes. The umbrella bundle supersedes it with 16 merged SEO/GEO skills (mapping below) plus influencer, paid-ads, and email disciplines on the same contract, five benchmark-driven gates, and keyless data connectors.
+
+<details>
+<summary><b>Where each of the 20 skills lives now (old → new)</b></summary>
+
+| This repo (v9.9.x) | In [aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills) |
+|---|---|
+| `research/keyword-research` | `seo-geo/research/keyword-research` |
+| `research/competitor-analysis` | `seo-geo/research/competitor-analysis` |
+| `research/serp-analysis` | `seo-geo/research/serp-analysis` |
+| `research/content-gap-analysis` | `seo-geo/research/content-gap-analysis` |
+| `build/seo-content-writer` | merged into `seo-geo/build/content-writer` |
+| `build/geo-content-optimizer` | `seo-geo/build/geo-content-optimizer` |
+| `build/meta-tags-optimizer` | merged into `seo-geo/build/serp-markup-builder` |
+| `build/schema-markup-generator` | merged into `seo-geo/build/serp-markup-builder` |
+| `optimize/content-refresher` | merged into `seo-geo/build/content-writer` |
+| `optimize/internal-linking-optimizer` | merged into `seo-geo/optimize/site-structure-optimizer` |
+| `optimize/on-page-seo-auditor` | `seo-geo/optimize/on-page-seo-auditor` |
+| `optimize/technical-seo-checker` | `seo-geo/optimize/technical-seo-checker` |
+| `monitor/rank-tracker` | `seo-geo/monitor/rank-tracker` |
+| `monitor/performance-reporter` | merged into `seo-geo/monitor/performance-monitor` |
+| `monitor/alert-manager` | merged into `seo-geo/monitor/performance-monitor` |
+| `monitor/backlink-analyzer` | merged into `seo-geo/monitor/offsite-signal-analyzer` |
+| `cross-cutting/content-quality-auditor` | `seo-geo/optimize/content-quality-auditor` |
+| `cross-cutting/domain-authority-auditor` | `seo-geo/monitor/domain-authority-auditor` |
+| `cross-cutting/entity-optimizer` | `protocol/entity-optimizer` |
+| `cross-cutting/memory-management` | `protocol/memory-management` |
+
+The umbrella also adds `seo-geo/build/page-play-builder` and folds site-architecture and AI-traffic monitoring into `site-structure-optimizer` / `offsite-signal-analyzer` — capabilities this line never had.
+
+</details>
 
 **20 skills. 5 commands. Plan, audit, and monitor SEO/GEO work.**
 

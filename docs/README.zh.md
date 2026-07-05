@@ -1,5 +1,9 @@
 # SEO & GEO 技能库
 
+> [!IMPORTANT]
+> **已冻结于 v9.9.12 —— 活跃开发已迁至 [aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills)。**
+> 本仓库是 SEO/GEO 独立产品的最终版本线（20 个技能），对存量用户保持可安装，但不再接收任何更新（含修复）。主仓库以合并后的 16 个 SEO/GEO 技能取代本仓库（对照表见英文 README），并新增网红、付费广告、邮件营销三个学科。
+
 **20 个技能。5 个命令。规划、审计、监控 SEO/GEO 工作。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
