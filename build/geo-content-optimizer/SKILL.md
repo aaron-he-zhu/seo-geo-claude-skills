@@ -4,7 +4,7 @@
 > `seo-geo-claude-skills` is now a **signpost** repo — its skills are no longer developed here.
 > This file exists only so older links to `build/geo-content-optimizer/` keep resolving.
 
-**Active version:** [`seo-geo/build/geo-content-optimizer`](https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/main/seo-geo/build/geo-content-optimizer) in the [`aaron-marketing-skills`](https://github.com/aaron-he-zhu/aaron-marketing-skills) bundle.
+**Active version:** [`seo-geo/implement/geo-content-optimizer`](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/seo-geo/implement/geo-content-optimizer/SKILL.md) in the [`aaron-marketing-skills`](https://github.com/aaron-he-zhu/aaron-marketing-skills) bundle.
 
 **Frozen standalone copy** (unchanged, tag `v9.9.12`): [`build/geo-content-optimizer/SKILL.md`](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/v9.9.12/build/geo-content-optimizer/SKILL.md).
 
