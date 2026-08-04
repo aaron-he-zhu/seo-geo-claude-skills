@@ -4,7 +4,7 @@
 > `seo-geo-claude-skills` is now a **signpost** repo — its skills are no longer developed here.
 > This file exists only so older links to `monitor/rank-tracker/` keep resolving.
 
-**Active version:** [`seo-geo/monitor/rank-tracker`](https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/main/seo-geo/monitor/rank-tracker) in the [`aaron-marketing-skills`](https://github.com/aaron-he-zhu/aaron-marketing-skills) bundle.
+**Active version:** [`seo-geo/evaluate/rank-tracker`](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/seo-geo/evaluate/rank-tracker/SKILL.md) in the [`aaron-marketing-skills`](https://github.com/aaron-he-zhu/aaron-marketing-skills) bundle.
 
 **Frozen standalone copy** (unchanged, tag `v9.9.12`): [`monitor/rank-tracker/SKILL.md`](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/v9.9.12/monitor/rank-tracker/SKILL.md).
 
